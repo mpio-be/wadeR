@@ -18,3 +18,4 @@ vignettes/*.html
 vignettes/*.pdf
 vignettes/*.png
 *.sublime-workspace
+*.sublime-project
