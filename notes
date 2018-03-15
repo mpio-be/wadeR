@@ -1,0 +1,31 @@
+
+# Fresh DB install
+require(sdb)
+ # mysqlrestore(file = system.file('DB_structure', 'barebone_DB.sql', package= 'wader') , db = 'FIELD_REPHatBARROW' , user = 'wader')
+
+# web interface install & web server reload  (after package update)
+    require(sysmanager)
+    require(wader)
+    install_github( "valcu/DataEntry"  ,auth_token = github_pat(),  dependencies = TRUE)
+    install_github( "valcu/wader"      ,auth_token = github_pat(),  dependencies = TRUE)
+    install_shiny_ui('wader', restartShiny = TRUE, pwd = 'wader') 
+
+# web server reload (after db tables updates)
+    sysmanager::restart_shinyServer('wader')
+
+# restart dhcp server (F12 to get access to a terminal)
+    sudo service isc-dhcp-server restart    &&  sudo systemctl status isc-dhcp-server # check     
+
+# Backup
+    * database is backed up every 30 mins to /home/wader/ownCloud/BACKUPS/db/
+    * db backups are placed in /home/wader/ownCloud/BACKUPS/
+    * data is synchronized to https://owncloud.gwdg.de using user=gitlab-grpkempenaers@orn.mpg.de pwd=Beeco@mpio
+    * backups are run by cron using:
+        mysqldump   --host=127.0.0.1 --user=wader --password=wader --databases FIELD_REPHatBARROW --routines  --result-file=/home/wader/ownCloud/BACKUPS/db/$(date +\%Y-\%m-\%d-\%H.\%M.\%S).sql
+
+    # running the same line in a terminal (press F12) creates a manual backup
+
+# updating validators
+     * make sure the text is saved with unix line breaks
+     * use double quotes only. 
+

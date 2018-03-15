@@ -1,0 +1,31 @@
+---
+title: ""
+geometry: "left=0.8cm,right=0.5cm,top=1cm,bottom=1cm"
+fontsize: 11pt
+output:
+  pdf_document
+---
+
+```{r setup, include=FALSE}
+require(wader)
+library(xtable)
+options(xtable.comment = FALSE)
+```
+
+###Reference date: `r Sys.Date()`
+
+```{r nests, echo=FALSE, message=FALSE, warning=FALSE,results='asis'}
+n = NESTS()[species == 'REPH']
+n = n[, .(nest, nest_state, lastCheck, iniClutch, clutch, IN, m_sure, f_sure)]
+
+x = xtable(n, auto = TRUE, caption = NULL, floating = TRUE, floating.environment = "sidewaystable", latex.environments = "" )
+
+print(x, hline.after = 0:nrow(x))
+
+```
+
+
+
+
+
+

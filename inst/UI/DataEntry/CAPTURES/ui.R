@@ -1,0 +1,2 @@
+
+shinyUI( DataEntry::DataEntryMaterialFloating(table))
