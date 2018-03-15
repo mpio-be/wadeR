@@ -35,7 +35,7 @@ Suggests:
     leaflet,
     gtools
 Remotes: 
-    mpio-be/sdb
+    mpio-be/sdb,
     mpio-be/DataEntry
 VignetteBuilder: knitr
 LazyData: true
