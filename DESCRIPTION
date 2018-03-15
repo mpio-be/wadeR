@@ -4,7 +4,7 @@ Title: Wader field work manager
 Description: Wader (or any open breeder) field work organizer: mapping and data entry. 
 Version: 0.5.3
 Authors@R: c( 
-           person("Mihai", "Valcu",       email = "valcu@orn.mpg.de",    role = c("aut", "cre")),
+           person("Mihai", "Valcu",       email = "valcu@orn.mpg.de",     role = c("aut", "cre")),
            person("Johannes", "Krietsch", email = "jkrietsch@orn.mpg.de", role = "ctb") )
 Depends:
     R (>= 3.3.2),
@@ -34,8 +34,9 @@ Suggests:
     shinytoastr,
     leaflet,
     gtools
-Remotes:
+Remotes: 
     mpio-be/sdb
+    mpio-be/DataEntry
 VignetteBuilder: knitr
 LazyData: true
 License: GPL > 2
