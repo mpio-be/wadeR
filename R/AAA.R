@@ -7,7 +7,7 @@
 .onLoad <- function(libname, pkgname){
     dcf <- read.dcf(file=system.file('DESCRIPTION', package=pkgname) )
     packageStartupMessage(paste('This is', pkgname, dcf[, 'Version'] ))
-    options(wader.host = scidbadmin::getSysOption('host') )
+    options(wader.host = sdb::probeDB() )
     options(wader.user = 'wader')
     options(wader.demo = FALSE)
     options(wader.freshdata = 60) # days

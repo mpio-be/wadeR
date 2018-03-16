@@ -1,4 +1,3 @@
-
 Package: wader
 Title: Wader field work manager
 Description: Wader (or any open breeder) field work organizer: mapping and data entry. 
@@ -11,6 +10,7 @@ Depends:
     utils, 
     methods,
     sdb,
+    DataEntry,
     magrittr,
     stringr,
     rgdal,
