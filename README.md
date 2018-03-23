@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mpio-be/wader.svg?branch=master)](https://travis-ci.org/mpio-be/wader)
+[![Build Status](https://travis-ci.org/mpio-be/wadeR.svg?branch=master)](https://travis-ci.org/mpio-be/wadeR)
 
 wadeR
 ------------
