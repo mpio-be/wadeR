@@ -9,7 +9,6 @@
     packageStartupMessage(paste('This is', pkgname, dcf[, 'Version'] ))
     # options(wader.host = sdb::probeDB() )
     options(wader.user = 'wader')
-    options(wader.demo = FALSE)
     options(wader.freshdata = 60) # days
     options(wader.dbbackup = '~/ownCloud/BACKUPS/db/') # days
     

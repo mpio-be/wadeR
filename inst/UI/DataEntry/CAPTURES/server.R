@@ -1,48 +1,55 @@
+#######################
+
 function(input, output,session) {
 
   observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalEnv)) )
 
-  
+
   observeEvent(input$refresh, {
         shinyjs::js$refresh()
       })
 
   Save <- eventReactive(input$saveButton, {
-
     return(hot_to_r(input$table))
+
+    #### 
 
    })
 
   output$run_save <- renderUI({
     x = Save() %>% data.table
-    x = cleaner(x)
-  
+    # x<<- x
+    cleaner(x)
+
+
     isolate(ignore_validators <- input$ignore_checks )
 
-
-
     # inspector
-      cc =  inspector(sqlInspector, x, user, db, host)
-      #cc<<- cc
+      cc = inspector(x)
+      # cc<<- cc
 
       if(nrow(cc) > 0 & !ignore_validators) {
           toastr_error( boostrap_table(cc),
-            title = HTML('<p>Data entry errors. Check <q>Ignore warnings</q> to by-pass this filter and save the data as it is.<br> WRITE IN THE COMMENTS WHY DID YOU IGNORE WARNINGS!</p>') ,
+            title = HTML('<p>Data entry errors. Check <q>Ignore warnings</q> to by-pass this filter and save the data as it is.<br> Write in the comments why did you ignore warnings!</p>') ,
             timeOut = 100000, closeButton = TRUE, position = 'top-full-width')
        }
 
     # db update
       if(   nrow(cc) == 0 | (nrow(cc) > 0 & ignore_validators ) ) {
 
-        con = dbcon(user = user,  host = host)
-        dbq(con, paste('USE', db) )
-        saved_set = dbWriteTable(con, table, x, append = TRUE, row.names = FALSE)
+      con = dbcon(user = user,  host = host, db = db)
+    
+      saved_set = dbWriteTable(con, tableName, x, append = TRUE, row.names = FALSE)
 
-        if(saved_set) {
+
+      if(saved_set) {
+          toggleState(id = "saveButton")
+          
           toastr_success( paste(nrow(x), "rows saved to database.") )
           toastr_warning('Refreshing in 5 secs ...', progressBar = TRUE, timeOut = 5000) 
-          Sys.sleep(6)
-           shinyjs::js$refresh()
+          Sys.sleep(5)
+          
+          shinyjs::js$refresh()
 
           }
 
@@ -55,27 +62,36 @@ function(input, output,session) {
     })
 
 
-
-  # drop down menus
+  # HOT TABLE
   output$table  <- renderRHandsontable({
-    H = emptyFrame(user, host, db, table, n = 10, excludeColumns, 
-          preFilled = list( date_ = as.character(Sys.Date()), UL = 'M', UR = 'Y') )
-
-      
     rhandsontable(H) %>%
-      hot_rows(fixedRowsTop = 1) %>%
       hot_cols(columnSorting = FALSE, manualColumnResize = TRUE) %>%
-      hot_col(col = "author",       type = "dropdown", source = c('', 'GB', 'MB', 'MC', 'CG', 'BK', 'JK', 'P3', 'KT', 'MV', 'AW') ) %>%
-      hot_col(col = "capture_meth", type = "dropdown", source = c('', 'M', 'T', 'H') ) %>%
-      hot_col(col = "age",          type = "dropdown", source = c('', 'ASY', 'SY', 'NA') )
-
-   })
+      hot_rows(fixedRowsTop = 1) %>%
+      hot_col(col = "method", type = "dropdown", source = as.character(1:5) )
+    })
 
 
-
-   output$column_comments <- renderTable({
+  # MODALS
+  # column definitions
+  output$column_comments <- renderTable({
       comments
   })
 
+  # DATA summary
+  getDataSummary <- eventReactive(input$tableInfoButton, {
+    table_smry()
+   })
+  output$data_summary <- renderTable({
+    getDataSummary()
+    })
+
+  # CHEATSHEET
+  output$cheatsheet_show <- renderUI({
+      includeMarkdown(system.file('cheatsheet.md', package = "DataEntry"))
+    })
+
+
+
  }
+
 

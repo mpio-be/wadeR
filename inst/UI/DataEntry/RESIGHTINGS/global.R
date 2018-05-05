@@ -3,8 +3,9 @@
 
 
 # settings
-  sapply(c('sdb', 'wader', 'DataEntry','shiny','shinyjs','rhandsontable','miniUI','shinyBS','shinytoastr','knitr'),
+  sapply(c('waderR','DataEntry', 'data.table', 'shinyjs', 'shinyBS'),
     require, character.only = TRUE, quietly = TRUE)
+
   tags = shiny::tags
  
 
@@ -12,18 +13,18 @@
   host           = getOption('wader.host')
   db             = yy2dbnam(year(Sys.Date()))
   table          = 'RESIGHTINGS'
-  excludeColumns = c('PC', 'pk')
-  sqlInspector   = 'select script from validators where table_name = "RESIGHTINGS"'
-
-
-
-  H = emptyFrame(user, host, db, table, n = 15, excludeColumns, 
-        preFilled = list(UL = 'M', UR = 'Y') 
-        )
+  excludeColumns = c('pk', 'PC')
   
+  # todo: 
+  inspector <- wadeR::inspector.captures
+
+
   comments = column_comment(user, host, db, table,excludeColumns)
 
 
 
+# table summary function
+    table_smry <- function() {
+      data.table(a = 'TODO')
 
-
+    }
