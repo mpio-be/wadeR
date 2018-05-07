@@ -1,20 +1,39 @@
 #### While your GPS is plugged-in into your computer
+- only use the original Garmin USB cable (others can make problems)
 - make sure /GARMIN/.Trash-1000/ directory is empty; let's start clean.
 - open /Garmin/startup.txt and add e.g. 'GPS=x', without quotes, within the file where x is your gps unit id.
 
 
 #### Open you GPS and navigate through all settings below
-- **System/GPS** WAAS/EGNOS  
+- **System/Satellite/Satellite System** GPS + GLONASS
+- **System/Satellite/WAAS/EGNOS** On
+- **System/Mode** Classic
+- **System/Battery Type** Lithium or NiMH (depending on what you use)
 
-#### Tracks/Track Log
-- **Track Log**     Record, Do not Show  
-- **Record Method** Time,interval=00:00:20
+### Display
+- **Backlight Timeout** 15 sec
+- **Orientation Lock*:** Portrait
+- **Battery Save** On
+
+### Wi-Fi
+- **Wi-Fi** Off
+
+#### Recording
+- **Record Method** Time
+- **Interval** 00:00:20 
+- **Auto Pause** Off
+- **Advanced Setup/Output Format** Tracks (GPX/FIT)
+- **Advanced Setup/Trip Recording** Always
+
+#### Position Format
+- **Position Format** hddd.ddddd°
+- **Map Datum** WGS 84
+- **Map Spheroid** WGS 84
 
 #### Units 
 - **Distance** Metric
-- **Elevation**  meters
-- **Depth** meters
-- **Temperature** ℃,
+- **Vertical Speed**  Meters (m/sec)
+- **Temperature** Celsius
 - **Pressure** Millimeters (Hg)
 
 #### Time 
@@ -22,10 +41,6 @@
 - **Time Zone** US - Alaska
 - **Daylight Saving Time** Yes
 
-#### Position
-- **Position Format** hddd.ddddd°
-- **Map Datum** WGS 84
-- **Map Spheroid** WGS 84
 
 ---------------------------------------------------------------
 
