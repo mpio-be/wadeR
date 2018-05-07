@@ -2,10 +2,10 @@
 % Please edit documentation in R/utils.R
 \name{yy2dbnam}
 \alias{yy2dbnam}
-\title{find database name from year}
+\title{make field database name from year}
 \usage{
-yy2dbnam(year, demo = getOption("wader.demo"))
+yy2dbnam(year, db = getOption("wader.db"))
 }
 \description{
-find database name from year
+make field database name from year
 }

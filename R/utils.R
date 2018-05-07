@@ -26,15 +26,12 @@ nest2species <- function(nest){
    }
 
 
-#' find database name from year
+#' make field database name from year
 #' @export
-yy2dbnam <- function(year, demo = getOption('wader.demo') ) {
+yy2dbnam <- function(year, db = getOption('wader.db') ) {
   if(year == format(Sys.Date(), format = "%Y") )
-     db = 'FIELD_REPHatBARROW' else
      paste('FIELD', year, 'REPHatBARROW', sep = "_")
-     if(demo) db = 'FIELD_REPHatBARROW_demo'
      db
-
   }
 
 #' query function
