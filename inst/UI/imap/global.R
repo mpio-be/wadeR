@@ -1,10 +1,9 @@
-# shiny::runApp('inst/UI/imap', launch.browser = TRUE)
+# shiny::runApp('inst/UI/imap', launch.browser = TRUE,port = 1111)
 
 
 
 # settings
-    sapply(c('wader', 'knitr', 'ggplot2', 'ggthemes',
-            'shiny','shinyjs','shinydashboard','shinyBS','shinytoastr', 'leaflet'),
+    sapply(c('wadeR', 'leaflet'),
       function(x) suppressPackageStartupMessages( require(x, character.only = TRUE, quietly = TRUE) ))
     options(stringsAsFactors = FALSE)
 

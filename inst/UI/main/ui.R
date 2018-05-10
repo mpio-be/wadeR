@@ -1,8 +1,8 @@
 
 shinyUI(
 
-dashboardPage(skin = 'green',
-  dashboardHeader(title = 'BARROW 2017'),
+dashboardPage(skin = 'black',
+  dashboardHeader(title = paste('BARROW', Y)   ),
 
   dashboardSidebar(
     sidebarMenu(id = 'menubar',
@@ -27,16 +27,16 @@ dashboardPage(skin = 'green',
         menuSubItem("Resightings",     tabName  = "resightsmap_tab",      icon = icon("caret-right") ),
         menuSubItem("Resights by id",  tabName  = "resightsbyidmap_tab",  icon = icon("caret-right") ),
         menuSubItem("Tracks",          tabName  = "tracksmap_tab",  icon = icon("caret-right") ),
-        menuSubItem('INTERACTIVE',     href     = '/wader/imap',        newtab = TRUE)
+        menuSubItem('INTERACTIVE',     href     = '/wadeR/imap',        newtab = TRUE)
 
         ),
 
       menuItem("Data entry",  icon = icon("database"),
-        menuSubItem('CAPTURES',   href = '/wader/DataEntry/CAPTURES',     newtab = TRUE),
-        menuSubItem('NESTS',      href = '/wader/DataEntry/NESTS',        newtab = TRUE),
-        menuSubItem('RESIGHTINGS',href = '/wader/DataEntry/RESIGHTINGS',  newtab = TRUE),
-        menuSubItem('DEVICES',    href = '/wader/DataEntry/DEVICES',      newtab = TRUE),
-        menuSubItem('phpmyadmin', href = 'http://192.168.1.1/phpmyadmin/',newtab = TRUE)
+        menuSubItem('CAPTURES',   href = '/wadeR/DataEntry/CAPTURES',     newtab = TRUE),
+        menuSubItem('NESTS',      href = '/wadeR/DataEntry/NESTS',        newtab = TRUE),
+        menuSubItem('RESIGHTINGS',href = '/wadeR/DataEntry/RESIGHTINGS',  newtab = TRUE),
+        menuSubItem('DEVICES',    href = '/wadeR/DataEntry/DEVICES',      newtab = TRUE),
+        menuSubItem('phpmyadmin', href = paste0('http://',IP,'/phpmyadmin/'),newtab = TRUE)
         ),
 
       # CONDITIONAL PANNELS
@@ -128,7 +128,7 @@ tabItems(
 
     # GPS
       tabItem(tabName = "gps_tab",
-        box(  includeMarkdown( system.file('UI', 'docs', 'garmin_oregon_450.md', package = 'wader')), 
+        box(  includeMarkdown( system.file('UI', 'docs', 'garmin_oregon_450.md', package = 'wadeR')), 
               title = 'Initial GPS Settings.', collapsible = TRUE, collapsed = FALSE,
                 footer = 'Before using your GPS for the first time make sure the settings are correct.'), 
 

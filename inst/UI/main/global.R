@@ -1,6 +1,6 @@
 
 
-# shiny::runApp('inst/UI/main', launch.browser = TRUE)
+# shiny::runApp('inst/UI/main', launch.browser = TRUE, port = 1111)
 
 
 # settings
@@ -9,6 +9,9 @@
       function(x) suppressPackageStartupMessages( require(x, character.only = TRUE, quietly = TRUE) ))
     options(stringsAsFactors = FALSE)
 
+Y = year(Sys.Date())
 
 tags = shiny::tags
  
+IP = ip() 
+

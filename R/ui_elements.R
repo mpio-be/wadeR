@@ -30,29 +30,23 @@ UI <- function() {
   
    )
 
-
-
-} 
+  } 
 
 
 #' sysinfo
 #' @export
-sysinfo <- function() {
+sysinfo <- function(ip) {
 
-    o1 = paste(badge('Keyboard shortcut'), '</span> <kbd>/</kbd> Expands  to current time-stamp' )
-    o2 = paste(badge('Current site location'), ip() )
+    o1 = paste(badge('Current site location'), ip)
 
     lastbk = try(lastdbBackup(), silent = TRUE)
 
-
     if( inherits(lastbk, 'try-error') || lastbk > 30) Wrn("Please check BACKUP system !!")
 
+    o2 = paste(badge('Last DB backup'), paste(lastbk, 'minutes ago') )
 
-    o3 = paste(badge('Last DB backup'), paste(lastbk, 'minutes ago') )
+    o3 = paste(badge('Package version'), paste('wader', packageVersion('wadeR') ) )
 
-    o4 = paste(badge('Package version'), paste('wader', packageVersion('wader') ) )
-    o5 = paste(badge('Package version'), paste('rhandsontable', packageVersion('rhandsontable') ) )
-    o6 = paste(badge('Package version'), paste('DataEntry', packageVersion('DataEntry') ) )
 
 
     O =
@@ -60,10 +54,7 @@ sysinfo <- function() {
     '<ul class="list-group">',
         paste(o1%>%li,
               o2%>%li,
-              o3%>%li,
-              o4%>%li,
-              o5%>%li,
-              o6%>%li
+              o3%>%li
               ),
      '</ul>' )
 
@@ -71,6 +62,8 @@ sysinfo <- function() {
 
 
 }
+
+
 
 
 
@@ -118,45 +111,6 @@ paste('<span class="badge">',x,'</span>')
 paste('<li class="list-group-item">',x,'</li>')
 
  }
-
-
-#' sysinfo
-#' @export
-sysinfo <- function() {
-
-    o1 = paste(badge('Keyboard shortcut'), '</span> <kbd>/</kbd> Expands  to current time-stamp' )
-    o2 = paste(badge('Current site location'), ip() )
-
-    lastbk = try(lastdbBackup(), silent = TRUE)
-
-
-    if( inherits(lastbk, 'try-error') || lastbk > 30) Wrn("Please check BACKUP system !!")
-
-
-    o3 = paste(badge('Last DB backup'), paste(lastbk, 'minutes ago') )
-
-    o4 = paste(badge('Package version'), paste('wader', packageVersion('wader') ) )
-    o5 = paste(badge('Package version'), paste('rhandsontable', packageVersion('rhandsontable') ) )
-    o6 = paste(badge('Package version'), paste('DataEntry', packageVersion('DataEntry') ) )
-
-
-    O =
-    paste(
-    '<ul class="list-group">',
-        paste(o1%>%li,
-              o2%>%li,
-              o3%>%li,
-              o4%>%li,
-              o5%>%li,
-              o6%>%li
-              ),
-     '</ul>' )
-
-    HTML(O)
-
-
-}
-
 
 
 

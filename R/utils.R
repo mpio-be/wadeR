@@ -71,31 +71,20 @@ dayofyear2date <- function(dayofyear, year) {
    }
 
 
-#' ip
-#' @export
-#' @examples 
-#' ip()
-ip <-function(x, expand_to_index = TRUE) {
-  o = system("ip route get 8.8.8.8 | awk 'NR==1 {print $NF}'", intern = TRUE)
-  o
-  if( expand_to_index & length(o)> 0)
-
-    o = paste0('http://', o , '/wader/main/') else o = 'WARNING! NO INTERNET ACCESS.'
-
-    o
-
- 
- }
-
-
 
 #' lastdbBackup
 #' @export
 lastdbBackup <- function(path = getOption('wader.dbbackup') ) {
 
-  o = data.table(p = list.files(path, full.names = TRUE))
-  o = o[, file.info(p, extra_cols = FALSE), by = 1:nrow(o)]
-  o[, difftime(Sys.time(), max(ctime), units = 'mins') %>% round]
+ 
+  if(dir.exists(path)) {
+    o = data.table( p = list.files(path, full.names = TRUE))
+    o = o[, file.info(p, extra_cols = FALSE), by = 1:nrow(o)]
+    o[, difftime(Sys.time(), max(ctime), units = 'mins') %>% round]
+    } else
+    o = data.table(warning = 'backup not installed!')
+
+    o
 
   }
 

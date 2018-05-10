@@ -13,7 +13,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   output$sys_show <- renderUI({
     invalidateLater(2000)
     
-    sysinfo()
+    sysinfo(ip = IP)
 
   })
 
@@ -22,21 +22,22 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
     invalidateLater(240000)
     # dbTablesStatus()
 
-    o = readRDS('~/.wader/lastArgos.RDS')
+    # o = readRDS('~/.wader/lastArgos.RDS')
 
-    Msg( paste( "Last Argos update:", as.character(attr(o, 'lastrun') ) ) )
+    # Msg( paste( "Last Argos update:", as.character(attr(o, 'lastrun') ) ) )
     
-    lostTags = attr(o, 'lost_platforms')
-    if(lostTags > 0) Err( paste( lostTags, 'tags most likely lost.') )
+    # lostTags = attr(o, 'lost_platforms')
+    # if(lostTags > 0) Err( paste( lostTags, 'tags most likely lost.') )
   
-    o
+    o = data.table(info = 'waiting for tags')
+
   
   }, options = list(pageLength = 40))
   
   output$sys_show <- renderUI({
     invalidateLater(2000)
     
-    sysinfo()
+    sysinfo(ip = IP)
 
   })
 

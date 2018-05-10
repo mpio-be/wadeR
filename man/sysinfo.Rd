@@ -2,15 +2,10 @@
 % Please edit documentation in R/ui_elements.R
 \name{sysinfo}
 \alias{sysinfo}
-\alias{sysinfo}
 \title{sysinfo}
 \usage{
-sysinfo()
-
-sysinfo()
+sysinfo(ip)
 }
 \description{
-sysinfo
-
 sysinfo
 }
