@@ -3,10 +3,7 @@
 # INSTALL UI-s
 # ==========================================================================
 
-    require(wadeR)
-
-    devtools::install_github( "mpio/wadeR")
-    install_ui()
+      wadeR::install_ui()
     
 
 

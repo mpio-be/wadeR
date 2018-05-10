@@ -30,7 +30,7 @@ demo <- function(x) {
  
 NESTS <- function(project = TRUE) {
     # last state
-      n = idbq('SELECT nest, max(datetime_) datetime_, nest_state 
+      n = idbq('SELECT nest, max(CONCAT_WS(" ",date_,time_appr)) datetime_, nest_state 
                       FROM NESTS 
                           GROUP BY nest, nest_state')
       n[, species := nest2species(nest)]

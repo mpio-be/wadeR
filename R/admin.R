@@ -41,7 +41,13 @@ return(f)
 #' @examples
 #' install_ui() 
 #'
-install_ui <- function(pwd, root = "/srv/shiny-server", IP = ip() ) {
+install_ui <- function(pwd, install_package = TRUE, root = "/srv/shiny-server", IP = ip() ) {
+
+  if(install_package) {
+    cat('Install package...')
+    devtools::install_github( "mpio-be/wadeR")
+    cat('done\n')
+    }
 
   u = system.file('UI', package = 'wadeR')
   uisrc = paste0(system.file('UI', package = 'wadeR'),'/*')
@@ -62,7 +68,7 @@ install_ui <- function(pwd, root = "/srv/shiny-server", IP = ip() ) {
 
 
   # index
-  f = index.html()
+  f = wadeR::index.html()
 
   system( paste('echo', shQuote(pwd), '| sudo -S cp -rf', f, '/var/www/html/'),wait = TRUE,ignore.stderr = TRUE  )
 
@@ -76,6 +82,8 @@ install_ui <- function(pwd, root = "/srv/shiny-server", IP = ip() ) {
     wait = TRUE,ignore.stderr = TRUE )
   cat('done\n')
 
+  cat('Go to http://192.168.2.102/')
+  
 
 
   }
