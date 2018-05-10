@@ -15,12 +15,6 @@ data.tableTransform <- function(DT, proj = '+proj=omerc +lat_0=71.3332703512554 
   }
 
 
-#' @export
-demo <- function(x) {
-    x[, lon := lon - median(lon) -156.660121 ]
-    x[, lat := lat - median(lat) + 71.321545 ]
-  }
-
 
 #' NESTS
 #' @export
@@ -41,7 +35,7 @@ NESTS <- function(project = TRUE) {
       n[, lastCheck := difftime(Sys.time(), datetime_, units = 'days') %>% as.numeric %>% round(., 1)  ]
 
     # lat, lon for F state, species
-      g = idbq('SELECT n.gps_id, n.gps_point, n.datetime_ datetime_found, n.nest, lat, lon
+      g = idbq('SELECT n.gps_id, n.gps_point, CONCAT_WS(" ",n.date_,n.time_appr) datetime_found, n.nest, lat, lon
                   FROM NESTS n JOIN GPS_POINTS g on n.gps_id = g.gps_id AND n.gps_point = g.gps_point
                     WHERE n.gps_id is not NULL and n.nest_state = "F"')
       n = merge(n, g[, .(nest, lat, lon, datetime_found)], by = c("nest"), all.x = TRUE)
@@ -88,8 +82,6 @@ NESTS <- function(project = TRUE) {
 
 
     # coords transformations
-      if(getOption('wader.demo')) demo(o)
-      
       if(project)  
       data.tableTransform(o)
     
