@@ -1,4 +1,3 @@
-#######################
 
 function(input, output,session) {
 
@@ -10,17 +9,15 @@ function(input, output,session) {
       })
 
   Save <- eventReactive(input$saveButton, {
-    return(hot_to_r(input$table))
-
-    #### 
-
+    o = hot_to_r(input$table) %>% data.table
+    class(o) = c(class(o), tableName)
+    o
    })
 
   output$run_save <- renderUI({
-    x = Save() %>% data.table
+    x = Save() 
     # x<<- x
     cleaner(x)
-
 
     isolate(ignore_validators <- input$ignore_checks )
 
@@ -64,10 +61,7 @@ function(input, output,session) {
 
   # HOT TABLE
   output$table  <- renderRHandsontable({
-    rhandsontable(H) %>%
-      hot_cols(columnSorting = FALSE, manualColumnResize = TRUE) %>%
-      hot_rows(fixedRowsTop = 1) %>%
-      hot_col(col = "method", type = "dropdown", source = as.character(1:5) )
+      uitable
     })
 
 
@@ -79,7 +73,7 @@ function(input, output,session) {
 
   # DATA summary
   getDataSummary <- eventReactive(input$tableInfoButton, {
-    table_smry()
+    describeTable()
    })
   output$data_summary <- renderTable({
     getDataSummary()

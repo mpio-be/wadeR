@@ -28,10 +28,11 @@ nest2species <- function(nest){
 
 #' make field database name from year
 #' @export
-yy2dbnam <- function(year, db = getOption('wader.db') ) {
+yy2dbnam <- function(year = format(Sys.Date(), format = "%Y") , db = getOption('wader.db') ) {
   if(year == format(Sys.Date(), format = "%Y") )
+     paste('FIELD', 'REPHatBARROW', sep = "_") else 
      paste('FIELD', year, 'REPHatBARROW', sep = "_")
-     db
+     
   }
 
 #' query function
@@ -176,3 +177,11 @@ removeDuplicates <- function(table, key = 'pk') {
   }
 
 
+#' @export
+#' @import broom
+describeTable <- function(table, ...){
+  o = idbq(paste('select author from', table), ...)
+  
+  rbind(data.table(author = 'ALL', N = nrow(o)),   o[, .N, author] )
+
+  }

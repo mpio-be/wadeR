@@ -4,7 +4,7 @@
 
 
 # settings
-    sapply(c('wader', 'knitr', 'ggplot2', 'ggthemes',
+    sapply(c('wadeR', 'knitr', 'ggplot2', 'ggthemes',
             'shiny','shinyjs','shinydashboard','shinyBS','shinytoastr'),
       function(x) suppressPackageStartupMessages( require(x, character.only = TRUE, quietly = TRUE) ))
     options(stringsAsFactors = FALSE)

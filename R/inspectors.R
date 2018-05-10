@@ -1,11 +1,28 @@
-
-
+#' Data police
+#'
+#' inspectors are a collection of validators
+#'
+#' @title data inspector 
+#' @param x numeric number
+#' @param ... other arguments
+#' @examples
+#' 1 # TODO
+#' 
+#' 
 #' @export
+ inspector <- function (x) {
+   UseMethod("inspector", x)
+   }
+
+
+# @method inspector CAPTURES
+# @S3method inspector CAPTURES
+#' @export 
 inspector.CAPTURES <- function(x){
     # Mandatory to enter
     v1  = is.na_validator(x[, .(date_, form_id, author, gps_id, gps_point, ID, start_capture, recapture, capture_meth, weight, 
                                 LL, LR, UL, UR, cam_id, blood_dna, haema, behav)])
-    v2  = is.na_validator(x[recapture == 0, .(tarsus, culmen, total_head, wing, pit_tag)], "Mandatory at first capture")
+    v2  = is.na_validator(x[recapture == 0, .(tarsus, culmen, total_head, wing)], "Mandatory at first capture")
     v3  = is.na_validator(x[sex == 2, .(carries_egg)], "Mandatory for females")
 
     # Correct format?
@@ -49,7 +66,10 @@ inspector.CAPTURES <- function(x){
 
     }
 
-#' @export
+
+# @method inspector RESIGHTINGS
+# @S3method inspector RESIGHTINGS
+#' @export 
 inspector.RESIGHTINGS <- function(x){
     # Mandatory to enter
     v1  = is.na_validator(x[, .(author, gps_id, gps_point, behav_cat, sex, LR, UL, UR, habitat)])
@@ -88,7 +108,10 @@ inspector.RESIGHTINGS <- function(x){
 
     }
 
-#' @export
+
+# @method inspector NESTS
+# @S3method inspector NESTS
+#' @export 
 inspector.NESTS <- function(x){
     #Mandatory to enter
     v1  = is.na_validator(x[, .(author, nest, datetime_, time_left, nest_state)])
@@ -141,7 +164,9 @@ inspector.NESTS <- function(x){
     }
 
 
-#' @export
+# @method inspector EGGS_CHICKS
+# @S3method inspector EGGS_CHICKS
+#' @export 
 inspector.EGGS_CHICKS <- function(x){
 
     # Mandatory to enter
@@ -163,7 +188,10 @@ inspector.EGGS_CHICKS <- function(x){
 
     }
 
-#' @export
+
+# @method inspector DEVICES
+# @S3method inspector DEVICES
+#' @export 
 inspector.DEVICES <- function(x){
    
     v1  = is.na_validator(x[, .(device, device_id)])
