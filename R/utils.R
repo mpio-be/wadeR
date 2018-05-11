@@ -10,15 +10,15 @@
 
 nest2species <- function(nest){
 
-  o = sapply(nest, function (x) { 
+  o = sapply(nest, function (x) {
    n = substr(x, 1, 1)
-   ifelse(n == 'R', 'REPH', 
-    ifelse(n == 'N', 'RNPH', 
-      ifelse(n == 'P', 'PESA', 
-        ifelse(n == 'S', 'SESA', 
+   ifelse(n == 'R', 'REPH',
+    ifelse(n == 'N', 'RNPH',
+      ifelse(n == 'P', 'PESA',
+        ifelse(n == 'S', 'SESA',
           ifelse(n == 'A', 'AMGP',
-            ifelse(n == 'T', 'RUTU', 
-             ifelse(n == 'B', 'BASA', 
+            ifelse(n == 'T', 'RUTU',
+             ifelse(n == 'B', 'BASA',
                ifelse(n == 'D', 'DUNL',NA))))))))
 
     })
@@ -30,9 +30,9 @@ nest2species <- function(nest){
 #' @export
 yy2dbnam <- function(year = format(Sys.Date(), format = "%Y") , db = getOption('wader.db') ) {
   if(year == format(Sys.Date(), format = "%Y") )
-     paste('FIELD', 'REPHatBARROW', sep = "_") else 
+     paste('FIELD', 'REPHatBARROW', sep = "_") else
      paste('FIELD', year, 'REPHatBARROW', sep = "_")
-     
+
   }
 
 #' query function
@@ -63,11 +63,11 @@ dayofyear2date <- function(dayofyear, year) {
 
 #' gpxPOSIXct
 #' @export
-#' @examples 
+#' @examples
 #' strptime('2017/04/18 13:05:28+00', "%Y/%m/%d %H:%M:%S+%OS")
   gpxPOSIXct <-function(x) {
     x = str_replace(x, '\\+00$', '')
-    strptime(x, "%Y/%m/%d %H:%M:%S") %>% as.POSIXct 
+    strptime(x, "%Y/%m/%d %H:%M:%S") %>% as.POSIXct
    }
 
 
@@ -76,13 +76,13 @@ dayofyear2date <- function(dayofyear, year) {
 #' @export
 lastdbBackup <- function(path = getOption('wader.dbbackup') ) {
 
- 
+
   if(dir.exists(path)) {
     o = data.table( p = list.files(path, full.names = TRUE))
     o = o[, file.info(p, extra_cols = FALSE), by = 1:nrow(o)]
-    o[, difftime(Sys.time(), max(ctime), units = 'mins') %>% round]
+    o = o[, difftime(Sys.time(), max(ctime), units = 'mins') %>% round]
     } else
-    o = data.table(warning = 'backup not installed!')
+    o = 'backup not installed!'
 
     o
 
@@ -93,7 +93,7 @@ lastdbBackup <- function(path = getOption('wader.dbbackup') ) {
 #' @export
 dbTablesStatus <- function() {
 
-  o = idbq(paste("SELECT table_name, last_update, n_rows from mysql.innodb_table_stats 
+  o = idbq(paste("SELECT table_name, last_update, n_rows from mysql.innodb_table_stats
               WHERE database_name =", shQuote(yy2dbnam(year(Sys.Date())))))
   o[, last_update := format(last_update, "%a, %d %b %H:%M") ]
   o
@@ -119,13 +119,13 @@ dbTableUpdate <- function(user, host, db, table, newdat) {
     dbq(con, paste('RENAME TABLE TEMP to', table) )
     }
 
-   update_ok 
-        
+   update_ok
+
 }
 
 #' combo
 #' @export
-#' @examples 
+#' @examples
 #' LL = c('W,R', 'Y,DB', NA, NA, 'NOBA'); LR = c('Y', 'DB', 'c', NA)
 combo <- function(LL, LR) {
   o = paste(LL, LR, sep = '|')
@@ -139,7 +139,7 @@ combo <- function(LL, LR) {
 
 #' removeDuplicates (latest version on sdb)
 #' @export
-#' @examples 
+#' @examples
 #' removeDuplicates('NESTS')
 removeDuplicates <- function(table, key = 'pk') {
 
@@ -151,7 +151,7 @@ removeDuplicates <- function(table, key = 'pk') {
 
   k[, dupl := duplicated(d) ]
   duplk = k[(dupl), key, with = FALSE]
-  
+
   if(nrow(duplk) > 0) {
 
     duplk = paste(as.matrix(duplk)[,1], collapse = ',')
@@ -159,7 +159,7 @@ removeDuplicates <- function(table, key = 'pk') {
     idbq(paste("DELETE FROM", table,   "WHERE",  key , "IN (",  duplk, ")" ), enhance= FALSE)
 
     n1 = idbq( paste("select count(*) n from ", table), enhance= FALSE )$n
-    
+
     message(n0-n1, ' duplicates removed from ', table)
     } else  "nothing to remove"
 
@@ -170,7 +170,7 @@ removeDuplicates <- function(table, key = 'pk') {
 #' @import broom
 describeTable <- function(table, ...){
   o = idbq(paste('select author from', table), ...)
-  
+
   rbind(data.table(author = 'ALL', N = nrow(o)),   o[, .N, author] )
 
   }
