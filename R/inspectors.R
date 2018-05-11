@@ -2,13 +2,13 @@
 #'
 #' inspectors are a collection of validators
 #'
-#' @title data inspector 
+#' @title data inspector
 #' @param x numeric number
 #' @param ... other arguments
 #' @examples
 #' 1 # TODO
-#' 
-#' 
+#'
+#'
 #' @export
  inspector <- function (x) {
    UseMethod("inspector", x)
@@ -17,10 +17,10 @@
 
 # @method inspector CAPTURES
 # @S3method inspector CAPTURES
-#' @export 
+#' @export
 inspector.CAPTURES <- function(x){
     # Mandatory to enter
-    v1  = is.na_validator(x[, .(date_, form_id, author, gps_id, gps_point, ID, start_capture, recapture, capture_meth, weight, 
+    v1  = is.na_validator(x[, .(date_, form_id, author, gps_id, gps_point, ID, start_capture, recapture, capture_meth, weight,
                                 LL, LR, UL, UR, cam_id, blood_dna, haema, behav)])
     v2  = is.na_validator(x[recapture == 0, .(tarsus, culmen, total_head, wing)], "Mandatory at first capture")
     v3  = is.na_validator(x[sex == 2, .(carries_egg)], "Mandatory for females")
@@ -43,14 +43,14 @@ inspector.CAPTURES <- function(x){
     v15 = interval_validator( x[, .(gps_point)],   v = data.table(variable = "gps_point", lq = 1, uq = 999),        "GPS waypoint is over 999?" )
 
     # Entry would be duplicate
-    v16 = is.duplicate_validator(x[recapture == 0 & !is.na(ID), .(ID)], 
+    v16 = is.duplicate_validator(x[recapture == 0 & !is.na(ID), .(ID)],
                                  v = data.table(variable = "ID", set = list(idbq("SELECT * FROM CAPTURES")$ID  ) ), "Metal band already in use! Recapture?" )
 
-    v17 = combo_validator(x[!LR %in% c("", NA), .( UL, LL, UR, LR)] , include = TRUE, 
+    v17 = combo_validator(x[!LR %in% c("", NA), .( UL, LL, UR, LR)] , include = TRUE,
                           validSet  = idbq('select CONCAT_WS(",", UL, LL, UR, LR) combo FROM CAPTURES' )$combo, "Ring Combo already in use! Recapture?")
 
     # RC are not existing or in wrong format
-    v19  = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE,  
+    v19  = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE,
                            validSet  = colorCombos() )
 
     # Entry is impossible
@@ -69,7 +69,7 @@ inspector.CAPTURES <- function(x){
 
 # @method inspector RESIGHTINGS
 # @S3method inspector RESIGHTINGS
-#' @export 
+#' @export
 inspector.RESIGHTINGS <- function(x){
     # Mandatory to enter
     v1  = is.na_validator(x[, .(author, gps_id, gps_point, behav_cat, sex, LR, UL, UR, habitat)])
@@ -79,7 +79,7 @@ inspector.RESIGHTINGS <- function(x){
     # v5 =
 
     # Correct format?
-    v6  = is.element_validator(x[ , .(author)],         v = data.table(variable = "author",  
+    v6  = is.element_validator(x[ , .(author)],         v = data.table(variable = "author",
                                                                        set = list(c("GB", "MB", "MC", "CG", "BK", "JK", "P3", "KT", "MV", "AW"))  ))
     v7  = is.element_validator(x[ , .(behav_cat)],      v = data.table(variable = "behav_cat",     set = list(c("R", "C"))  ))
     v8  = is.element_validator(x[ , .(sex)],            v = data.table(variable = "sex",           set = list(c("M", "F"))  ))
@@ -95,10 +95,10 @@ inspector.RESIGHTINGS <- function(x){
     # Entry should be within specific interval
     v17 = interval_validator( x[, .(gps_id)],                       v = data.table(variable = "gps_id",     lq = 1, uq = 20),  "GPS ID not found?" )
     v18 = interval_validator( x[, .(gps_point)],                    v = data.table(variable = "gps_point",  lq = 1, uq = 999), "GPS waypoint is over 999?" )
-    v19 = interval_validator( x[!is.na(min_dist), .(min_dist)],     v = data.table(variable = "min_dist",   lq = 0, uq = 25 ), 
+    v19 = interval_validator( x[!is.na(min_dist), .(min_dist)],     v = data.table(variable = "min_dist",   lq = 0, uq = 25 ),
                               "Other individuals more than 25 m away? - Individuals really together?" )
     # Combo not existing in CAPTURES
-    v20 = combo_validator(x[!LR %in% c("NOBA", "NOBA1", "NOBA2", "NOBA3", "NOBA4", "COBA", "M, ,Y,COBA", NA), .( UL, LL, UR, LR)] ,  include = FALSE, 
+    v20 = combo_validator(x[!LR %in% c("NOBA", "NOBA1", "NOBA2", "NOBA3", "NOBA4", "COBA", "M, ,Y,COBA", NA), .( UL, LL, UR, LR)] ,  include = FALSE,
                           validSet  = idbq('select CONCAT_WS(",", UL, LL, UR, LR) combo FROM CAPTURES' )$combo  )
 
     o = list(v1, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20) %>% rbindlist
@@ -111,9 +111,11 @@ inspector.RESIGHTINGS <- function(x){
 
 # @method inspector NESTS
 # @S3method inspector NESTS
-#' @export 
+#' @export
 inspector.NESTS <- function(x){
-    #Mandatory to enter
+
+  x[, datetime_ := as.POSIXct(paste(date_, time_appr))]
+  #Mandatory to enter
     v1  = is.na_validator(x[, .(author, nest, datetime_, time_left, nest_state)])
     v2  = is.na_validator(x[nest_state == "F" | nest_state == "C", .(clutch_size)], "Clutch size is missing?")
     v3  = is.na_validator(x[!is.na(msr_id), .(msr_state)],   "MSR state is missing?")
@@ -121,10 +123,10 @@ inspector.NESTS <- function(x){
     v5  = is.na_validator(x[!is.na(msr_state), .(msr_id)],   "MSR ID is missing!")
     v6  = is.na_validator(x[!is.na(rfid_state), .(rfid_id)], "RFID ID is missing!")
     # Correct format?
-    v7  = is.element_validator(x[ , .(author)], v = data.table(variable = "author",  
+    v7  = is.element_validator(x[ , .(author)], v = data.table(variable = "author",
                                                                set = list(c("GB", "MB", "MC", "CG", "BK", "JK", "P3", "KT", "MV", "AW"))  ))
-    v8  = POSIXct_validator(x[ , .(datetime_)] ) 
-    v9  = datetime_validator(x[ , .(datetime_)] ) 
+    v8  = POSIXct_validator(x[ , .(datetime_)] )
+    v9  = datetime_validator(x[ , .(datetime_)] )
     v10 = hhmm_validator(x[ , .(time_left)] )
     v11 = is.element_validator(x[ , .(nest_state)],  v = data.table(variable = "nest_state",    set = list(c("F", "C", "I", "pP", "P", "pD", "D", "H"))  ))
     v13 = is.element_validator(x[ , .(m_behav)],     v = data.table(variable = "m_behav",       set = list(c("INC", "DF", "BW", "O", "INC,DF", "INC, O", "INC,BW"))  ))
@@ -136,19 +138,19 @@ inspector.NESTS <- function(x){
     v17 = interval_validator( x[, .(gps_point)],     v = data.table(variable = "gps_point",  lq = 1, uq = 999), "GPS waypoint is over 999?" )
     v18 = interval_validator( x[!is.na(clutch_size), .(clutch_size)], v = data.table(variable = "clutch_size", lq = 0, uq = 4 ),  "No eggs or more than 4?" )
     # Metal ID not found in CAPTURES
-    v19 = is.element_validator(x[!is.na(male_id), .(male_id)], 
+    v19 = is.element_validator(x[!is.na(male_id), .(male_id)],
                                v = data.table(variable = "male_id",   set = list(idbq("SELECT ID FROM CAPTURES")$ID  ) ), "Metal ID is not exiting in CAPTURES!" )
-    v20 = is.element_validator(x[!is.na(female_id), .(female_id)], 
+    v20 = is.element_validator(x[!is.na(female_id), .(female_id)],
                                v = data.table(variable = "female_id", set = list(idbq("SELECT ID FROM CAPTURES")$ID  ) ), "Metal ID is not exiting in CAPTURES!" )
     # Device not existing in DEVICES
-    v21 = is.element_validator(x[!is.na(msr_id) | nchar(msr_id) > 0 , .(msr_id)], 
+    v21 = is.element_validator(x[!is.na(msr_id) | nchar(msr_id) > 0 , .(msr_id)],
                                v = data.table(variable = "msr_id",  set = list(idbq("SELECT device_id FROM DEVICES")$device_id  ) ), "MSR ID is not existing in DEVICES!" )
-    v22 = is.element_validator(x[!is.na(rfid_id) | nchar(msr_id) > 0, .(rfid_id)], 
+    v22 = is.element_validator(x[!is.na(rfid_id) | nchar(msr_id) > 0, .(rfid_id)],
                                v = data.table(variable = "rfid_id", set = list(idbq("SELECT device_id FROM DEVICES")$device_id  ) ), "RFID ID is not existing in DEVICES!" )
     # Nest can"t be entered twice if nest_state == F and should exist in data base if nest_state != F
-    v23 = is.duplicate_validator(x[nest_state == "F", .(nest)], 
+    v23 = is.duplicate_validator(x[nest_state == "F", .(nest)],
                                  v = data.table(variable = "nest", set = list(idbq("SELECT nest FROM NESTS")$nest  ) ), "Nest is already assigned! Nest number given twice or nest_state is not F?" )
-    v24 = is.element_validator(x[nest_state != "F", .(nest)], 
+    v24 = is.element_validator(x[nest_state != "F", .(nest)],
                                v = data.table(variable = "nest", set = list(idbq("SELECT nest FROM NESTS")$nest  ) ), "Nest does not exist in NESTS as found!" )
     # Nest is in wrong format
     possible_nests = rbind(paste0("R", 101:9999), paste0("N", 101:9999), paste0("P", 101:9999), paste0("S", 101:9999))
@@ -166,7 +168,7 @@ inspector.NESTS <- function(x){
 
 # @method inspector EGGS_CHICKS
 # @S3method inspector EGGS_CHICKS
-#' @export 
+#' @export
 inspector.EGGS_CHICKS <- function(x){
 
     # Mandatory to enter
@@ -178,7 +180,7 @@ inspector.EGGS_CHICKS <- function(x){
     v4 = interval_validator( x[, .(egg_weight)],  v = data.table(variable = "egg_weight",  lq = 3, uq = 20),  "Weight unrealistic?" )
     v5 = interval_validator( x[, .(float_angle)], v = data.table(variable = "float_angle", lq = 21, uq = 89),  "Angle has to be between 21 and 89 for the formula" )
     # Nest is not entered
-    v6 = is.element_validator(x[, .(nest)], 
+    v6 = is.element_validator(x[, .(nest)],
                               v = data.table(variable = "nest", set = list(idbq("SELECT * FROM NESTS")$nest  ) ), "Nest does not exists in NESTS!" )
 
     o = list(v1, v2, v3, v4, v5, v6) %>% rbindlist
@@ -191,9 +193,9 @@ inspector.EGGS_CHICKS <- function(x){
 
 # @method inspector DEVICES
 # @S3method inspector DEVICES
-#' @export 
+#' @export
 inspector.DEVICES <- function(x){
-   
+
     v1  = is.na_validator(x[, .(device, device_id)])
     o = list(v1) %>% rbindlist
     o[, .(rowid = paste(rowid, collapse = ",")), by = .(variable, reason)]

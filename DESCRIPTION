@@ -22,7 +22,8 @@ Depends:
     mapproj,
     lubridate,
     foreach,
-    RColorBrewer
+    RColorBrewer,
+    V8
 Suggests:
     shiny,
     markdown,
