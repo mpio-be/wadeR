@@ -1,4 +1,4 @@
-# shiny::runApp('inst/UI/DataEntry/DEVICES')
+# shiny::runApp('inst/UI/DataEntry/DEVICES', port = 1111)
 
 
 # settings
@@ -12,23 +12,20 @@
   db             = yy2dbnam(year(Sys.Date()))
   
   tableName       = 'DEVICES'
-  excludeColumns = c('pk', 'PC')
+  excludeColumns = c('pk')
   n_empty_lines   =  30
   
   comments = column_comment(user, host, db, tableName,excludeColumns)
-  authors = idbq('select initials from AUTHORS')$initials
+
 
 # UI table  
-  H = emptyFrame(user, host, db, tableName, n = n_empty_lines, excludeColumns, 
-      preFilled = list(
-          date_ = format(Sys.Date(), "%Y-%m-%d") ) )
+  H = emptyFrame(user, host, db, tableName, n = n_empty_lines, excludeColumns)
 
 
  uitable =  
   rhandsontable(H) %>%
       hot_cols(columnSorting = FALSE, manualColumnResize = TRUE) %>%
-      hot_rows(fixedRowsTop = 1) %>%
-      hot_col(col = "author", type = "dropdown", source = authors )
+      hot_rows(fixedRowsTop = 1) 
     
 
 

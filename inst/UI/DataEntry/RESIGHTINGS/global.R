@@ -1,35 +1,5 @@
 
-# shiny::runApp('inst/UI/DataEntry/RESIGHTINGS')
-
-
-# settings
-  sapply(c('wadeR','DataEntry', 'data.table', 'shinyjs', 'shinyBS'),
-    require, character.only = TRUE, quietly = TRUE)
-
-  tags = shiny::tags
- 
-
-  user           = getOption('wader.user')
-  host           = getOption('wader.host')
-  db             = yy2dbnam(year(Sys.Date()))
-  table          = 'RESIGHTINGS'
-  excludeColumns = c('pk', 'PC')
-  
-  # todo: 
-  inspector <- wadeR::inspector.captures
-
-
-  comments = column_comment(user, host, db, table,excludeColumns)
-
-
-
-# table summary function
-    table_smry <- function() {
-      data.table(a = 'TODO')
-
-    }
-
-# shiny::runApp('inst/UI/DataEntry/RESIGHTINGS')
+# shiny::runApp('inst/UI/DataEntry/RESIGHTINGS', port = 1111)
 
 
 # settings
@@ -43,16 +13,14 @@
   db             = yy2dbnam(year(Sys.Date()))
   
   tableName       = 'RESIGHTINGS'
-  excludeColumns = c('pk', 'PC')
+  excludeColumns = c('pk')
   n_empty_lines   =  30
   
   comments = column_comment(user, host, db, tableName,excludeColumns)
   authors = idbq('select initials from AUTHORS')$initials
 
 # UI table  
-  H = emptyFrame(user, host, db, tableName, n = n_empty_lines, excludeColumns, 
-      preFilled = list(
-          date_ = format(Sys.Date(), "%Y-%m-%d") ) )
+  H = emptyFrame(user, host, db, tableName, n = n_empty_lines, excludeColumns)
 
 
  uitable =  

@@ -2,6 +2,7 @@
 
 
 
+
 # settings
     sapply(c('wadeR', 'leaflet', 'shinydashboard'),
       function(x) suppressPackageStartupMessages( require(x, character.only = TRUE, quietly = TRUE) ))

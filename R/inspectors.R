@@ -119,9 +119,7 @@ inspector.NESTS <- function(x){
     v1  = is.na_validator(x[, .(author, nest, datetime_, time_left, nest_state)])
     v2  = is.na_validator(x[nest_state == "F" | nest_state == "C", .(clutch_size)], "Clutch size is missing?")
     v3  = is.na_validator(x[!is.na(msr_id), .(msr_state)],   "MSR state is missing?")
-    v4  = is.na_validator(x[!is.na(rfid_id), .(rfid_state)], "RFID state is missing?")
     v5  = is.na_validator(x[!is.na(msr_state), .(msr_id)],   "MSR ID is missing!")
-    v6  = is.na_validator(x[!is.na(rfid_state), .(rfid_id)], "RFID ID is missing!")
     # Correct format?
     v7  = is.element_validator(x[ , .(author)], v = data.table(variable = "author",
                                                                set = list(c("GB", "MB", "MC", "CG", "BK", "JK", "P3", "KT", "MV", "AW"))  ))
@@ -132,21 +130,18 @@ inspector.NESTS <- function(x){
     v13 = is.element_validator(x[ , .(m_behav)],     v = data.table(variable = "m_behav",       set = list(c("INC", "DF", "BW", "O", "INC,DF", "INC, O", "INC,BW"))  ))
     v26 = is.element_validator(x[ , .(f_behav)],     v = data.table(variable = "f_behav",       set = list(c("INC", "DF", "BW", "O", ""))  ))
     v14 = is.element_validator(x[ , .(msr_state)],   v = data.table(variable = "msr_state",     set = list(c("ON", "OFF", "DD", NA, ""))  ))
-    v15 = is.element_validator(x[ , .(rfid_state)],  v = data.table(variable = "rfid_state",    set = list(c("ON", "OFF", "DD", NA, ""))  ))
     # Entry should be within specific interval
     v16 = interval_validator( x[, .(gps_id)],        v = data.table(variable = "gps_id",     lq = 1, uq = 20),  "GPS ID not found?" )
     v17 = interval_validator( x[, .(gps_point)],     v = data.table(variable = "gps_point",  lq = 1, uq = 999), "GPS waypoint is over 999?" )
     v18 = interval_validator( x[!is.na(clutch_size), .(clutch_size)], v = data.table(variable = "clutch_size", lq = 0, uq = 4 ),  "No eggs or more than 4?" )
     # Metal ID not found in CAPTURES
     v19 = is.element_validator(x[!is.na(male_id), .(male_id)],
-                               v = data.table(variable = "male_id",   set = list(idbq("SELECT ID FROM CAPTURES")$ID  ) ), "Metal ID is not exiting in CAPTURES!" )
+                               v = data.table(variable = "male_id",   set = list(idbq("SELECT ID FROM CAPTURES")$ID  ) ), "Metal ID does not exist in CAPTURES!" )
     v20 = is.element_validator(x[!is.na(female_id), .(female_id)],
-                               v = data.table(variable = "female_id", set = list(idbq("SELECT ID FROM CAPTURES")$ID  ) ), "Metal ID is not exiting in CAPTURES!" )
+                               v = data.table(variable = "female_id", set = list(idbq("SELECT ID FROM CAPTURES")$ID  ) ), "Metal ID does not exist in CAPTURES!" )
     # Device not existing in DEVICES
     v21 = is.element_validator(x[!is.na(msr_id) | nchar(msr_id) > 0 , .(msr_id)],
-                               v = data.table(variable = "msr_id",  set = list(idbq("SELECT device_id FROM DEVICES")$device_id  ) ), "MSR ID is not existing in DEVICES!" )
-    v22 = is.element_validator(x[!is.na(rfid_id) | nchar(msr_id) > 0, .(rfid_id)],
-                               v = data.table(variable = "rfid_id", set = list(idbq("SELECT device_id FROM DEVICES")$device_id  ) ), "RFID ID is not existing in DEVICES!" )
+                               v = data.table(variable = "msr_id",  set = list(idbq("SELECT device_id FROM DEVICES")$device_id  ) ), "MSR ID does not exist in DEVICES!" )
     # Nest can"t be entered twice if nest_state == F and should exist in data base if nest_state != F
     v23 = is.duplicate_validator(x[nest_state == "F", .(nest)],
                                  v = data.table(variable = "nest", set = list(idbq("SELECT nest FROM NESTS")$nest  ) ), "Nest is already assigned! Nest number given twice or nest_state is not F?" )
@@ -158,7 +153,7 @@ inspector.NESTS <- function(x){
     v25  = is.element_validator(x[, .(nest)], v = data.table(variable = "nest", set = list(possible_nests)  ), "Nest ID does not exist, in wrong format or GPS ID > 9!")
 
 
-    o = list(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24, v25, v26) %>% rbindlist;
+    o = list(v1, v2, v3, v5, v7, v8, v9, v10, v11, v13, v14, v16, v17, v18, v19, v20, v21,  v23, v24, v25, v26) %>% rbindlist;
     o[, .(rowid = paste(rowid, collapse = ",")), by = .(variable, reason)]
 
 
