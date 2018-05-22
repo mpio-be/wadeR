@@ -20,29 +20,31 @@ inspector <- function (x) {
 #' @export
 inspector.CAPTURES <- function(x){
   # Mandatory to enter
-  v1  = is.na_validator(x[, .(date_, form_id, author, gps_id, gps_point, ID, start_capture, recapture, capture_meth, weight,
-                              LL, LR, UL, UR, cam_id, blood_dna, haema, behav)])
+  v1  = is.na_validator(x[, .(date_, form_id, author, gps_id, gps_point, ID, start_capture, recapture,
+                              capture_meth, weight, blood_dna)])
+  v2  = is.na_validator(x[species == "REPH", .(LL, LR, UL, UR, cam_id, haema, behav)])
   v2  = is.na_validator(x[recapture == 0, .(tarsus, culmen, total_head, wing)], "Mandatory at first capture")
   v3  = is.na_validator(x[sex == 2, .(carries_egg)], "Mandatory for females")
 
   # Correct format?
-  v4  = POSIXct_validator(x[ , .(date_)] )
-  v5  = hhmm_validator(x[ , .(caught_time, bled_time, released_time)] )
+  v4  = POSIXct_validator(x[, .(date_)] )
+  v5  = hhmm_validator(x[, .(caught_time, released_time)] )
+  v5  = hhmm_validator(x[species == "REPH", .(bled_time)] )
   v6  = is.element_validator(x[ , .(author)], v = data.table(variable = "author", set = list(c("AW", "BK", "JK", "KB", "LC", "MC", "MV", "PD", "PS", "SK", "SS"))  ))
   v25 = is.element_validator(x[ , .(sex)], v = data.table(variable = "sex", set = list(c("M", "F"))  ))
 
-  v13 = is.element_validator( x[, .(ID)], v = data.table(variable = "ID", set = list(c(70001:71000, 45001:46000)) ), "Metal band not existing for REPH" )
+  v13 = is.element_validator( x[species == "REPH", .(ID)], v = data.table(variable = "ID", set = list(c(70001:71000, 45001:46000)) ), "Metal band not existing for REPH" )
 
 
   # Entry should be within specific interval
-  v7  = interval_validator( x[, .(tarsus)],      v = data.table(variable = "tarsus",     lq = 20, uq = 24 ),   "Measurement out of typical range" )
-  v8  = interval_validator( x[, .(culmen)],      v = data.table(variable = "culmen",     lq = 20, uq = 25 ),   "Measurement out of typical range" )
-  v9  = interval_validator( x[, .(total_head)],  v = data.table(variable = "total_head", lq = 43.5, uq = 50 ),   "Measurement out of typical range" )
-  v10 = interval_validator( x[, .(wing)],        v = data.table(variable = "wing",       lq = 128, uq = 145 ), "Measurement out of typical range" )
-  v11 = interval_validator( x[, .(weight)],      v = data.table(variable = "weight",     lq = 40, uq = 72 ),   "Measurement out of typical range" )
+  v7  = interval_validator( x[species == "REPH", .(tarsus)],      v = data.table(variable = "tarsus",     lq = 20, uq = 24 ),   "Measurement out of typical range" )
+  v8  = interval_validator( x[species == "REPH", .(culmen)],      v = data.table(variable = "culmen",     lq = 20, uq = 25 ),   "Measurement out of typical range" )
+  v9  = interval_validator( x[species == "REPH", .(total_head)],  v = data.table(variable = "total_head", lq = 43.5, uq = 50 ), "Measurement out of typical range" )
+  v10 = interval_validator( x[species == "REPH", .(wing)],        v = data.table(variable = "wing",       lq = 128, uq = 145 ), "Measurement out of typical range" )
+  v11 = interval_validator( x[species == "REPH", .(weight)],      v = data.table(variable = "weight",     lq = 40, uq = 72 ),   "Measurement out of typical range" )
 
-  v14 = interval_validator( x[, .(gps_id)],      v = data.table(variable = "gps_id",    lq = 1, uq = 13),         "GPS ID is not existing?" )
-  v15 = interval_validator( x[, .(gps_point)],   v = data.table(variable = "gps_point", lq = 1, uq = 999),        "GPS waypoint is over 999?" )
+  v14 = interval_validator( x[species == "REPH", .(gps_id)],      v = data.table(variable = "gps_id",    lq = 1, uq = 13),         "GPS ID is not existing?" )
+  v15 = interval_validator( x[species == "REPH", .(gps_point)],   v = data.table(variable = "gps_point", lq = 1, uq = 999),        "GPS waypoint is over 999?" )
 
   # Entry would be duplicate
   v16 = is.duplicate_validator(x[recapture == 0 & !is.na(ID), .(ID)],
@@ -128,7 +130,7 @@ inspector.NESTS <- function(x){
   v6  = is.element_validator(x[ , .(author)], v = data.table(variable = "author",
                                                              set = list(c("AW", "BK", "JK", "KB", "LC", "MC", "MV", "PD", "PS", "SK", "SS"))  ))
   v7  = POSIXct_validator(x[ , .(datetime_)] )
-  v8  = datetime_validator(x[ , .(datetime_)] )
+  v8  = datetime_validator(x[ , .(datetime_)] ) # not working
   v9 = hhmm_validator(x[ , .(time_appr)] )
   v10 = hhmm_validator(x[ , .(time_left)] )
   v11 = is.element_validator(x[ , .(nest_state)],  v = data.table(variable = "nest_state",    set = list(c("F", "C", "I", "pP", "P", "pD", "D", "H"))  ))
@@ -179,7 +181,7 @@ inspector.EGGS_CHICKS <- function(x){
   v2  = POSIXct_validator(x[ , .(arrival_datetime)] ) # add also a validator which checks that the time is not missing!
   # Entry should be within specific interval
   v3 = interval_validator( x[, .(egg_id)],      v = data.table(variable = "egg_id",      lq = 1, uq = 4),    "More than 4 eggs?" )
-  v4 = interval_validator( x[, .(egg_weight)],  v = data.table(variable = "egg_weight",  lq = 3, uq = 20),  "Weight unrealistic?" )
+  v4 = interval_validator( x[, .(egg_weight)],  v = data.table(variable = "egg_weight",  lq = 6.5, uq = 9.5),  "Weight out of typical range?" )
   v5 = interval_validator( x[, .(float_angle)], v = data.table(variable = "float_angle", lq = 21, uq = 89),  "Angle has to be between 21 and 89 for the formula" )
   # Nest is not entered
   v6 = is.element_validator(x[, .(nest)],
