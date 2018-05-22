@@ -23,49 +23,49 @@ inspector.CAPTURES <- function(x){
   v1  = is.na_validator(x[, .(date_, form_id, author, gps_id, gps_point, ID, start_capture, recapture,
                               capture_meth, weight, blood_dna)])
   v2  = is.na_validator(x[species == "REPH", .(LL, LR, UL, UR, cam_id, haema, behav)])
-  v2  = is.na_validator(x[recapture == 0, .(tarsus, culmen, total_head, wing)], "Mandatory at first capture")
-  v3  = is.na_validator(x[sex == 2, .(carries_egg)], "Mandatory for females")
+  v3  = is.na_validator(x[recapture == 0, .(tarsus, culmen, total_head, wing)], "Mandatory at first capture")
+  v4  = is.na_validator(x[sex == 2 & species == "REPH", .(carries_egg)], "Mandatory for females")
 
   # Correct format?
-  v4  = POSIXct_validator(x[, .(date_)] )
-  v5  = hhmm_validator(x[, .(caught_time, released_time)] )
-  v5  = hhmm_validator(x[species == "REPH", .(bled_time)] )
-  v6  = is.element_validator(x[ , .(author)], v = data.table(variable = "author", set = list(c("AW", "BK", "JK", "KB", "LC", "MC", "MV", "PD", "PS", "SK", "SS"))  ))
-  v25 = is.element_validator(x[ , .(sex)], v = data.table(variable = "sex", set = list(c("M", "F"))  ))
+  v5  = POSIXct_validator(x[, .(date_)] )
+  v6  = hhmm_validator(x[, .(caught_time, released_time)] )
+  v7  = hhmm_validator(x[species == "REPH", .(bled_time)] )
+  v8  = is.element_validator(x[ , .(author)], v = data.table(variable = "author", set = list(c("AW", "BK", "JK", "KB", "LC", "MC", "MV", "PD", "PS", "SK", "SS"))  ))
+  v9 = is.element_validator(x[ , .(sex)], v = data.table(variable = "sex", set = list(c("M", "F"))  ))
 
-  v13 = is.element_validator( x[species == "REPH", .(ID)], v = data.table(variable = "ID", set = list(c(70001:71000, 45001:46000)) ), "Metal band not existing for REPH" )
+  v10 = is.element_validator( x[species == "REPH", .(ID)], v = data.table(variable = "ID", set = list(c(70001:71000, 45001:46000)) ), "Metal band not existing for REPH" )
 
 
   # Entry should be within specific interval
-  v7  = interval_validator( x[species == "REPH", .(tarsus)],      v = data.table(variable = "tarsus",     lq = 20, uq = 24 ),   "Measurement out of typical range" )
-  v8  = interval_validator( x[species == "REPH", .(culmen)],      v = data.table(variable = "culmen",     lq = 20, uq = 25 ),   "Measurement out of typical range" )
-  v9  = interval_validator( x[species == "REPH", .(total_head)],  v = data.table(variable = "total_head", lq = 43.5, uq = 50 ), "Measurement out of typical range" )
-  v10 = interval_validator( x[species == "REPH", .(wing)],        v = data.table(variable = "wing",       lq = 128, uq = 145 ), "Measurement out of typical range" )
-  v11 = interval_validator( x[species == "REPH", .(weight)],      v = data.table(variable = "weight",     lq = 40, uq = 72 ),   "Measurement out of typical range" )
+  v11  = interval_validator( x[species == "REPH", .(tarsus)],      v = data.table(variable = "tarsus",     lq = 20, uq = 24 ),   "Measurement out of typical range" )
+  v12  = interval_validator( x[species == "REPH", .(culmen)],      v = data.table(variable = "culmen",     lq = 20, uq = 25 ),   "Measurement out of typical range" )
+  v13  = interval_validator( x[species == "REPH", .(total_head)],  v = data.table(variable = "total_head", lq = 43.5, uq = 50 ), "Measurement out of typical range" )
+  v14 = interval_validator( x[species == "REPH", .(wing)],        v = data.table(variable = "wing",       lq = 128, uq = 145 ), "Measurement out of typical range" )
+  v15 = interval_validator( x[species == "REPH", .(weight)],      v = data.table(variable = "weight",     lq = 40, uq = 72 ),   "Measurement out of typical range" )
 
-  v14 = interval_validator( x[species == "REPH", .(gps_id)],      v = data.table(variable = "gps_id",    lq = 1, uq = 13),         "GPS ID is not existing?" )
-  v15 = interval_validator( x[species == "REPH", .(gps_point)],   v = data.table(variable = "gps_point", lq = 1, uq = 999),        "GPS waypoint is over 999?" )
+  v16 = interval_validator( x[species == "REPH", .(gps_id)],      v = data.table(variable = "gps_id",    lq = 1, uq = 13),         "GPS ID is not existing?" )
+  v17 = interval_validator( x[species == "REPH", .(gps_point)],   v = data.table(variable = "gps_point", lq = 1, uq = 999),        "GPS waypoint is over 999?" )
 
   # Entry would be duplicate
-  v16 = is.duplicate_validator(x[recapture == 0 & !is.na(ID), .(ID)],
-                               v = data.table(variable = "ID", set = list(idbq("SELECT * FROM CAPTURES")$ID  ) ), "Metal band already in use! Recapture?" )
+  v18 = is.duplicate_validator(x[recapture == 0 & !is.na(ID), .(ID)],
+                               v = data.table(variable = "ID", set = list( substr(idbq("SELECT ID FROM CAPTURES")$ID, 5, 10)  ) ), "Metal band already in use! Recapture?" )
 
-  v17 = combo_validator(x[!LR %in% c("", NA), .( UL, LL, UR, LR)] , include = TRUE,
+  v19 = combo_validator(x[!LR %in% c("", NA), .( UL, LL, UR, LR)] , include = TRUE,
                         validSet  = idbq('select CONCAT_WS(",", UL, LL, UR, LR) combo FROM CAPTURES' )$combo, "Ring Combo already in use! Recapture?")
 
   # RC are not existing or in wrong format
-  v19  = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE,
+  v20  = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE,
                          validSet  = colorCombos() )
 
   # Entry is impossible
-  # v21 = time_order_validator(x[, .(caught_time)], v = x[!is.na(start_capture), .(start_capture)], "Caught before capture started?")
-  # v22 = time_order_validator(x[, .(bled_time)], v = x[!is.na(caught_time), .(caught_time)],       "Bled before captured?")
-  # v23 = time_order_validator(x[, .(released_time)], v = x[!is.na(bled_time), .(bled_time)],      "Bled before captured?")
+  v21 = time_order_validator(x[!is.na(start_capture), .(caught_time)], v = x[!is.na(start_capture), .(start_capture)], "Caught before capture started?")
+  v22 = time_order_validator(x[!is.na(caught_time), .(bled_time)], v = x[!is.na(caught_time), .(caught_time)],       "Bled before captured?")
+  v23 = time_order_validator(x[!is.na(bled_time), .(released_time)], v = x[!is.na(bled_time), .(bled_time)],      "Bled before captured?")
   v24 = is.element_validator(x[!is.na(nest), .(nest)],
                              v = data.table(variable = "nest", set = list(idbq("SELECT * FROM NESTS")$nest  ) ), "Nest not found in NESTS!" )
 
 
-  o = list(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v13, v14, v15, v16, v17, v19, v24, v25) %>% rbindlist
+  o = list(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v19,v20, v21, v22, v23, v24) %>% rbindlist
   o[, .(rowid = paste(rowid, collapse = ",")), by = .(variable, reason)]
 
 }
