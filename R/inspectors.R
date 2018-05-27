@@ -133,7 +133,7 @@ inspector.NESTS <- function(x){
   v8  = datetime_validator(x[ , .(datetime_)] ) # not working
   v9  = hhmm_validator(x[ , .(time_appr)] )
   v10 = hhmm_validator(x[ , .(time_left)] )
-  v11 = time_order_validator(x[!is.na(start_capture), .(caught_time)], v = x[!is.na(start_capture), .(start_capture)], "Caught before capture started?")
+  v11 = time_order_validator(x[!is.na(time_appr), .(time_left)], v = x[!is.na(time_appr), .(time_appr)], "Left time is before approached time")
   v12 = is.element_validator(x[ , .(nest_state)],  v = data.table(variable = "nest_state",    set = list(c("F", "C", "I", "pP", "P", "pD", "D", "H"))  ))
   v13 = is.element_validator(x[ , .(m_behav)],     v = data.table(variable = "m_behav",       set = list(c("INC", "DF", "BW", "O", "INC,DF", "INC,O", "INC,BW"))  ))
   v14 = is.element_validator(x[ , .(f_behav)],     v = data.table(variable = "f_behav",       set = list(c("INC", "DF", "BW", "O", ""))  ))
