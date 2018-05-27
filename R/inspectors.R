@@ -131,38 +131,39 @@ inspector.NESTS <- function(x){
                                                              set = list(c("AW", "BK", "JK", "KB", "LC", "MC", "MV", "PD", "PS", "SK", "SS"))  ))
   v7  = POSIXct_validator(x[ , .(datetime_)] )
   v8  = datetime_validator(x[ , .(datetime_)] ) # not working
-  v9 = hhmm_validator(x[ , .(time_appr)] )
+  v9  = hhmm_validator(x[ , .(time_appr)] )
   v10 = hhmm_validator(x[ , .(time_left)] )
-  v11 = is.element_validator(x[ , .(nest_state)],  v = data.table(variable = "nest_state",    set = list(c("F", "C", "I", "pP", "P", "pD", "D", "H"))  ))
-  v12 = is.element_validator(x[ , .(m_behav)],     v = data.table(variable = "m_behav",       set = list(c("INC", "DF", "BW", "O", "INC,DF", "INC,O", "INC,BW"))  ))
-  v13 = is.element_validator(x[ , .(f_behav)],     v = data.table(variable = "f_behav",       set = list(c("INC", "DF", "BW", "O", ""))  ))
-  v14 = is.element_validator(x[ , .(msr_state)],   v = data.table(variable = "msr_state",     set = list(c("ON", "OFF", "DD", NA, ""))  ))
+  v11 = time_order_validator(x[!is.na(start_capture), .(caught_time)], v = x[!is.na(start_capture), .(start_capture)], "Caught before capture started?")
+  v12 = is.element_validator(x[ , .(nest_state)],  v = data.table(variable = "nest_state",    set = list(c("F", "C", "I", "pP", "P", "pD", "D", "H"))  ))
+  v13 = is.element_validator(x[ , .(m_behav)],     v = data.table(variable = "m_behav",       set = list(c("INC", "DF", "BW", "O", "INC,DF", "INC,O", "INC,BW"))  ))
+  v14 = is.element_validator(x[ , .(f_behav)],     v = data.table(variable = "f_behav",       set = list(c("INC", "DF", "BW", "O", ""))  ))
+  v15 = is.element_validator(x[ , .(msr_state)],   v = data.table(variable = "msr_state",     set = list(c("ON", "OFF", "DD", NA, ""))  ))
 
   # Entry should be within specific interval
-  v15 = interval_validator( x[, .(gps_id)],        v = data.table(variable = "gps_id",     lq = 1, uq = 13),  "GPS ID not found?" )
-  v16 = interval_validator( x[, .(gps_point)],     v = data.table(variable = "gps_point",  lq = 1, uq = 999), "GPS waypoint is over 999?" )
-  v17 = interval_validator( x[!is.na(clutch_size), .(clutch_size)], v = data.table(variable = "clutch_size", lq = 0, uq = 4 ),  "No eggs or more than 4?" )
+  v16 = interval_validator( x[, .(gps_id)],        v = data.table(variable = "gps_id",     lq = 1, uq = 13),  "GPS ID not found?" )
+  v17 = interval_validator( x[, .(gps_point)],     v = data.table(variable = "gps_point",  lq = 1, uq = 999), "GPS waypoint is over 999?" )
+  v18 = interval_validator( x[!is.na(clutch_size), .(clutch_size)], v = data.table(variable = "clutch_size", lq = 0, uq = 4 ),  "No eggs or more than 4?" )
   # Metal ID not found in CAPTURES
-  v18 = is.element_validator(x[!is.na(male_id), .(male_id)],
+  v19 = is.element_validator(x[!is.na(male_id), .(male_id)],
                              v = data.table(variable = "male_id",   set = list(  substr(idbq("SELECT ID FROM CAPTURES")$ID, 5, 10)  ) ), "Metal ID is not exiting in CAPTURES!" )
-  v19 = is.element_validator(x[!is.na(female_id), .(female_id)],
+  v20 = is.element_validator(x[!is.na(female_id), .(female_id)],
                              v = data.table(variable = "female_id", set = list(  substr(idbq("SELECT ID FROM CAPTURES")$ID, 5, 10)  ) ), "Metal ID is not exiting in CAPTURES!" )
   # Device not existing in DEVICES
-  v20 = is.element_validator(x[!is.na(msr_id) | nchar(msr_id) > 0 , .(msr_id)],
+  v21 = is.element_validator(x[!is.na(msr_id) | nchar(msr_id) > 0 , .(msr_id)],
                              v = data.table(variable = "msr_id",  set = list(idbq("SELECT device_id FROM DEVICES")$device_id  ) ), "MSR ID is not existing in DEVICES!" )
 
   # Nest can"t be entered twice if nest_state == F and should exist in data base if nest_state != F
-  v21 = is.duplicate_validator(x[nest_state == "F", .(nest)],
+  v22 = is.duplicate_validator(x[nest_state == "F", .(nest)],
                                v = data.table(variable = "nest", set = list(idbq("SELECT nest FROM NESTS")$nest  ) ), "Nest is already assigned! Nest number given twice or nest_state is not F?" )
-  v22 = is.element_validator(x[nest_state != "F", .(nest)],
+  v23 = is.element_validator(x[nest_state != "F", .(nest)],
                              v = data.table(variable = "nest", set = list(idbq("SELECT nest FROM NESTS")$nest  ) ), "Nest does not exist in NESTS as found!" )
   # Nest is in wrong format
   possible_nests = rbind(paste0("R", 101:9999), paste0("N", 101:9999), paste0("P", 101:9999), paste0("S", 101:9999))
 
-  v23  = is.element_validator(x[, .(nest)], v = data.table(variable = "nest", set = list(possible_nests)  ), "Nest ID does not exist, in wrong format or GPS ID > 13!")
+  v24  = is.element_validator(x[, .(nest)], v = data.table(variable = "nest", set = list(possible_nests)  ), "Nest ID does not exist, in wrong format or GPS ID > 13!")
 
 
-  o = list(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23) %>% rbindlist;
+  o = list(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20, v21, v22, v23, v24) %>% rbindlist;
   o[, .(rowid = paste(rowid, collapse = ",")), by = .(variable, reason)]
 
 
