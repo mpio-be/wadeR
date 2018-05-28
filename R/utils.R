@@ -134,8 +134,22 @@ combo <- function(LL, LR) {
   }
 
 
+#' colorCombos
+#' @name      colorCombos
+#' @title     create all color combinations
+#' @param v   character vector containing the colors
+#' @export
+#' @examples
+#' colorCombos()
+colorCombos <- function(v = c('R', 'Y', 'W', 'DB', 'G', 'O') ) {
+  setA       = gtools::permutations(length(v), 3, v, repeats=TRUE)
+  L_combos17 = paste0('M', '-', setA[,1], ',', setA[,2], '|', 'Y', '-', setA[,3])
+  R_combos17 = paste0('M', '-', setA[,3], '|',  'Y', '-', setA[,1], ',', setA[,2])
+  L_combos18 = paste0('M', '-', setA[,1], ',', setA[,2], '|', 'W', '-', setA[,3])
+  R_combos18 = paste0('M', '-', setA[,3], '|',  'W', '-', setA[,1], ',', setA[,2])
+  c(L_combos17, R_combos17, L_combos18, R_combos18)
+}
 
- #' removeDuplicates
 
 #' removeDuplicates (latest version on sdb)
 #' @export
