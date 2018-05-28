@@ -2,13 +2,11 @@
 % Please edit documentation in R/utils.R
 \name{removeDuplicates}
 \alias{removeDuplicates}
-\title{removeDuplicates
-removeDuplicates (latest version on sdb)}
+\title{removeDuplicates (latest version on sdb)}
 \usage{
 removeDuplicates(table, key = "pk")
 }
 \description{
-removeDuplicates
 removeDuplicates (latest version on sdb)
 }
 \examples{
