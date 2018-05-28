@@ -58,9 +58,9 @@ inspector.CAPTURES <- function(x){
                          validSet  = colorCombos() )
 
   # Entry is impossible
-  v21 = time_order_validator(x[!is.na(start_capture), .(caught_time)], v = x[!is.na(start_capture), .(start_capture)], "Caught before capture started?")
-  v22 = time_order_validator(x[!is.na(caught_time), .(bled_time)], v = x[!is.na(caught_time), .(caught_time)],       "Bled before captured?")
-  v23 = time_order_validator(x[!is.na(bled_time), .(released_time)], v = x[!is.na(bled_time), .(bled_time)],      "Bled before captured?")
+  v21 = time_order_validator(x[!is.na(start_capture) & !is.na(caught_time), .(caught_time)], v = x[!is.na(start_capture), .(start_capture)], "Caught before capture started?")
+  v22 = time_order_validator(x[!is.na(caught_time) & !is.na(bled_time), .(bled_time)], v = x[!is.na(caught_time), .(caught_time)],       "Bled before captured?")
+  v23 = time_order_validator(x[!is.na(bled_time) & !is.na(released_time), .(released_time)], v = x[!is.na(bled_time), .(bled_time)],      "Bled before captured?")
   v24 = is.element_validator(x[!is.na(nest), .(nest)],
                              v = data.table(variable = "nest", set = list(idbq("SELECT * FROM NESTS")$nest  ) ), "Nest not found in NESTS!" )
 
