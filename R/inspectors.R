@@ -54,18 +54,17 @@ inspector.CAPTURES <- function(x){
                         validSet  = idbq('select CONCAT_WS(",", UL, LL, UR, LR) combo FROM CAPTURES' )$combo, "Ring Combo already in use! Recapture?")
 
   # RC are not existing or in wrong format
-  v20  = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE,
-                         validSet  = colorCombos() )
+  v20  = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE, validSet = colorCombos() )
 
   # Entry is impossible
-  v21 = time_order_validator(x[!is.na(start_capture) & !is.na(caught_time), .(caught_time)], v = x[!is.na(start_capture), .(start_capture)], "Caught before capture started?")
-  v22 = time_order_validator(x[!is.na(caught_time) & !is.na(bled_time), .(bled_time)], v = x[!is.na(caught_time), .(caught_time)],       "Bled before captured?")
-  v23 = time_order_validator(x[!is.na(bled_time) & !is.na(released_time), .(released_time)], v = x[!is.na(bled_time), .(bled_time)],      "Bled before captured?")
+  v21 = time_order_validator(x[, .(start_capture, caught_time)], time1 = 'start_capture', time2 = 'caught_time', time_max = 60)
+  v22 = time_order_validator(x[, .(caught_time, bled_time)], time1 = 'caught_time', time2 = 'bled_time', time_max = 60)
+  v23 = time_order_validator(x[, .(bled_time, released_time)], time1 = 'bled_time', time2 = 'released_time', time_max = 60)
   v24 = is.element_validator(x[!is.na(nest), .(nest)],
                              v = data.table(variable = "nest", set = list(idbq("SELECT * FROM NESTS")$nest  ) ), "Nest not found in NESTS!" )
 
 
-  o = list(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v19,v20, v21, v22, v23, v24) %>% rbindlist
+  o = list(v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v19, v20, v21, v22, v23, v24) %>% rbindlist
   o[, .(rowid = paste(rowid, collapse = ",")), by = .(variable, reason)]
 
 }
@@ -76,11 +75,7 @@ inspector.CAPTURES <- function(x){
 #' @export
 inspector.RESIGHTINGS <- function(x){
   # Mandatory to enter
-  v1  = is.na_validator(x[, .(author, gps_id, gps_point, behav_cat, sex, LR, UL, UR, habitat)])
-  # v2 =
-  # v3 =
-  # v4 =
-  # v5 =
+  v1  = is.na_validator(x[, .(author, gps_id, gps_point, behav_cat, sex, LR, habitat)])
 
   # Correct format?
   v6  = is.element_validator(x[ , .(author)],         v = data.table(variable = "author",
@@ -92,8 +87,8 @@ inspector.RESIGHTINGS <- function(x){
   v11 = is.element_validator(x[ , .(displ)],          v = data.table(variable = "displ",         set = list(c("K", "K0", "K1", "F", "F0", "F1", "P", "P0", "P1", NA, ""))  ))
   v12 = is.element_validator(x[ , .(cop)],            v = data.table(variable = "cop",           set = list(c("S", "S0", "S1", "A", "A0", "A1", NA, ""))  ))
   v13 = is.element_validator(x[ , .(flight)],         v = data.table(variable = "flight",        set = list(c("F", "F0", "F1","C", "C0", "C1", "CF", "CF0", "CF1", NA, ""))  ))
-  v14 = is.element_validator(x[ , .(voc)],            v = data.table(variable = "voc",           set = list(c("Y", "N",NA, ""))  ))
-  v15 = is.element_validator(x[ , .(maint)],          v = data.table(variable = "maint",         set = list(c("F", "R", "P", "A", "BW", NA, "", "F,P", "P,F", "F,R", "F,A"))  ))
+  v14 = is.element_validator(x[ , .(voc)],            v = data.table(variable = "voc",           set = list(c("Y", "N", NA, ""))  ))
+  v15 = is.element_validator(x[ , .(maint)],          v = data.table(variable = "maint",         set = list(c("F", "R", "P", "A", "BW", NA, "", "F,P", "P,F", "F,R", "F,A", "P,A"))  ))
   v16 = is.element_validator(x[ , .(spin)],           v = data.table(variable = "spin",          set = list(c("C", "AC", "B", NA, ""))  ))
 
   # Entry should be within specific interval
@@ -133,7 +128,7 @@ inspector.NESTS <- function(x){
   v8  = datetime_validator(x[ , .(datetime_)] ) # not working
   v9  = hhmm_validator(x[ , .(time_appr)] )
   v10 = hhmm_validator(x[ , .(time_left)] )
-  v11 = time_order_validator(x[!is.na(time_appr), .(time_left)], v = x[!is.na(time_appr), .(time_appr)], "Left time is before approached time")
+  v11 = time_order_validator(x[, .(time_appr, time_left)], time1 = 'time_appr', time2 = 'time_left', time_max = 60)
   v12 = is.element_validator(x[ , .(nest_state)],  v = data.table(variable = "nest_state",    set = list(c("F", "C", "I", "pP", "P", "pD", "D", "H"))  ))
   v13 = is.element_validator(x[ , .(m_behav)],     v = data.table(variable = "m_behav",       set = list(c("INC", "DF", "BW", "O", "INC,DF", "INC,O", "INC,BW"))  ))
   v14 = is.element_validator(x[ , .(f_behav)],     v = data.table(variable = "f_behav",       set = list(c("INC", "DF", "BW", "O", ""))  ))
