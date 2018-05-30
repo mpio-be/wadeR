@@ -48,10 +48,12 @@ inspector.CAPTURES <- function(x){
 
   # Entry would be duplicate
   v18 = is.duplicate_validator(x[recapture == 0 & !is.na(ID), .(ID)],
-                               v = data.table(variable = "ID", set = list( substr(idbq("SELECT ID FROM CAPTURES")$ID, 5, 10)  ) ), "Metal band already in use! Recapture?" )
+                               v = data.table(variable = "ID", set = list( c(str_sub(idbq("SELECT ID FROM CAPTURES")$ID, -5), getOption('wader.IDs'))  ) ), "Metal band already in use! Recapture?" )
 
   v19 = combo_validator(x[!LR %in% c("", NA), .( UL, LL, UR, LR)] , include = TRUE,
-                        validSet  = idbq('select CONCAT_WS(",", UL, LL, UR, LR) combo FROM CAPTURES' )$combo, "Ring Combo already in use! Recapture?")
+                        validSet  = c(idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM CAPTURES' )$combo,
+                                      idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM FIELD_2017_REPHatBARROW.CAPTURES' )$combo),
+                                      "Color Combo already in use (in CAPTURES)! Recapture?")
 
   # RC are not existing or in wrong format
   v20  = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE, validSet = colorCombos() )
@@ -75,7 +77,11 @@ inspector.CAPTURES <- function(x){
 #' @export
 inspector.RESIGHTINGS <- function(x){
   # Mandatory to enter
-  v1  = is.na_validator(x[, .(author, gps_id, gps_point, behav_cat, sex, LR, habitat)])
+  v1  = is.na_validator(x[, .(author, gps_id, gps_point)])
+  v2  = is.na_validator(x[, .(LR)], "Ring combo, NOBA or COBA mandatory")
+  v3  = is.na_validator(x[, .(habitat)], "No habitat? Please remember to note it")
+  v4  = is.na_validator(x[, .(behav_cat)], "Resighting or capture?")
+  v5  = is.na_validator(x[, .(sex)], "Sex not identified?")
 
   # Correct format?
   v6  = is.element_validator(x[ , .(author)],         v = data.table(variable = "author",
@@ -97,8 +103,11 @@ inspector.RESIGHTINGS <- function(x){
   v19 = interval_validator( x[!is.na(min_dist), .(min_dist)],     v = data.table(variable = "min_dist",   lq = 0, uq = 25 ),
                             "Other individuals more than 25 m away? - Individuals really together?" )
   # Combo not existing in CAPTURES
-  v20 = combo_validator(x[!LR %in% c("NOBA", "NOBA1", "NOBA2", "NOBA3", "NOBA4", "COBA", "M, ,Y,COBA", NA), .( UL, LL, UR, LR)] ,  include = FALSE,
-                        validSet  = idbq('select CONCAT_WS(",", UL, LL, UR, LR) combo FROM CAPTURES' )$combo  )
+  v20 = combo_validator(x[!LR %in% c("NOBA", "NOBA1", "NOBA2", "NOBA3", "NOBA4", "COBA", "M, ,Y,COBA", "M, ,W,COBA", NA), .( UL, LL, UR, LR)] ,  include = TRUE,
+                        validSet  = c(idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM CAPTURES' )$combo,
+                                      idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM FIELD_2017_REPHatBARROW.CAPTURES' )$combo),
+                                      "Color combo does not exist in CAPTURES" )
+
 
   o = list(v1, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16, v17, v18, v19, v20) %>% rbindlist
   o[, .(rowid = paste(rowid, collapse = ",")), by = .(variable, reason)]
@@ -140,9 +149,10 @@ inspector.NESTS <- function(x){
   v18 = interval_validator( x[!is.na(clutch_size), .(clutch_size)], v = data.table(variable = "clutch_size", lq = 0, uq = 4 ),  "No eggs or more than 4?" )
   # Metal ID not found in CAPTURES
   v19 = is.element_validator(x[!is.na(male_id), .(male_id)],
-                             v = data.table(variable = "male_id",   set = list(  substr(idbq("SELECT ID FROM CAPTURES")$ID, 5, 10)  ) ), "Metal ID is not exiting in CAPTURES!" )
+                             v = data.table(variable = "male_id",   set = list(  c(str_sub(idbq("SELECT ID FROM CAPTURES")$ID, -5),
+                                                                                   idbq("SELECT ID FROM FIELD_2017_REPHatBARROW.CAPTURES")$ID)  ) ), "Metal ID is not exiting in CAPTURES!" )
   v20 = is.element_validator(x[!is.na(female_id), .(female_id)],
-                             v = data.table(variable = "female_id", set = list(  substr(idbq("SELECT ID FROM CAPTURES")$ID, 5, 10)  ) ), "Metal ID is not exiting in CAPTURES!" )
+                             v = data.table(variable = "female_id", set = list(  str_sub(idbq("SELECT ID FROM CAPTURES")$ID, -5)  ) ), "Metal ID is not exiting in CAPTURES!" )
   # Device not existing in DEVICES
   v21 = is.element_validator(x[!is.na(msr_id) | nchar(msr_id) > 0 , .(msr_id)],
                              v = data.table(variable = "msr_id",  set = list(idbq("SELECT device_id FROM DEVICES")$device_id  ) ), "MSR ID is not existing in DEVICES!" )
