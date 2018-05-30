@@ -56,7 +56,7 @@ inspector.CAPTURES <- function(x){
                                       "Color Combo already in use (in CAPTURES)! Recapture?")
 
   # RC are not existing or in wrong format
-  v20  = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE, validSet = colorCombos() )
+  v20  = combo_validator(x[species == "REPH", .( UL, LL, UR, LR)] , include = FALSE, validSet = colorCombos() )
 
   # Entry is impossible
   v21 = time_order_validator(x[, .(start_capture, caught_time)], time1 = 'start_capture', time2 = 'caught_time', time_max = 60)
