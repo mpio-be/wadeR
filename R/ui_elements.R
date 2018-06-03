@@ -27,10 +27,10 @@ UI <- function() {
 
     js_insertMySQLTimeStamp()
 
-  
+
    )
 
-  } 
+  }
 
 
 #' sysinfo
@@ -38,6 +38,8 @@ UI <- function() {
 sysinfo <- function(ip) {
 
     o1 = paste(badge('Current site location'), ip)
+
+    o4 = paste(badge('Shared folder [copy/paste in windows explorer]'), paste0('\\\\', ip ) )
 
     lastbk = try(lastdbBackup(), silent = TRUE)
 
@@ -53,6 +55,7 @@ sysinfo <- function(ip) {
     paste(
     '<ul class="list-group">',
         paste(o1%>%li,
+              o4%>% li,
               o2%>%li,
               o3%>%li
               ),
@@ -118,6 +121,6 @@ paste('<li class="list-group-item">',x,'</li>')
 #' @export
 
 textInputMini <-function(..., divWidth = 50) {
-  div(style= 
+  div(style=
     paste("display: inline-block;vertical-align:top; width:", divWidth, ";")  ,textInput(...) )
 }

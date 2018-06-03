@@ -50,13 +50,13 @@ inspector.CAPTURES <- function(x){
   v18 = is.duplicate_validator(x[recapture == 0 & !is.na(ID), .(ID)],
                                v = data.table(variable = "ID", set = list( c(str_sub(idbq("SELECT ID FROM CAPTURES")$ID, -5), getOption('wader.IDs'))  ) ), "Metal band already in use! Recapture?" )
 
-  v19 = combo_validator(x[!LR %in% c("", NA), .( UL, LL, UR, LR)] , include = TRUE,
+  v19 = combo_validator(x[species == "REPH" & !LR %in% c("", NA), .( UL, LL, UR, LR)] , include = FALSE,
                         validSet  = c(idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM CAPTURES' )$combo,
                                       idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM FIELD_2017_REPHatBARROW.CAPTURES' )$combo),
                                       "Color Combo already in use (in CAPTURES)! Recapture?")
 
   # RC are not existing or in wrong format
-  v20  = combo_validator(x[species == "REPH", .( UL, LL, UR, LR)] , include = FALSE, validSet = colorCombos() )
+  v20  = combo_validator(x[species == "REPH", .( UL, LL, UR, LR)] , include = TRUE, validSet = colorCombos() )
 
   # Entry is impossible
   v21 = time_order_validator(x[, .(start_capture, caught_time)], time1 = 'start_capture', time2 = 'caught_time', time_max = 60)
@@ -103,7 +103,7 @@ inspector.RESIGHTINGS <- function(x){
   v19 = interval_validator( x[!is.na(min_dist), .(min_dist)],     v = data.table(variable = "min_dist",   lq = 0, uq = 25 ),
                             "Other individuals more than 25 m away? - Individuals really together?" )
   # Combo not existing in CAPTURES
-  v20 = combo_validator(x[!LR %in% c("NOBA", "NOBA1", "NOBA2", "NOBA3", "NOBA4", "COBA", "M, ,Y,COBA", "M, ,W,COBA", NA), .( UL, LL, UR, LR)] ,  include = TRUE,
+  v20 = combo_validator(x[!LR %in% c("NOBA", "NOBA1", "NOBA2", "NOBA3", "NOBA4", "COBA", "M, ,Y,COBA", "M, ,W,COBA", NA), .( UL, LL, UR, LR)] ,  include = FALSE,
                         validSet  = c(idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM CAPTURES' )$combo,
                                       idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM FIELD_2017_REPHatBARROW.CAPTURES' )$combo),
                                       "Color combo does not exist in CAPTURES" )
