@@ -20,7 +20,7 @@ inspector <- function (x) {
 #' @export
 inspector.CAPTURES <- function(x){
   # Mandatory to enter
-  v1  = is.na_validator(x[, .(date_, form_id, author, gps_id, gps_point, ID, start_capture, recapture,
+  v1  = is.na_validator(x[, .(date_, form_id, author, gps_id, gps_point, ID, recapture,
                               capture_meth, weight, blood_dna)])
   v2  = is.na_validator(x[species == "REPH", .(LL, LR, UL, UR, cam_id, haema, behav)])
   v3  = is.na_validator(x[recapture == 0, .(tarsus, culmen, total_head, wing)], "Mandatory at first capture")
