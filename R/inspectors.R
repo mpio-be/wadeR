@@ -50,7 +50,7 @@ inspector.CAPTURES <- function(x){
   v18 = is.duplicate_validator(x[recapture == 0 & !is.na(ID), .(ID)],
                                v = data.table(variable = "ID", set = list( c(str_sub(idbq("SELECT ID FROM CAPTURES")$ID, -5), getOption('wader.IDs'))  ) ), "Metal band already in use! Recapture?" )
 
-  v19 = combo_validator(x[, .( UL, LL, UR, LR)] , include = FALSE,
+  v19 = combo_validator(x[, .( UL, LL, UR, LR)] , include = TRUE,
                         validSet  = c(idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM CAPTURES' )$combo,
                                       idbq('select CONCAT(UL, "-", LL, "|",UR, "-", LR) combo FROM FIELD_2017_REPHatBARROW.CAPTURES' )$combo),
                                       "Color Combo already in use (in CAPTURES)! Recapture?")
