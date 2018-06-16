@@ -7,7 +7,7 @@
 #' \dontrun{
 #'  require(wader)
 #'
-#'  nanotag2db ()
+#'  nanotag2db()
 #' }
 #'
 nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/" ) {
@@ -18,9 +18,6 @@ nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/" ) {
 
   newff = merge(allff, doneff, byx = 'f', all.x = TRUE)[is.na(done)]
 
-  if( nrow(newff) == 0 ) {
-    stop ('-------- NO NEW FILES FOUND -------- ')
-   }
 
   # fetch new data
   O = foreach(i = 1: nrow(newff)  , .combine = rbind, .errorhandling = 'remove')  %do% {
@@ -34,13 +31,19 @@ nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/" ) {
     }
 
   # upload to b
-  O[, pk := NA]
-  dbnam = idbq(q = "select * from NANO_TAGS where false") %>% names
-  setnames(O, dbnam)
-  con = dbcon(user = getOption("wader.user"), host =  getOption("wader.host"), db = yy2dbnam(data.table::year(Sys.Date())))
-  out= dbWriteTable(con,'NANO_TAGS', O, append = TRUE, row.names = FALSE)
-  dbDisconnect(con)
-  out
+  if( inherits(O, 'data.table')) {
+    O[, pk := NA]
+
+    O[, Device.ID := as.integer(Device.ID) - 967000]
+
+    dbnam = idbq(q = "select * from NANO_TAGS where false") %>% names
+    setnames(O, dbnam)
+    con = dbcon(user = getOption("wader.user"), host =  getOption("wader.host"), db = yy2dbnam(data.table::year(Sys.Date())))
+    out= dbWriteTable(con,'NANO_TAGS', O, append = TRUE, row.names = FALSE)
+    dbDisconnect(con)
+    return(out)
+  } else FALSE
+
 
 }
 
