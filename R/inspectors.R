@@ -94,7 +94,7 @@ inspector.RESIGHTINGS <- function(x){
   v12 = is.element_validator(x[ , .(cop)],            v = data.table(variable = "cop",           set = list(c("S", "S0", "S1", "A", "A0", "A1", NA, ""))  ))
   v13 = is.element_validator(x[ , .(flight)],         v = data.table(variable = "flight",        set = list(c("F", "F0", "F1","C", "C0", "C1", "CF", "CF0", "CF1", NA, ""))  ))
   v14 = is.element_validator(x[ , .(voc)],            v = data.table(variable = "voc",           set = list(c("Y", "N", NA, ""))  ))
-  v15 = is.element_validator(x[ , .(maint)],          v = data.table(variable = "maint",         set = list(c("F", "R", "P", "A", "BW", NA, "", "F,P", "P,F", "F,R", "F,A", "P,A"))  ))
+  v15 = is.element_validator(x[ , .(maint)],          v = data.table(variable = "maint",         set = list(c("F", "R", "P", "A", "BW", NA, "", "F,P", "P,F", "F,R", "F,A", "P,A", "O"))  ))
   v16 = is.element_validator(x[ , .(spin)],           v = data.table(variable = "spin",          set = list(c("C", "AC", "B", NA, ""))  ))
 
   # Entry should be within specific interval
