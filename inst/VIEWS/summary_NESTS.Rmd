@@ -7,8 +7,8 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-require(wader)
-library(xtable)
+require(wadeR)
+require(xtable)
 options(xtable.comment = FALSE)
 ```
 

@@ -7,25 +7,25 @@
 hatch_est(x, y)
 }
 \arguments{
-\item{x}{a data.table containing 
-nest,  
-arrival_datetime (POSIXct), 
-float_angle (angle with which the egg is floating in degree (must be >20 and <90) ), 
+\item{x}{a data.table containing
+nest,
+arrival_datetime (POSIXct),
+float_angle (angle with which the egg is floating in degree (must be >20 and <90) ),
 float_height (only if egg is floating) float height in mm
 pk (row id)}
 
-\item{y}{a data.table containing 
-nest, 
-iniCLutch (initial clutch), 
-clutch (final clutch), 
+\item{y}{a data.table containing
+nest,
+iniCLutch (initial clutch),
+clutch (final clutch),
 datetime_found}
 }
 \value{
 an estimated hatching date (as POSIXct)
 }
 \description{
-This function calculates the estimated hatching date based on Liebezeit et al. (2007) 
-              "Assessing the development of shorebird eggs using the flotation method: 
+This function calculates the estimated hatching date based on Liebezeit et al. (2007)
+              "Assessing the development of shorebird eggs using the flotation method:
               Species-specific and generalized regression models." Condor 109(1): 32-47.
 }
 \examples{
@@ -36,8 +36,8 @@ x = data.table(
   float_angle = c(21, 80, 85, 20,NA,NA),
   float_height = c(0, NA, 2, NA,NA,NA), pk = 1:6 )
 
-y = data.table(nest = c('R103', 'R104'), datetime_ = as.POSIXct(c('2017-06-01 10:00', '2017-06-01 13:00')), 
+y = data.table(nest = c('R103', 'R104'), datetime_ = as.POSIXct(c('2017-06-01 10:00', '2017-06-01 13:00')),
     iniClutch = c(1,2), clutch = c(4,4) )
 
-hatch_est(x,y) 
+hatch_est(x,y)
 }

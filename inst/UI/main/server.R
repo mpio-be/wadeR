@@ -7,12 +7,12 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   output$overview_show <- renderTable({
     invalidateLater(60000)
     dbTablesStatus()
-  
+
   })
-  
+
   output$sys_show <- renderUI({
     invalidateLater(2000)
-    
+
     sysinfo(ip = IP)
 
   })
@@ -25,34 +25,34 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
     # o = readRDS('~/.wader/lastArgos.RDS')
 
     # Msg( paste( "Last Argos update:", as.character(attr(o, 'lastrun') ) ) )
-    
+
     # lostTags = attr(o, 'lost_platforms')
     # if(lostTags > 0) Err( paste( lostTags, 'tags most likely lost.') )
-  
+
     o = data.table(info = 'waiting for tags')
 
-  
+
   }, options = list(pageLength = 40))
-  
+
   output$sys_show <- renderUI({
     invalidateLater(2000)
-    
+
     sysinfo(ip = IP)
 
   })
 
 # GPS data
  # observeEvent(input$menubar, {
- #     Wrn('Plug in your GPS (it will behave like an USB pen) 
- #         and ONLY select directory Garmin within your  e.g. E:\\GARMIN. 
+ #     Wrn('Plug in your GPS (it will behave like an USB pen)
+ #         and ONLY select directory Garmin within your  e.g. E:\\GARMIN.
  #         Selecting the entire disk works but it will select its recycle bin too.')
  #    }, once = TRUE, ignoreInit = TRUE)
 
   df <- reactive({
          if(!is.null(input$fileIn)) {
         allff  = data.table(input$fileIn)
-        gpxff = allff[grep('\\.gpx$', name)][!grepl('NESTS.gpx$', name)]$datapath 
-        gpsid = allff[grep('startup.txt$', name)]$datapath %>% read_gpsID 
+        gpxff = allff[grep('\\.gpx$', name)][!grepl('NESTS.gpx$', name)]$datapath
+        gpsid = allff[grep('startup.txt$', name)]$datapath %>% read_gpsID
 
         upload_gps(gpxff, gpsid)
 
@@ -60,7 +60,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
    })
 
   output$gps_files <- renderDataTable({
-          
+
           df()
    })
 
@@ -76,13 +76,13 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   N <- reactive({
     if(input$menubar == 'nestsmap_tab') {
     NESTS()
-      
+
     }
-    
+
     })
-  
+
   output$nestsmap_show <- renderPlot({
-    
+
     n = N()
     if(length(input$nest_state) > 0 )
       n =  n[nest_state %in% input$nest_state]
@@ -90,7 +90,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
       n =  n[species %in% input$species]
 
 
-    map_nests(n, size = input$font_size) 
+    map_nests(n, size = input$font_size)
 
 
     })
@@ -104,7 +104,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
     if(length(input$species) > 0 )
       n =  n[species %in% input$species]
 
-    m = map_nests(n, size = input$font_size) 
+    m = map_nests(n, size = input$font_size)
     cairo_pdf(file = file, width = 11, height = 8.5)
     print(m)
     dev.off()
@@ -122,7 +122,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   content = function(file) {
     f = NESTS_SUMMARY()
     file.copy(f, file)
-  })  
+  })
 
   # hatch update estimation
     Hatch_Update <- eventReactive(input$update_hatching, {
@@ -133,9 +133,9 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
 
     output$update_hatchingOut <- renderUI({
      o = Hatch_Update()
-   
+
      HTML(o)
-    
+
     })
 
   # hatching date show
@@ -143,7 +143,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
       x = idbq('select min(est_hatch_date) est_hatch_date  from EGGS_CHICKS group by nest')
       x[, est_hatch_date := as.Date(est_hatch_date)]
 
-      ggplot(x[est_hatch_date > as.Date('2017-06-28')], aes(est_hatch_date)) + geom_bar() + 
+      ggplot(x[est_hatch_date > as.Date('2017-06-28')], aes(est_hatch_date)) + geom_bar() +
       theme_gdocs()
 
 
@@ -152,20 +152,20 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
 
 # RESIGHTINGS map
   output$resightsmap_show <- renderPlot({
-    
+
     x = RESIGHTINGS()
-    map_resights(x, size = input$font_size) 
+    map_resights(x, size = input$font_size, daysAgo = input$daysAgo)
 
     })
 
   output$resightsmap_pdf <- downloadHandler(
   filename = 'resightsmap.pdf',
   content = function(file) {
-    
+
     x = RESIGHTINGS()
-    
-    m = map_resights(x, size = input$font_size) 
-    
+
+    m = map_resights(x, size = input$font_size)
+
     cairo_pdf(file = file, width = 11, height = 8.5)
     print(m)
     dev.off()
@@ -175,7 +175,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   output$resightsbyidmap_show <- renderPlot({
 
   x = RESIGHTINGS_BY_ID(input$LL, input$LR)
-  map_resights_by_id(x) 
+  map_resights_by_id(x)
 
   })
 
@@ -183,7 +183,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   output$tracksmap_show <- renderPlot({
 
   x = fetch_GPS_tracks(input$trackshour)
-  map_tracks(x) 
+  map_tracks(x)
 
   })
 
@@ -198,7 +198,7 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
     idbq('select * from CAPTURES')
 
     } )
- 
+
 
 })
 

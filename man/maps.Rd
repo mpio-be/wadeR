@@ -22,7 +22,7 @@ map_nests(n, size = 2.5)
 
 map_tracks(x = fetch_GPS_tracks(48))
 
-map_resights(x, size = 2.5)
+map_resights(x, size = 2.5, daysAgo = 5)
 
 map_resights_by_id(x, size = 2.5)
 
@@ -36,8 +36,7 @@ n = NESTS()[species == 'REPH']
 map_nests(n)
 map_tracks()
 x = RESIGHTINGS()
-map_resights(x)
-map_resights(x, zoom = FALSE)
+map_resights(x, daysAgo = 1)
 x = RESIGHTINGS_BY_ID('DB,Y', 'Y')
 map_resights_by_id(x)
 

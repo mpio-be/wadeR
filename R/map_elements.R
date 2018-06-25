@@ -34,7 +34,7 @@ theme_wader  <- function() {
 #' coord_wader(x)
 coord_wader  <- function(x = map_layers) {
     coord_equal(
-      xlim = x[name == 'boundary', .(min(lon), max(lon))] %>% t%>% as.vector, 
+      xlim = x[name == 'boundary', .(min(lon), max(lon))] %>% t%>% as.vector,
       ylim = x[name == 'boundary', .(min(lat), max(lat))] %>% t%>% as.vector
 
       )
@@ -75,7 +75,7 @@ map_nests <- function(n, size = 2.5) {
   geom_point( data = n, aes(lon, lat,  color = nest_state) , size = size) +
   geom_point( data = n[!is.na(IN)], aes(lon, lat) , size = size, pch = 14) +
   geom_text_repel( data = n, aes(lon, lat, label = nest), size = size ) +
-  coord_wader() + 
+  coord_wader() +
   labs(subtitle = paste('N nests:' , nrow(n), "; Collected clutches:", nrow( n[!is.na(IN)] )) )
 
 
@@ -87,11 +87,11 @@ map_nests <- function(n, size = 2.5) {
 #' @examples
 #' map_tracks()
 map_tracks <- function(x = fetch_GPS_tracks(48) ) {
-  
 
-  map_empty() + 
-  geom_path(data = x, aes(x=lon, y=lat, group = gps_id, color = gps_id), size = 1, alpha = .7 ) + 
-  scale_color_manual(values = c(brewer.pal(8, "Dark2"), 'black', 'red', 'navy')  ) + 
+
+  map_empty() +
+  geom_path(data = x, aes(x=lon, y=lat, group = gps_id, color = gps_id), size = 1, alpha = .7 ) +
+  scale_color_manual(values = c(brewer.pal(8, "Dark2"), 'black', 'red', 'navy')  ) +
   coord_wader()
 
 
@@ -102,17 +102,18 @@ map_tracks <- function(x = fetch_GPS_tracks(48) ) {
 #' @rdname maps
 #' @examples
 #' x = RESIGHTINGS()
-#' map_resights(x)
-#' map_resights(x, zoom = FALSE)
-map_resights <- function(x, size = 2.5) {
+#' map_resights(x, daysAgo = 1)
+map_resights <- function(x, size = 2.5, daysAgo = 5) {
 
+  if(!missing(daysAgo) && daysAgo > 0 )
+    x = x[seenDaysAgo <= daysAgo]
   x[, lab := paste(combo, seenDaysAgo,sep = '-')]
   x = x[combo != "|"]
 
     map_empty() +
     geom_point(      data = x, aes(lon, lat) , size = 1, color = 'grey') +
-    geom_label_repel( data = x, aes(lon, lat, label = lab, color = sex),   size = size ) +
-    coord_wader() + 
+    geom_label_repel( data = x, aes(lon, lat, label = lab, color = sex),  size = size) +
+    coord_wader() +
     scale_colour_manual(values = c("red", "blue") )
 
 
@@ -124,12 +125,12 @@ map_resights <- function(x, size = 2.5) {
 #' @examples
 #' x = RESIGHTINGS_BY_ID('DB,Y', 'Y')
 #' map_resights_by_id(x)
-#' 
+#'
 map_resights_by_id <- function(x, size = 2.5) {
 
     map_empty() +
-    geom_point( data = x, aes(lon, lat, color = seenDaysAgo) , size = size) + 
-    scale_colour_gradient(low = "red", high = "navy") + 
+    geom_point( data = x, aes(lon, lat, color = seenDaysAgo) , size = size) +
+    scale_colour_gradient(low = "red", high = "navy") +
     coord_wader()
 
 
@@ -145,18 +146,18 @@ map_resights_by_id <- function(x, size = 2.5) {
 #' n = n[nest2species(nest) == 'REPH']
 #' map_resights_by_day(x)
 #' map_resights_by_day(x, n)
-#' 
+#'
 map_resights_by_day <- function(x, n, size = 2.5) {
 
-    g = 
+    g =
     map_empty() +
     geom_point(      data = x, aes(lon, lat) , size = 1, color = 'grey') +
     geom_text_repel( data = x, aes(lon, lat, label = combo, color = sex),   size = size ) +
     coord_wader()
 
-    
+
     if(!missing(n)) {
-      g = g + 
+      g = g +
       geom_point( data = n, aes(lon, lat) , size = size, color = 'red') +
       geom_text_repel( data = n, aes(lon, lat, label = nest), size = size )
     }

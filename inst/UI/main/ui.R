@@ -9,20 +9,20 @@ dashboardPage(skin = 'black',
       # dateInput("date", "Date:", value = Sys.Date(), min = '2016-05-20', max =  Sys.Date() + 6 ),
 
       menuItem("Overview",         tabName  = "overview_tab",  icon = icon("clone") ),
-      
+
       menuItem("Argos",         tabName  = "argos_tab",  icon = icon("eye") ),
-      
+
       menuItem("GPS management",   tabName  = "gps_tab",   icon = icon("hdd-o") ),
 
       menuItem("Nests dashboard",  tabName  = "nestsDashSummary_tab",      icon = icon("sun-o") ),
 
-      menuItem("Data viewer",  icon = icon("binoculars") , 
+      menuItem("Data viewer",  icon = icon("binoculars") ,
         menuSubItem("Captures",    tabName  = "capturesdata_tab",   icon = icon("caret-right") ),
         menuSubItem("Resightings", tabName  = "resightsdata_tab",   icon = icon("caret-right") ),
         menuItem("Nests",          tabName  = "nestsdata_tab",      icon = icon("caret-right") )
         ),
-      
-      menuItem("Maps",  icon = icon("map") , 
+
+      menuItem("Maps",  icon = icon("map") ,
         menuSubItem("Nests",           tabName  = "nestsmap_tab",         icon = icon("caret-right") ),
         menuSubItem("Resightings",     tabName  = "resightsmap_tab",      icon = icon("caret-right") ),
         menuSubItem("Resights by id",  tabName  = "resightsbyidmap_tab",  icon = icon("caret-right") ),
@@ -43,7 +43,7 @@ dashboardPage(skin = 'black',
       # all maps
         div(class = "col-sm-12 text-center",
         conditionalPanel(
-          condition = "input.menubar == 'nestsmap_tab' | 
+          condition = "input.menubar == 'nestsmap_tab' |
                        input.menubar == 'resightsmap_tab'",
           sliderInput("font_size", "Text and symbol size:", min = 1, max = 7,step = 0.2, value = 4)
 
@@ -54,47 +54,53 @@ dashboardPage(skin = 'black',
         conditionalPanel(
           condition = "input.menubar == 'nestsmap_tab'",
           selectInput("species", "Species:",multiple = TRUE, selected = 'REPH',
-              c("AMGP", "BASA", "DUNL", "RNPH", "PESA", "REPH", "SESA") ),          
+              c("AMGP", "BASA", "DUNL", "RNPH", "PESA", "REPH", "SESA") ),
 
-          selectInput("nest_state", "Nest state:",multiple = TRUE, 
-              c("Found"             = "F", 
-                "Collected"         = "C", 
-                "Incubated"         = "I", 
-                "possibly Predated" = "pP", 
-                "possibly Deserted" = "pD", 
+          selectInput("nest_state", "Nest state:",multiple = TRUE,
+              c("Found"             = "F",
+                "Collected"         = "C",
+                "Incubated"         = "I",
+                "possibly Predated" = "pP",
+                "possibly Deserted" = "pD",
                 "Hatched"           = "H"
                 )),
 
           downloadButton('nestsmap_pdf', 'PDF map', style="font-size:25px;" )
           ) ),
-      
+
       # RESIGHTINGS
         div(class = "col-sm-12 text-center",
         conditionalPanel(
           condition = "input.menubar == 'resightsmap_tab'",
           downloadButton('resightsmap_pdf', 'PDF map', style="font-size:25px;" )
-          ) ) ,       
+          ),
+        conditionalPanel(
+          condition = "input.menubar == 'resightsmap_tab'",
+          sliderInput("daysAgo", "Seen ≤ Days:", min = 1, max = 30,step =1, value = 3)
+        )
+
+        ) ,
 
       # RESIGHTINGS BY ID
         div(class = "col-sm-6 text-center",
-        
+
         conditionalPanel(
           condition = "input.menubar == 'resightsbyidmap_tab'",
           div(style="display:inline-block", textInput('LL', 'LL', width = '100') ),
           div(style="display:inline-block", textInput('LR', 'LR', width = '100') )
-        
+
           )
-        ), 
+        ),
 
 
       # RESIGHTINGS BY ID
         div(class = "col-sm-12 text-center",
-        
+
         conditionalPanel(
           condition = "input.menubar == 'tracksmap_tab'",
-          
+
           numericInput('trackshour', 'N hours', value = 48)
-        
+
           )
         )
 
@@ -109,14 +115,14 @@ dashboardPage(skin = 'black',
 
 tabItems(
     tabItem(tabName = "overview_tab",
-      
+
       box(title = 'Info',
-        uiOutput('sys_show') 
+        uiOutput('sys_show')
         ),
-      
+
       box(title = 'DB state',
         tableOutput('overview_show'))
-  
+
 
       ),
 
@@ -128,21 +134,21 @@ tabItems(
 
     # GPS
       tabItem(tabName = "gps_tab",
-        box(  includeMarkdown( system.file('UI', 'docs', 'garmin_oregon_450.md', package = 'wadeR')), 
+        box(  includeMarkdown( system.file('UI', 'docs', 'garmin_oregon_450.md', package = 'wadeR')),
               title = 'Initial GPS Settings.', collapsible = TRUE, collapsed = FALSE,
-                footer = 'Before using your GPS for the first time make sure the settings are correct.'), 
+                footer = 'Before using your GPS for the first time make sure the settings are correct.'),
 
       box(title = 'GPS Upload - Download',
-             shiny::tags$div(class="form-group shiny-input-container", 
+             shiny::tags$div(class="form-group shiny-input-container",
               shiny::tags$div(shiny::tags$label("Upload GPS", class="btn btn-danger",
                                   shiny::tags$input(id = "fileIn", webkitdirectory = TRUE, type = "file", style="display: none;", onchange="pressed()"))),
               shiny::tags$label("Select the GARMIN directory only!", id = "noFile"),
               shiny::tags$div(id="fileIn_progress", class="progress progress-striped active shiny-file-input-progress",
                        shiny::tags$div(class="progress-bar")
-              )     
+              )
              ),
 
-       dataTableOutput("gps_files"), 
+       dataTableOutput("gps_files"),
 
        downloadButton("download_NESTS", label="Download NESTS", class = "dbutt"),
           tags$head(tags$style(".dbutt{background-color:#E6991C;} .dbutt{color: white;}"))
@@ -152,7 +158,7 @@ tabItems(
       HTML("<script type='text/javascript' src='getFolders.js'></script>")
 
 
-     ), 
+     ),
 
     # NESTS
       tabItem(tabName = "nestsmap_tab",
@@ -162,21 +168,21 @@ tabItems(
 
       tabItem(tabName = "nestsdata_tab",
         dataTableOutput('nestsdata_show')
-        ), 
+        ),
 
       tabItem(tabName = "nestsDashSummary_tab",
         box(title = 'NESTS',
           downloadButton("download_nestsSummary", label="Download Nest Summary  PDF"),
-          
-          actionButton("update_hatching", "UPDATE hatching estimation"),    
-          uiOutput("update_hatchingOut")
-          ), 
 
-        box(title = 'Hatching', 
+          actionButton("update_hatching", "UPDATE hatching estimation"),
+          uiOutput("update_hatchingOut")
+          ),
+
+        box(title = 'Hatching',
           plotOutput('hatching_show')
           )
-        
-        ), 
+
+        ),
 
 
 
@@ -212,8 +218,8 @@ tabItems(
 
 
 
-  
+
   )
- 
+
 )))
 

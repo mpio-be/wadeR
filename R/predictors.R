@@ -1,19 +1,19 @@
 
 #' @title        Calculates the estimated hatching date
 #' @name         hatch_est
-#' @param         x   a data.table containing 
-#'                  nest,  
-#'                  arrival_datetime (POSIXct), 
-#'                  float_angle (angle with which the egg is floating in degree (must be >20 and <90) ), 
+#' @param         x   a data.table containing
+#'                  nest,
+#'                  arrival_datetime (POSIXct),
+#'                  float_angle (angle with which the egg is floating in degree (must be >20 and <90) ),
 #'                  float_height (only if egg is floating) float height in mm
 #'                  pk (row id)
-#' @param        y a data.table containing 
-#'                  nest, 
-#'                  iniCLutch (initial clutch), 
-#'                  clutch (final clutch), 
+#' @param        y a data.table containing
+#'                  nest,
+#'                  iniCLutch (initial clutch),
+#'                  clutch (final clutch),
 #'                  datetime_found
-#' @description  This function calculates the estimated hatching date based on Liebezeit et al. (2007) 
-#'               "Assessing the development of shorebird eggs using the flotation method: 
+#' @description  This function calculates the estimated hatching date based on Liebezeit et al. (2007)
+#'               "Assessing the development of shorebird eggs using the flotation method:
 #'               Species-specific and generalized regression models." Condor 109(1): 32-47.
 #' @return       an estimated hatching date (as POSIXct)
 #' @export
@@ -24,11 +24,11 @@
 #'   arrival_datetime =as.POSIXct(c('2017-06-01 10:00','2017-06-03 11:00','2017-06-13 09:00','2017-06-13 09:00',NA,NA)),
 #'   float_angle = c(21, 80, 85, 20,NA,NA),
 #'   float_height = c(0, NA, 2, NA,NA,NA), pk = 1:6 )
-#' 
-#' y = data.table(nest = c('R103', 'R104'), datetime_ = as.POSIXct(c('2017-06-01 10:00', '2017-06-01 13:00')), 
+#'
+#' y = data.table(nest = c('R103', 'R104'), datetime_ = as.POSIXct(c('2017-06-01 10:00', '2017-06-01 13:00')),
 #'     iniClutch = c(1,2), clutch = c(4,4) )
 #'
-#' hatch_est(x,y) 
+#' hatch_est(x,y)
 
 
 
@@ -53,21 +53,24 @@ hatch_est <- function(x, y) {
    d = merge(d, parm, by = 'species', sort = FALSE, all.x = TRUE)
 
   # sinking eggs
-    d[ float_height <= 0 | is.na(float_height), 
+    d[ float_height <= 0 | is.na(float_height),
       hatch_date := arrival_datetime + 24*60*60 * abs(a1 + b1 * logit((float_angle - 20) / 70) ) ]
 
-  # floating eggs  
-    d[ float_height > 0, 
+  # floating eggs
+    d[ float_height > 0,
       hatch_date := arrival_datetime + 24*60*60 * abs(a1 + b1 * logit((float_angle - 20) / 70) ) ]
 
   # direct estimation
-    y[, lay_date       := datetime_found -  (iniClutch*3600*24)]  
-    y[, hatch_date_dir := lay_date  +  (19*3600*24)]  
+    if(nrow(y) > 0) {
+      y[, lay_date       := datetime_found -  (iniClutch*3600*24)]
+      y[, hatch_date_dir := lay_date  +  (19*3600*24)]
 
-  o = merge(d, y[, .(nest, hatch_date_dir)], by = 'nest', sort = FALSE, all.x = TRUE)  
+      o = merge(d, y[, .(nest, hatch_date_dir)], by = 'nest', sort = FALSE, all.x = TRUE)
 
 
-  o[!is.na(hatch_date_dir), hatch_date := hatch_date_dir] 
+      o[!is.na(hatch_date_dir), hatch_date := hatch_date_dir]
+    } else o = d
+
 
   o[, .(hatch_date, pk)]
 
@@ -84,7 +87,7 @@ EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db = 'FIELD_REPHa
   EC = idbq( paste("SELECT nest,arrival_datetime,float_angle,float_height,pk FROM",  table) )
   n = NESTS()
 
-  h = hatch_est(EC, n)
+  h = hatch_est(x = EC, y = n)
 
   # update table
   con = dbcon(user = getOption('wader.user'),  host = getOption('wader.host'), db = db)
@@ -95,7 +98,7 @@ EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db = 'FIELD_REPHa
 
   writeTMP = dbWriteTable(con, 'TEMP', h, row.names = FALSE)
 
-  if(writeTMP) { 
+  if(writeTMP) {
 
   dbq(con, paste('UPDATE', table ,' e, TEMP t
    SET e.est_hatch_date = t.hatch_date
