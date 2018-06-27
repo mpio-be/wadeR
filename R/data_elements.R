@@ -24,7 +24,7 @@ data.tableTransform <- function(DT, proj = '+proj=omerc +lat_0=71.3332703512554 
 
 NESTS <- function(project = TRUE) {
     # last state
-      n = idbq('SELECT nest, max(CONCAT_WS(" ",date_,time_appr)) datetime_, nest_state, msr_state
+      n = idbq('SELECT nest, max(CONCAT_WS(" ",date_,time_appr)) datetime_, nest_state
                       FROM NESTS
                           GROUP BY nest, nest_state')
       n[, datetime_      := anytime(datetime_, asUTC = TRUE, tz = 'AKDT')]
@@ -61,6 +61,10 @@ NESTS <- function(project = TRUE) {
       e = idbq("select distinct nest from NESTS where nest_state = 'C' ")
       e[, IN := "*"]
 
+    # msr_state
+      m = idbq("select distinct nest from NESTS where msr_state = 'ON' ")
+      m[, MSR := "ON"]
+
     # male confirmed identity
       idm = idbq("SELECT distinct n.nest,c.LL, c.LR
                 from NESTS n
@@ -84,6 +88,7 @@ NESTS <- function(project = TRUE) {
     # final set
       o = merge(n, cs, by = 'nest', all.x = TRUE)
       o = merge(o, e,  by = 'nest', all.x = TRUE)
+      o = merge(o, m,  by = 'nest', all.x = TRUE)
       o = merge(o, idm,  by = 'nest', all.x = TRUE)
       o = merge(o, idf,  by = 'nest', all.x = TRUE)
 
