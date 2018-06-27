@@ -24,7 +24,7 @@ data.tableTransform <- function(DT, proj = '+proj=omerc +lat_0=71.3332703512554 
 
 NESTS <- function(project = TRUE) {
     # last state
-      n = idbq('SELECT nest, max(CONCAT_WS(" ",date_,time_appr)) datetime_, nest_state
+      n = idbq('SELECT nest, max(CONCAT_WS(" ",date_,time_appr)) datetime_, nest_state, msr_state
                       FROM NESTS
                           GROUP BY nest, nest_state')
       n[, datetime_      := anytime(datetime_, asUTC = TRUE, tz = 'AKDT')]
