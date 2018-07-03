@@ -58,12 +58,12 @@ hatch_est <- function(x, y) {
 
   # floating eggs
     d[ float_height > 0,
-      hatch_date := arrival_datetime + 24*60*60 * abs(a1 + b1 * logit((float_angle - 20) / 70) ) ]
+       hatch_date := arrival_datetime + 19*24*60*60 - 24*60*60 * abs(a2 + b2 * float_height + c2 * float_angle) ]
 
   # direct estimation
     if(nrow(y) > 0) {
       y[, lay_date       := datetime_found -  (iniClutch*3600*24)]
-      y[, hatch_date_dir := lay_date  +  (19*3600*24)]
+      y[, hatch_date_dir := lay_date  + clutch*3600*24 +  (19*3600*24)]
 
       o = merge(d, y[, .(nest, hatch_date_dir)], by = 'nest', sort = FALSE, all.x = TRUE)
 
