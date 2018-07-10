@@ -84,6 +84,14 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   output$nestsmap_show <- renderPlot({
 
     n = N()
+
+    # exclude closed nests
+    closed = c('R202', 'R204', 'R205', 'R605', 'R701', 'R803', 'R804', 'R904', 'R909', 'R1201', 'R801', 'R902')
+    n[nest %in% closed, closed := TRUE]
+    n = n[is.na(closed)]
+    n[, closed := NULL]
+
+
     if(length(input$nest_state) > 0 )
       n =  n[nest_state %in% input$nest_state]
     if(length(input$species) > 0 )
@@ -99,6 +107,14 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   filename = 'nestsmap.pdf',
   content = function(file) {
     n = N()
+
+    # exclude closed nests
+    closed = c('R202', 'R204', 'R205', 'R605', 'R701', 'R803', 'R804', 'R904', 'R909', 'R1201', 'R801', 'R902')
+    n[nest %in% closed, closed := TRUE]
+    n = n[is.na(closed)]
+    n[, closed := NULL]
+
+
     if(length(input$nest_state) > 0 )
       n =  n[nest_state %in% input$nest_state]
     if(length(input$species) > 0 )

@@ -61,9 +61,14 @@ NESTS <- function(project = TRUE) {
       e = idbq("select distinct nest from NESTS where nest_state = 'C' ")
       e[, IN := "*"]
 
-    # msr_state
-      m = idbq("select distinct nest from NESTS where msr_state = 'ON' ")
-      m[, MSR := "ON"]
+    # last msr_state
+      m = idbq('SELECT nest, max(CONCAT_WS(" ",date_,time_appr)) datetime_, msr_state
+                      FROM NESTS
+                          GROUP BY nest, msr_state')
+      m = m[msr_state == 'ON' | msr_state == 'OFF' | msr_state == 'DD']
+      m[, lastd := max(datetime_), by = .(nest)]
+      m = m[datetime_ == lastd ][, c('lastd', 'datetime_') := NULL]
+      setnames(m, 'msr_state', 'MSR')
 
     # male confirmed identity
       idm = idbq("SELECT distinct n.nest,c.LL, c.LR

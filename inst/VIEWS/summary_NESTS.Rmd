@@ -18,12 +18,24 @@ options(xtable.comment = FALSE)
 n = NESTS()[species == 'REPH']
 n = n[, .(nest, state = nest_state, lastCheck, iniClutch, clutch, MSR, IN, m_sure, f_sure)]
 n[nest == 'R802', m_sure := 'W,R|W']
-CA = c('R201', 'R901', 'R902', 'R1201', 'R602', 'R603', 'R801')
+n[nest == 'R501', m_sure := 'O,O|Y']
+CA = c('R201', 'R901', 'R902', 'R1201', 'R602', 'R603', 'R801', 'R703')
 n[nest %in% CA, CA := CA]
 n[!is.na(CA), CA := 'CA']
 n[nest %like% 'REPH', Rick := TRUE]
 n = n[is.na(Rick)]
 n[, Rick := NULL]
+
+n[state == 'P', m_sure := '----']
+
+# exclude closed nests
+closed = c('R202', 'R204', 'R205', 'R605', 'R701', 'R803', 'R804', 'R904', 'R909', 'R1201', 'R801', 'R902')
+n[nest %in% closed, closed := TRUE]
+n = n[is.na(closed)]
+n[, closed := NULL]
+
+setorder(n, CA, nest)
+
 
 x = xtable(n, auto = TRUE, caption = NULL, floating = TRUE, floating.environment = "sidewaystable", latex.environments = "" )
 
