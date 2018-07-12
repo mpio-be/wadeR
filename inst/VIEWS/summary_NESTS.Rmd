@@ -15,7 +15,7 @@ options(xtable.comment = FALSE)
 ###Reference date: `r Sys.Date()`
 
 ```{r nests, echo=FALSE, message=FALSE, warning=FALSE,results='asis'}
-n = NESTS()[species == 'REPH']
+n = NESTS()# [species == 'REPH']
 n = n[, .(nest, state = nest_state, lastCheck, iniClutch, clutch, MSR, IN, m_sure, f_sure)]
 n[nest == 'R802', m_sure := 'W,R|W']
 n[nest == 'R501', m_sure := 'O,O|Y']
