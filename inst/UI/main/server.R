@@ -88,7 +88,8 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
     # exclude closed nests
     closed = c('R202', 'R204', 'R205', 'R605', 'R701', 'R803', 'R804', 'R904', 'R909', 'R1201', 'R801', 'R902',
                'R302', 'R303', 'R304', 'R601', 'R805', 'R807', 'R808', 'R810',
-               'R501', 'R502', 'R802', 'R812', 'R201', 'R602', 'R901')
+               'R501', 'R502', 'R802', 'R812', 'R201', 'R602', 'R901', 'P301', 'P603', 'P801',
+               'P1201', 'P302', 'P303', 'P304', 'P604', 'R401')
     n[nest %in% closed, closed := TRUE]
     n = n[is.na(closed)]
     n[, closed := NULL]
@@ -113,7 +114,8 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
     # exclude closed nests
     closed = c('R202', 'R204', 'R205', 'R605', 'R701', 'R803', 'R804', 'R904', 'R909', 'R1201', 'R801', 'R902',
                'R302', 'R303', 'R304', 'R601', 'R805', 'R807', 'R808', 'R810',
-               'R501', 'R502', 'R802', 'R812', 'R201', 'R602', 'R901')
+               'R501', 'R502', 'R802', 'R812', 'R201', 'R602', 'R901', 'P301', 'P603', 'P801',
+               'P1201', 'P302', 'P303', 'P304', 'P604', 'R401')
     n[nest %in% closed, closed := TRUE]
     n = n[is.na(closed)]
     n[, closed := NULL]
