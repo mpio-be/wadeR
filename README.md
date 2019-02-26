@@ -12,7 +12,6 @@ install.packages("devtools")
 devtools::install_github("mpio-be/wadeR")
 ```
 
-
 Notes
 ------------
  - data entry pages are customized from ./inst/UI/DataEntry/_TABLENAME_/global.R
