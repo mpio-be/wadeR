@@ -1,5 +1,5 @@
 
-# shiny::runApp('inst/UI/DataEntry/CAPTURES')
+# shiny::runApp('inst/UI/DataEntry/CAPTURES', launch.browser =  TRUE)
 
 
 # settings
@@ -31,6 +31,8 @@
 
   authors = idbq('select initials from AUTHORS')$initials
 
+
+  inspector= getS3method('inspector', tableName)
 
 
 # Define UI table  

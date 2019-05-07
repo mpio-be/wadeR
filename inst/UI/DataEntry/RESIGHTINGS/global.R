@@ -1,33 +1,49 @@
 
 # shiny::runApp('inst/UI/DataEntry/RESIGHTINGS', port = 1111)
 
-
 # settings
-  sapply(c('wadeR','DataEntry', 'data.table', 'shinyjs', 'shinyBS'),
+  sapply(c('wadeR','DataEntry', 'data.table', 'shinyjs', 'tableHTML', 'glue'),
     require, character.only = TRUE, quietly = TRUE)
-
   tags = shiny::tags
  
-  user           = getOption('wader.user')
   host           = getOption('wader.host')
   db             = yy2dbnam(year(Sys.Date()))
+  user           = getOption('wader.user')
+  pwd             = sdb::getCredentials(user, db, host )$pwd
   
   tableName       = 'RESIGHTINGS'
-  excludeColumns = c('pk')
+  excludeColumns = c('pk', 'nov')
   n_empty_lines   =  30
   
-  comments = column_comment(user, host, db, tableName,excludeColumns)
+# table summary function
+  describeTable <- function() {
+    x = idbq('select concat_ws(UL, LL, UR, LR) ID, species from RESIGHTINGS ')
+
+    data.table(
+        N_entries = nrow(x), 
+        N_unique_IDs = length(unique(x$ID))
+           )
+  }
+
+  comments = column_comment(user, host, db, pwd, tableName,excludeColumns)
+
+
   authors = idbq('select initials from AUTHORS')$initials
 
-# UI table  
-  H = emptyFrame(user, host, db, tableName, n = n_empty_lines, excludeColumns)
+  inspector= getS3method('inspector', tableName)
+
+# Define UI table  
+  uitable = emptyFrame(user, host, db, pwd, tableName, n = n_empty_lines, excludeColumns) %>% 
+    rhandsontable %>% 
+    hot_cols(columnSorting = FALSE, manualColumnResize = TRUE) %>%
+    hot_rows(fixedRowsTop = 1) %>%
+    hot_col(col = "author", type = "dropdown", source = authors )
 
 
- uitable =  
-  rhandsontable(H) %>%
-      hot_cols(columnSorting = FALSE, manualColumnResize = TRUE) %>%
-      hot_rows(fixedRowsTop = 1) %>%
-      hot_col(col = "author", type = "dropdown", source = authors )
-    
+
+
+
+
+
 
 
