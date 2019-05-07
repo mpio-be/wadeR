@@ -4,7 +4,7 @@
 # ==========================================================================
 
   require(wadeR)
-  wadeR::install_ui(pwd = 'w ....')
+  wadeR::install_ui(pwd = askpass::askpass()  )
 
 
 
