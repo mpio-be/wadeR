@@ -38,15 +38,17 @@ yy2dbnam <- function(year = format(Sys.Date(), format = "%Y") , db = getOption('
 #' query function
 #' @export
 idbq <- function(query, year , db  , host = getOption('wader.host') , user = getOption('wader.user'), enhance = TRUE ) {
-  require(sdb)
+
   if(missing(year)) year = data.table::year(Sys.Date() )
   if(missing(db)) db = yy2dbnam(year)
 
-  con = dbcon(user = user, host = host, db = db)
-  on.exit(  closeCon (con)  )
+  con =  dbConnect(RMySQL::MySQL(), host = host, user = user, db = db, password = pwd)
+  on.exit(  dbDisconnect (con)  )
 
-  dbq(con, query, enhance = enhance)
-
+  o = dbGetQuery(con, query) %>% data.table
+  if(enhance)
+    sdb::enhanceOutput(o)
+  o
   }
 
 

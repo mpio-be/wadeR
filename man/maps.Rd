@@ -28,6 +28,9 @@ map_resights_by_id(x, size = 2.5)
 
 map_resights_by_day(x, n, size = 2.5)
 }
+\description{
+maps
+}
 \examples{
 x = map_layers
 coord_wader(x)

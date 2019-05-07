@@ -9,6 +9,9 @@ nanotag2db(dir = "~/ownCloud/RAW_DATA/NANO_TAG_DATA/")
 \value{
 TRUE if new data are updated, error on no new files
 }
+\description{
+nanotag txt to database
+}
 \examples{
 \dontrun{
  require(wader)

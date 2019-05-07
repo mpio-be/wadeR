@@ -5,7 +5,7 @@
     require(magrittr)
     require(ggplot2)
     require(stringr)
-    require(wader)
+    require(wadeR)
     p4sold = "+proj=utm +zone=4 +datum=WGS84"
     p4sll = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs'
 

@@ -3,12 +3,8 @@
 \docType{package}
 \name{wadeR}
 \alias{wadeR}
-\alias{.onLoad}
 \alias{wadeR-package}
 \title{wadeR}
-\usage{
-.onLoad(libname, pkgname)
-}
 \description{
 Mapping and field work organizer
 }
