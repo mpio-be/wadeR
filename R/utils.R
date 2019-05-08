@@ -303,7 +303,7 @@ install_ui <- function(pwd, install_package = TRUE, root = "/srv/shiny-server", 
     wait = TRUE,ignore.stderr = TRUE )
   cat('done\n')
 
-  cat('Go to http://192.168.2.102/')
+  cat('Go to', ip() )
   
 
 
