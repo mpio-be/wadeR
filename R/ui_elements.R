@@ -12,7 +12,7 @@ sysinfo <- function(ip) {
 
     if( !inherits(lastbk, 'difftime') || lastbk > 180) Wrn("Please check BACKUP system !!")
 
-    o2 = paste(badge('Last DB backup'), paste(lastbk, 'minutes ago') )
+    o2 = paste(badge('Last DB backup (minutes ago)'), lastbk )
 
     o3 = paste(badge('Package version'), paste('wader', packageVersion('wadeR') ) )
 
