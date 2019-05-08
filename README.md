@@ -5,15 +5,14 @@ wadeR
 ------------
  Field work organizer (mapping and data entry).
 
-Installation
+Package installation
 ------------
 
 ``` r
-install.packages("devtools")
 devtools::install_github("mpio-be/wadeR")
 ```
 
-Site install
+Site installation
 ``` r
   require(wadeR)
   wadeR::install_ui(pwd = askpass::askpass()  )
