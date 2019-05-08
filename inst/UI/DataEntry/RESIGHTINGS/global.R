@@ -2,15 +2,9 @@
 # shiny::runApp('inst/UI/DataEntry/RESIGHTINGS', port = 1111)
 
 # settings
-  sapply(c('wadeR','DataEntry', 'data.table', 'shinyjs', 'tableHTML', 'glue'),
-    require, character.only = TRUE, quietly = TRUE)
-  tags = shiny::tags
+  source(system.file('UI', 'global_settings.R', package = 'wadeR'))
+
  
-  host           = getOption('wader.host')
-  db             = yy2dbnam(year(Sys.Date()))
-  user           = getOption('wader.user')
-  pwd             = sdb::getCredentials(user, db, host )$pwd
-  
   tableName       = 'RESIGHTINGS'
   excludeColumns = c('pk', 'nov')
   n_empty_lines   =  30

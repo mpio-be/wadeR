@@ -4,15 +4,9 @@
 
 
 # settings
-  sapply(c('wadeR','DataEntry', 'data.table', 'shinyjs', 'tableHTML', 'glue'),
-    require, character.only = TRUE, quietly = TRUE)
-  tags = shiny::tags
- 
-  host           = getOption('wader.host')
-  db             = yy2dbnam(year(Sys.Date()))
-  user           = getOption('wader.user')
-  pwd             = sdb::getCredentials(user, db, host )$pwd
-  
+  source(system.file('UI', 'global_settings.R', package = 'wadeR'))
+
+
   tableName       = 'NESTS'
   excludeColumns = c('pk', 'nov')
   n_empty_lines   =  30

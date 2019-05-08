@@ -7,4 +7,4 @@ tags   = shiny::tags
 host   = ip()
 db     = yy2dbnam(year(Sys.Date()))
 user   = getOption('wader.user')
-pwd    = pwd()
+pwd    = wadeR::pwd()

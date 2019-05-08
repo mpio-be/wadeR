@@ -4,7 +4,7 @@
 \alias{pwd}
 \title{Password manager}
 \usage{
-pwd(p = "~/.wader.pwd")
+pwd(p = paste(path.expand("~"), ".wader.pwd", sep = .Platform$file.sep))
 }
 \value{
 a plain text string saved by default on ~/.wader.pwd

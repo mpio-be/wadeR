@@ -4,8 +4,7 @@
 \alias{EGGS_CHICKS_updateHatchDate}
 \title{EGGS_CHICKS_updateHatchDate}
 \usage{
-EGGS_CHICKS_updateHatchDate(table = "EGGS_CHICKS",
-  db = "FIELD_REPHatBARROW")
+EGGS_CHICKS_updateHatchDate(table = "EGGS_CHICKS", db)
 }
 \description{
 EGGS_CHICKS_updateHatchDate

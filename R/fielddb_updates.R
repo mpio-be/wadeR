@@ -10,13 +10,17 @@
 #'  nanotag2db()
 #' }
 #'
-nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/" ) {
+nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/", db) {
+  if(missing(db)) db = yy2dbnam(data.table::year(Sys.Date()))
 
   allff  = data.table( f = list.files(dir, pattern = ".csv") )
-
   doneff = idbq(q = "select distinct filename f from NANO_TAGS")[, done := 1]
-
   newff = merge(allff, doneff, byx = 'f', all.x = TRUE)[is.na(done)]
+
+    con =  dbConnect(RMySQL::MySQL(), host = ip(), user = getOption('wader.user'), db = db,password = pwd())
+    on.exit(  dbDisconnect (con)  )
+
+
 
 
   # fetch new data
@@ -30,7 +34,7 @@ nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/" ) {
 
     }
 
-  # upload to b
+  # upload to db
   if( inherits(O, 'data.table')) {
     O[, pk := NA]
 
@@ -38,9 +42,9 @@ nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/" ) {
 
     dbnam = idbq(q = "select * from NANO_TAGS where false") %>% names
     setnames(O, dbnam)
-    con = dbcon(user = getOption("wader.user"), host =  getOption("wader.host"), db = yy2dbnam(data.table::year(Sys.Date())))
+    
     out= dbWriteTable(con,'NANO_TAGS', O, append = TRUE, row.names = FALSE)
-    dbDisconnect(con)
+ 
     return(out)
   } else FALSE
 
@@ -49,3 +53,27 @@ nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/" ) {
 
 
 
+#' NESTS2EGGS_CHICKS
+#' populate  table
+#' @export
+#' @examples
+#' NESTS2EGGS_CHICKS()
+#' NESTS2EGGS_CHICKS(c('PESA', 'RNPH'), table = 'EGGS_CHICKS_field')
+
+NESTS2EGGS_CHICKS <- function(Species = 'REPH', table = 'EGGS_CHICKS', db = 'FIELD_REPHatBARROW') {
+
+    con =  dbConnect(RMySQL::MySQL(), host = ip(), user = getOption('wader.user'), db = db, password = pwd())
+    on.exit(  dbDisconnect (con)  )
+
+
+    e = dbGetQuery(con, "select nest, max(clutch_size) clutch from NESTS
+                 where nest not in (SELECT distinct nest from EGGS_CHICKS)
+                group by nest")
+    e[, species := nest2species(nest)]
+    e = e[ species %in% Species]
+    e = e[, .(pk = rep(NA, each = clutch)) , by = nest]
+    Msg(paste(nrow(e), "rows added to the", table))
+
+    dbWriteTable(con, table, e, row.names = FALSE, append = TRUE)
+
+}

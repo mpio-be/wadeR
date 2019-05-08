@@ -11,7 +11,7 @@ NULL
     dcf <- read.dcf(file=system.file('DESCRIPTION', package=pkgname) )
     packageStartupMessage(paste('This is', pkgname, dcf[, 'Version'] ))
 
-    options(wader.host      = "192.168.6.72")
+
     options(wader.db        = "REPHatBARROW")
     options(wader.user      = 'wader')
     options(wader.freshdata = 60)

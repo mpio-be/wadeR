@@ -4,7 +4,7 @@
 \alias{nanotag2db}
 \title{nanotag txt to database}
 \usage{
-nanotag2db(dir = "~/ownCloud/RAW_DATA/NANO_TAG_DATA/")
+nanotag2db(dir = "~/ownCloud/RAW_DATA/NANO_TAG_DATA/", db)
 }
 \value{
 TRUE if new data are updated, error on no new files

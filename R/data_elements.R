@@ -249,30 +249,6 @@ fetch_GPS_tracks <- function(lastNhours = 48)  {
 
 
 
-#' NESTS2EGGS_CHICKS
-#' populate  table
-#' @export
-#' @examples
-#' NESTS2EGGS_CHICKS()
-#' NESTS2EGGS_CHICKS(c('PESA', 'RNPH'), table = 'EGGS_CHICKS_field')
-
-NESTS2EGGS_CHICKS <- function(Species = 'REPH', table = 'EGGS_CHICKS', db = 'FIELD_REPHatBARROW') {
-    require(sdb)
-    con = dbcon(user = getOption('wader.user'),  host = getOption('wader.host'), db = db)
-    on.exit(dbDisconnect(con))
-
-
-    e = dbq(con, "select nest, max(clutch_size) clutch from NESTS
-                 where nest not in (SELECT distinct nest from EGGS_CHICKS)
-                group by nest")
-    e[, species := nest2species(nest)]
-    e = e[ species %in% Species]
-    e = e[, .(pk = rep(NA, each = clutch)) , by = nest]
-    Msg(paste(nrow(e), "rows added to the", table))
-
-    dbWriteTable(con, table, e, row.names = FALSE, append = TRUE)
-
-}
 
 
 

@@ -14,18 +14,12 @@ ip = function() {
 #' @title   Password manager
 #' @return  a plain text string saved by default on ~/.wader.pwd
 #' @export
-pwd = function(p = '~/.wader.pwd') {
+pwd = function(p = paste(path.expand("~"), '.wader.pwd', sep = .Platform$file.sep) ) {
   if(file.exists(p))
   scan(p, what = 'character', quiet = TRUE) else
   stop('password not set')
 
   }
-
-
-
-
-
-
 
 
 
@@ -137,21 +131,32 @@ dbTablesStatus <- function() {
 
 #' dbTableUpdate
 #' @export
-dbTableUpdate <- function(user, host, db, table, newdat) {
+dbTableUpdate <- function(user= getOption('wader.user'), host, db, password = pwd(), table, newdat) {
+
+  if(missing(host))   host = ip()
+  if(missing(db)) db = yy2dbnam(data.table::year(Sys.Date()))
+
 
   con = dbcon(user = user,  host = host)
   on.exit(dbDisconnect(con))
 
-  dbq(con, paste('USE', db) )
+  con =  dbConnect(RMySQL::MySQL(), host = host, user = user, db = db)
+  on.exit(  dbDisconnect (con)  )
 
-  dbq(con, 'DROP TABLE IF EXISTS TEMP')
-  dbq(con, paste('CREATE TABLE TEMP LIKE', table) )
+
+
+
+
+  dbExecute(con, paste('USE', db) )
+
+  dbExecute(con, 'DROP TABLE IF EXISTS TEMP')
+  dbExecute(con, paste('CREATE TABLE TEMP LIKE', table) )
 
   update_ok = dbWriteTable(con, 'TEMP', newdat, append = TRUE, row.names = FALSE)
 
   if(update_ok) {
-    dbq(con, paste('DROP TABLE', table) )
-    dbq(con, paste('RENAME TABLE TEMP to', table) )
+    dbExecute(con, paste('DROP TABLE', table) )
+    dbExecute(con, paste('RENAME TABLE TEMP to', table) )
     }
 
    update_ok

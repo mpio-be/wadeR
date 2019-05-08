@@ -76,7 +76,8 @@ dashboardPage(skin = 'black',
           ),
         conditionalPanel(
           condition = "input.menubar == 'resightsmap_tab'",
-          sliderInput("daysAgo", "Seen ≤ Days:", min = 1, max = 30,step =1, value = 3)
+          numericInput('daysAgo', HTML('Seen in the last<br>N days:'), value = 3)
+
         )
 
         ) ,
@@ -99,7 +100,7 @@ dashboardPage(skin = 'black',
         conditionalPanel(
           condition = "input.menubar == 'tracksmap_tab'",
 
-          numericInput('trackshour', 'N hours', value = 48)
+          numericInput('trackshour', HTML('Last N hours<br>(since last entry)'), value = 48)
 
           )
         )

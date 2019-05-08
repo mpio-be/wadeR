@@ -82,7 +82,9 @@ hatch_est <- function(x, y) {
 #' @examples
 #' EGGS_CHICKS_updateHatchDate()
 
-EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db = 'FIELD_REPHatBARROW') {
+EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db) {
+
+  if(missing(db)) db = yy2dbnam(data.table::year(Sys.Date()))
 
   EC = idbq( paste("SELECT nest,arrival_datetime,float_angle,float_height,pk FROM",  table) )
   n = NESTS()
@@ -90,22 +92,23 @@ EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db = 'FIELD_REPHa
   h = hatch_est(x = EC, y = n)
 
   # update table
-  con = dbcon(user = getOption('wader.user'),  host = getOption('wader.host'), db = db)
-  on.exit(dbDisconnect(con))
+  con =  dbConnect(RMySQL::MySQL(), host = ip(), user = getOption('wader.user'), db = db, password = pwd())
+  on.exit(  dbDisconnect (con)  )
 
-  dbq(con, 'DROP TABLE IF EXISTS TEMP')
+
+  dbExecute(con, 'DROP TABLE IF EXISTS TEMP')
 
 
   writeTMP = dbWriteTable(con, 'TEMP', h, row.names = FALSE)
 
   if(writeTMP) {
 
-  dbq(con, paste('UPDATE', table ,' e, TEMP t
+  dbExecute(con, paste('UPDATE', table ,' e, TEMP t
    SET e.est_hatch_date = t.hatch_date
   WHERE e.pk = t.pk') )
 
 
-  dbq(con, 'DROP TABLE TEMP')
+  dbExecute(con, 'DROP TABLE TEMP')
 
   }
  }
