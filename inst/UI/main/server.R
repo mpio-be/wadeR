@@ -17,29 +17,6 @@ shinyServer(function(input, output, session) {
 
   })
 
-# ARGOS table
- #  output$argos_show <- renderDataTable({
- #    invalidateLater(240000)
- #    # dbTablesStatus()
-# 
- #    # o = readRDS('~/.wader/lastArgos.RDS')
-# 
- #    # Msg( paste( "Last Argos update:", as.character(attr(o, 'lastrun') ) ) )
-# 
- #    # lostTags = attr(o, 'lost_platforms')
- #    # if(lostTags > 0) Err( paste( lostTags, 'tags most likely lost.') )
-# 
- #    o = data.table(info = 'waiting for tags')
-# 
-# 
- #  }, options = list(pageLength = 40))
-# 
- #  output$sys_show <- renderUI({
- #    invalidateLater(2000)
-# 
- #    sysinfo(ip = IP)
-# 
- #  })
 
 # GPS data
  # observeEvent(input$menubar, {

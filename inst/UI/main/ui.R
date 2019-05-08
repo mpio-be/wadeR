@@ -10,7 +10,6 @@ dashboardPage(skin = 'black',
 
       menuItem("Overview",         tabName  = "overview_tab",  icon = icon("clone") ),
 
-      # menuItem("Argos",         tabName  = "argos_tab",  icon = icon("eye") ),
 
       menuItem("GPS management",   tabName  = "gps_tab",   icon = icon("hdd-o") ),
 
@@ -125,11 +124,6 @@ tabItems(
         tableOutput('overview_show'))
 
 
-      ),
-
-
-    tabItem(tabName = "argos_tab",
-      dataTableOutput('argos_show')
       ),
 
 
