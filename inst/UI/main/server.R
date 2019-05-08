@@ -1,7 +1,7 @@
 
 
 shinyServer(function(input, output, session) {
-observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalEnv)) )
+# observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalEnv)) )
 
 # main board
   output$overview_show <- renderTable({

@@ -40,11 +40,12 @@ nest2species <- function(nest){
    ifelse(n == 'R', 'REPH',
     ifelse(n == 'N', 'RNPH',
       ifelse(n == 'P', 'PESA',
+       ifelse(n == 'L', 'LBDO',
         ifelse(n == 'S', 'SESA',
           ifelse(n == 'A', 'AMGP',
             ifelse(n == 'T', 'RUTU',
              ifelse(n == 'B', 'BASA',
-               ifelse(n == 'D', 'DUNL',NA))))))))
+               ifelse(n == 'D', 'DUNL',NA)))))))))
 
     })
 

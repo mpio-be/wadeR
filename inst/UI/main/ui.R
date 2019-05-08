@@ -54,7 +54,7 @@ dashboardPage(skin = 'black',
         conditionalPanel(
           condition = "input.menubar == 'nestsmap_tab'",
           selectInput("species", "Species:",multiple = TRUE, selected = 'REPH',
-              c("AMGP", "BASA", "DUNL", "RNPH", "PESA", "REPH", "SESA") ),
+              c("AMGP", "BASA", "DUNL", "RNPH", "PESA", "REPH", "SESA", "LBDO") ),
 
           selectInput("nest_state", "Nest state:",multiple = TRUE,
               c("Found"             = "F",
