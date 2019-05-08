@@ -63,10 +63,11 @@ yy2dbnam <- function(year = format(Sys.Date(), format = "%Y") , db = getOption('
 #' query function
 #' @export
 #' @importFrom sdb enhanceOutput
-idbq <- function(query, year , db  , host = getOption('wader.host') , user = getOption('wader.user'), pwd, enhance = TRUE ) {
+idbq <- function(query, year , db  , host = ip() , user = getOption('wader.user'), pwd, enhance = TRUE ) {
 
   if(missing(year)) year = data.table::year(Sys.Date() )
   if(missing(db))   db   = yy2dbnam(year)
+  if(missing(host)) host = ip()
   if(missing(pwd))  pwd  = wadeR::pwd() 
 
   con =  dbConnect(RMySQL::MySQL(), host = host, user = user, db = db, password = pwd)
