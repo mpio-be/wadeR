@@ -5,7 +5,7 @@
 \title{query function}
 \usage{
 idbq(query, year, db, host = getOption("wader.host"),
-  user = getOption("wader.user"), enhance = TRUE)
+  user = getOption("wader.user"), pwd, enhance = TRUE)
 }
 \description{
 query function

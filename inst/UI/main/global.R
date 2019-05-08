@@ -1,7 +1,6 @@
 
 
-# shiny::runApp('inst/UI/main', launch.browser = TRUE, port = 1111)
-
+# shiny::runApp('inst/UI/main', launch.browser =  TRUE)
 
 # settings
     sapply(c('wadeR', 'knitr', 'ggplot2', 'ggthemes',

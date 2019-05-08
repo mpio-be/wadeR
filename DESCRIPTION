@@ -9,7 +9,6 @@ Depends:
     R (>= 3.3.2),
     utils, 
     methods,
-    sdb,
     DataEntry,
     magrittr,
     stringr,
@@ -24,6 +23,9 @@ Depends:
     foreach,
     RColorBrewer,
     V8
+Imports:
+    sdb,
+    anytime
 Suggests:
     shiny,
     markdown,

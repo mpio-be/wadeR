@@ -13,9 +13,15 @@ install.packages("devtools")
 devtools::install_github("mpio-be/wadeR")
 ```
 
+Site install
+``` r
+  require(wadeR)
+  wadeR::install_ui(pwd = askpass::askpass()  )
+```
+
 Notes
 ------------
- - data entry pages are customized from ./inst/UI/DataEntry/_TABLENAME_/global.R
+ - data entry pages are customized from `./inst/UI/DataEntry/_TABLENAME_/global.R` files
  
 
  

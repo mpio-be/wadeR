@@ -18,28 +18,28 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   })
 
 # ARGOS table
-  output$argos_show <- renderDataTable({
-    invalidateLater(240000)
-    # dbTablesStatus()
-
-    # o = readRDS('~/.wader/lastArgos.RDS')
-
-    # Msg( paste( "Last Argos update:", as.character(attr(o, 'lastrun') ) ) )
-
-    # lostTags = attr(o, 'lost_platforms')
-    # if(lostTags > 0) Err( paste( lostTags, 'tags most likely lost.') )
-
-    o = data.table(info = 'waiting for tags')
-
-
-  }, options = list(pageLength = 40))
-
-  output$sys_show <- renderUI({
-    invalidateLater(2000)
-
-    sysinfo(ip = IP)
-
-  })
+ #  output$argos_show <- renderDataTable({
+ #    invalidateLater(240000)
+ #    # dbTablesStatus()
+# 
+ #    # o = readRDS('~/.wader/lastArgos.RDS')
+# 
+ #    # Msg( paste( "Last Argos update:", as.character(attr(o, 'lastrun') ) ) )
+# 
+ #    # lostTags = attr(o, 'lost_platforms')
+ #    # if(lostTags > 0) Err( paste( lostTags, 'tags most likely lost.') )
+# 
+ #    o = data.table(info = 'waiting for tags')
+# 
+# 
+ #  }, options = list(pageLength = 40))
+# 
+ #  output$sys_show <- renderUI({
+ #    invalidateLater(2000)
+# 
+ #    sysinfo(ip = IP)
+# 
+ #  })
 
 # GPS data
  # observeEvent(input$menubar, {
@@ -85,16 +85,6 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
 
     n = N()
 
-    # exclude closed nests
-    closed = c('R202', 'R204', 'R205', 'R605', 'R701', 'R803', 'R804', 'R904', 'R909', 'R1201', 'R801', 'R902',
-               'R302', 'R303', 'R304', 'R601', 'R805', 'R807', 'R808', 'R810',
-               'R501', 'R502', 'R802', 'R812', 'R201', 'R602', 'R901', 'P301', 'P603', 'P801',
-               'P1201', 'P302', 'P303', 'P304', 'P604', 'R401',
-               'P601', 'P602', 'P605', 'R203', 'R604', 'R607', 'R608', 'R702', 'R809', 'R811', 'R903', 'R905', 'R906', 'R603', 'R703')
-    n[nest %in% closed, closed := TRUE]
-    n = n[is.na(closed)]
-    n[, closed := NULL]
-
 
     if(length(input$nest_state) > 0 )
       n =  n[nest_state %in% input$nest_state]
@@ -111,16 +101,6 @@ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalE
   filename = 'nestsmap.pdf',
   content = function(file) {
     n = N()
-
-    # exclude closed nests
-    closed = c('R202', 'R204', 'R205', 'R605', 'R701', 'R803', 'R804', 'R904', 'R909', 'R1201', 'R801', 'R902',
-               'R302', 'R303', 'R304', 'R601', 'R805', 'R807', 'R808', 'R810',
-               'R501', 'R502', 'R802', 'R812', 'R201', 'R602', 'R901', 'P301', 'P603', 'P801',
-               'P1201', 'P302', 'P303', 'P304', 'P604', 'R401',
-               'P601', 'P602', 'P605', 'R203', 'R604', 'R607', 'R608', 'R702', 'R809', 'R811', 'R903', 'R905', 'R906', 'R603', 'R703')
-    n[nest %in% closed, closed := TRUE]
-    n = n[is.na(closed)]
-    n[, closed := NULL]
 
 
     if(length(input$nest_state) > 0 )

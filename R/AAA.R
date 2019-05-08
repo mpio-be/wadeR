@@ -22,3 +22,5 @@ NULL
 
     }
 
+#' @import anytime
+NULL
