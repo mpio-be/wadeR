@@ -6,7 +6,9 @@ ip = function() {
   o = try(system('hostname -I', intern = TRUE), silent = TRUE)
   if(inherits(o, 'try-error'))
     o = "127.0.0.1"
-  o = str_trim(o)
+
+  o = str_extract(o, '\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b') %>% str_trim
+
   o
   }
 
@@ -110,10 +112,15 @@ lastdbBackup <- function(path = getOption('wader.dbbackup') ) {
 
   if(dir.exists(path)) {
     o = data.table( p = list.files(path, full.names = TRUE))
+    }
+
+  if(nrow(o) > 0) {
     o = o[, file.info(p, extra_cols = FALSE), by = 1:nrow(o)]
-    o = o[, difftime(Sys.time(), max(ctime), units = 'mins') %>% round]
-    } else
-    o = 'backup not installed!'
+    o = o[, difftime(Sys.time(), max(ctime, na.rm = TRUE), units = 'mins') %>% round]
+  }
+
+  if( !inherits(o, 'difftime'))
+    o = 'backup system is not installed or has crashed!'
 
     o
 

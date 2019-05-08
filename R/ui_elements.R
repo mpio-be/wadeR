@@ -10,7 +10,7 @@ sysinfo <- function(ip) {
 
     lastbk = try(lastdbBackup(), silent = TRUE)
 
-    if( inherits(lastbk, 'try-error') || lastbk > 30) Wrn("Please check BACKUP system !!")
+    if( !inherits(lastbk, 'difftime') || lastbk > 180) Wrn("Please check BACKUP system !!")
 
     o2 = paste(badge('Last DB backup'), paste(lastbk, 'minutes ago') )
 
