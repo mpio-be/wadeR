@@ -15,7 +15,7 @@ NULL
     options(wader.db        = "REPHatBARROW")
     options(wader.user      = 'wader')
     options(wader.freshdata = 60)
-    options(wader.dbbackup  = '~/ownCloud/BACKUPS/db/')
+    options(wader.dbbackup  = path.expand('~/ownCloud/BACKUPS/db/') )
 
     options(wader.IDs = 70101:70427 )
 

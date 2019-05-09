@@ -27,26 +27,53 @@ idbq <- function(query, year , db  , host = ip() , user = getOption('wader.user'
   }
 
 
+#' lastdbBackup
+#' @export
+lastdbBackup <- function(path = getOption('wader.dbbackup') ) {
+
+
+  if(dir.exists(path)) {
+    o = data.table( p = list.files(path, full.names = TRUE))
+    }
+
+  if(nrow(o) > 0) {
+    o = o[, file.info(p, extra_cols = FALSE), by = 1:nrow(o)]
+    o = o[, difftime(Sys.time(), max(ctime, na.rm = TRUE), units = 'mins') %>% round]
+  }
+
+  if( !inherits(o, 'difftime'))
+    o = 'backup system is not installed or has crashed!'
+
+    o
+
+  }
+
+
 #' @title   database backup 
 #' @return  NULL
 #' @note    similar to sdb::mysqldump but tailored for a field database.
 #' @export
 db_backup = function(year=data.table::year(Sys.Date() ) , db=yy2dbnam(year)  , host = ip() , 
     user = getOption('wader.user'), pwd = wadeR::pwd(), outdir = getOption('wader.dbbackup'), 
-    startDate = as.Date("2019-01-06") ) {
+    startMonth = 6, startDay = 1 ) {
 
+  # find the last backup file before saving
+  last_bk_path = data.table(fn = list.files(outdir, full.names = TRUE))
+  last_bk_path[, dtime := file.info(fn)$mtime ]
+  last_bk_path = last_bk_path[max(dtime) == dtime, fn]
 
+  # save current backup
+  filepath = glue('{outdir}', Sys.time() %>% make.names  %>% str_remove("X"), '.sql' )
+  syscall = glue('mysqldump --host={host} --user={user} --password={pwd} --databases  {db} --routines  --result-file={filepath} --verbose ')
+  system(syscall)
 
-  syscall = glue('mysqldump        --host= {crd$host}
-               --user=      {crd$user}
-               --password=  {crd$pwd}
-               --databases   {db}
-               --routines 
-               --result-file= filepath
-               --verbose ')
+  # remove last_bk_path ?
+  doit = tools::md5sum(lb) == tools::md5sum(last_bk_path)
+  if(length(doit) == 0) doit = FALSE
 
-
-    #*/15 * * * * mysqldump   --host=127.0.0.1 --user=wader --password=wader --databases FIELD_REPHatBARROW --routines  --result-file=/home/wader/ownCloud/BACKUPS/db/$(date +\%Y-\%m-\%d-\%H.\%M.\%S).sql
+  if(doit)
+    file.remove(last_bk_path)
+ 
 
   }
 
@@ -135,26 +162,6 @@ dayofyear2date <- function(dayofyear, year) {
 
 
 
-#' lastdbBackup
-#' @export
-lastdbBackup <- function(path = getOption('wader.dbbackup') ) {
-
-
-  if(dir.exists(path)) {
-    o = data.table( p = list.files(path, full.names = TRUE))
-    }
-
-  if(nrow(o) > 0) {
-    o = o[, file.info(p, extra_cols = FALSE), by = 1:nrow(o)]
-    o = o[, difftime(Sys.time(), max(ctime, na.rm = TRUE), units = 'mins') %>% round]
-  }
-
-  if( !inherits(o, 'difftime'))
-    o = 'backup system is not installed or has crashed!'
-
-    o
-
-  }
 
 
 #' dbTablesStatus
