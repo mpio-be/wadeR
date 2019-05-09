@@ -22,5 +22,5 @@ NULL
 
     }
 
-#' @import anytime
+#' @import anytime glue
 NULL

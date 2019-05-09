@@ -17,7 +17,6 @@ Depends:
     ggthemes,
     ggrepel,
     data.table,
-    devtools,
     mapproj,
     lubridate,
     foreach,
@@ -25,18 +24,19 @@ Depends:
     V8
 Imports:
     sdb,
-    anytime
+    anytime,
+    glue,
+    gtools
 Suggests:
     shiny,
     markdown,
     jsonlite,
     rhandsontable,
     shinydashboard,
-    shinyBS,
     shinyjs,
     shinytoastr,
     leaflet,
-    gtools
+    devtools
 Remotes: 
     mpio-be/sdb,
     mpio-be/DataEntry

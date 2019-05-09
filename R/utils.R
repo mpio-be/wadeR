@@ -1,3 +1,62 @@
+#' make field database name from year
+#' @export
+yy2dbnam <- function(year = format(Sys.Date(), format = "%Y") , db = getOption('wader.db') ) {
+  if(year == format(Sys.Date(), format = "%Y") )
+     paste('FIELD', 'REPHatBARROW', sep = "_") else
+     paste('FIELD', year, 'REPHatBARROW', sep = "_")
+
+  }
+
+#' query function
+#' @export
+#' @importFrom sdb enhanceOutput
+idbq <- function(query, year , db  , host = ip() , user = getOption('wader.user'), pwd, enhance = TRUE ) {
+
+  if(missing(year)) year = data.table::year(Sys.Date() )
+  if(missing(db))   db   = yy2dbnam(year)
+  if(missing(host)) host = ip()
+  if(missing(pwd))  pwd  = wadeR::pwd() 
+
+  con =  dbConnect(RMySQL::MySQL(), host = host, user = user, db = db, password = pwd)
+  on.exit(  dbDisconnect (con)  )
+
+  o = dbGetQuery(con, query) %>% data.table
+  if(enhance)
+    sdb::enhanceOutput(o)
+  o
+  }
+
+
+#' @title   database backup 
+#' @return  NULL
+#' @note    similar to sdb::mysqldump but tailored for a field database.
+#' @export
+db_backup = function(year=data.table::year(Sys.Date() ) , db=yy2dbnam(year)  , host = ip() , 
+    user = getOption('wader.user'), pwd = wadeR::pwd(), outdir = getOption('wader.dbbackup'), 
+    startDate = as.Date("2019-01-06") ) {
+
+
+
+  syscall = glue('mysqldump        --host= {crd$host}
+               --user=      {crd$user}
+               --password=  {crd$pwd}
+               --databases   {db}
+               --routines 
+               --result-file= filepath
+               --verbose ')
+
+
+    #*/15 * * * * mysqldump   --host=127.0.0.1 --user=wader --password=wader --databases FIELD_REPHatBARROW --routines  --result-file=/home/wader/ownCloud/BACKUPS/db/$(date +\%Y-\%m-\%d-\%H.\%M.\%S).sql
+
+  }
+
+
+
+
+
+
+
+
 #' @title   Find the ip address. 
 #' @return  The host external ip. It falls back to localhost on error. 
 #' @note    The function is used by idbq and in global.R files
@@ -52,35 +111,6 @@ nest2species <- function(nest){
     })
 
    }
-
-
-#' make field database name from year
-#' @export
-yy2dbnam <- function(year = format(Sys.Date(), format = "%Y") , db = getOption('wader.db') ) {
-  if(year == format(Sys.Date(), format = "%Y") )
-     paste('FIELD', 'REPHatBARROW', sep = "_") else
-     paste('FIELD', year, 'REPHatBARROW', sep = "_")
-
-  }
-
-#' query function
-#' @export
-#' @importFrom sdb enhanceOutput
-idbq <- function(query, year , db  , host = ip() , user = getOption('wader.user'), pwd, enhance = TRUE ) {
-
-  if(missing(year)) year = data.table::year(Sys.Date() )
-  if(missing(db))   db   = yy2dbnam(year)
-  if(missing(host)) host = ip()
-  if(missing(pwd))  pwd  = wadeR::pwd() 
-
-  con =  dbConnect(RMySQL::MySQL(), host = host, user = user, db = db, password = pwd)
-  on.exit(  dbDisconnect (con)  )
-
-  o = dbGetQuery(con, query) %>% data.table
-  if(enhance)
-    sdb::enhanceOutput(o)
-  o
-  }
 
 
 #' dayofyear2date
@@ -188,6 +218,7 @@ combo <- function(LL, LR) {
 #' @title     create all color combinations
 #' @param v   character vector containing the colors
 #' @export
+#' @importFrom gtools permutations
 #' @examples
 #' colorCombos()
 colorCombos <- function(v = c('R', 'Y', 'W', 'DB', 'G', 'O') ) {
