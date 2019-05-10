@@ -7,26 +7,27 @@ Authors@R: c(
            person("Johannes", "Krietsch", email = "jkrietsch@orn.mpg.de", role = "ctb") )
 Depends:
     R (>= 3.3.2),
+    data.table,
+    DataEntry.validation,
+    DataEntry
+Imports:
     utils, 
     methods,
-    DataEntry,
     magrittr,
     stringr,
+    sdb,
+    anytime,
+    glue,
+    gtools,
     rgdal,
     ggplot2,
     ggthemes,
     ggrepel,
-    data.table,
     mapproj,
     lubridate,
     foreach,
     RColorBrewer,
     V8
-Imports:
-    sdb,
-    anytime,
-    glue,
-    gtools
 Suggests:
     shiny,
     markdown,
@@ -40,6 +41,7 @@ Suggests:
 Remotes: 
     mpio-be/sdb,
     mpio-be/DataEntry
+    mpio-be/DataEntry.validation
 VignetteBuilder: knitr
 LazyData: true
 License: GPL > 2

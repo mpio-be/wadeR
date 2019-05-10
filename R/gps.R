@@ -116,7 +116,7 @@ upload_gps <- function(p, gps_id) {
 
     # fresh data check
     if (wp[ , any(as.Date(datetime_) + getOption('wader.freshdata') < Sys.Date()) ] )
-        stop( Wrn( paste('Slightly moldy data (older than', getOption('wader.freshdata'), 'days). 
+        stop( Wrn( paste('Slightly mouldy data (older than', getOption('wader.freshdata'), 'days). 
                     To be on the safe side I will not import those data.') ) )
 
 

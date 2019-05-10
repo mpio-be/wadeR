@@ -14,13 +14,14 @@ NULL
 
     options(wader.db        = "REPHatBARROW")
     options(wader.user      = 'wader')
-    options(wader.freshdata = 60)
+    options(wader.freshdata = 60) # for GPS import
     options(wader.dbbackup  = path.expand('~/ownCloud/BACKUPS/db/') )
 
-    options(wader.IDs = 70101:70427 )
 
 
     }
 
-#' @import anytime glue
+#' @import  utils  methods magrittr stringr  anytime glue
+#' @import  rgdal ggplot2 ggthemes ggrepel mapproj lubridate foreach RColorBrewer V8 
+
 NULL

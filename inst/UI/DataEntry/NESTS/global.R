@@ -1,7 +1,5 @@
 
-
-# shiny::runApp('inst/UI/DataEntry/NESTS', port = 1111)
-
+# shiny::runApp('inst/UI/DataEntry/NESTS' , launch.browser =  TRUE)
 
 # settings
   source(system.file('UI', 'global_settings.R', package = 'wadeR'))
@@ -26,7 +24,7 @@
 
   authors = idbq('select initials from AUTHORS')$initials
 
-  inspector= getS3method('inspector', tableName)
+
 
 # Define UI table  
   uitable = emptyFrame(user, host, db, pwd, tableName, n = n_empty_lines, excludeColumns, 

@@ -7,7 +7,7 @@ yy2dbnam <- function(year = format(Sys.Date(), format = "%Y") , db = getOption('
 
   }
 
-#' query function
+
 #' @export
 #' @importFrom sdb enhanceOutput
 idbq <- function(query, year , db  , host = ip() , user = getOption('wader.user'), pwd, enhance = TRUE ) {
@@ -125,7 +125,7 @@ pwd = function(p = paste(path.expand("~"), '.wader.pwd', sep = .Platform$file.se
 
 nest2species <- function(nest){
 
-  o = sapply(nest, function (x) {
+ sapply(nest, function (x) {
    n = substr(x, 1, 1)
    ifelse(n == 'R', 'REPH',
     ifelse(n == 'N', 'RNPH',
