@@ -55,25 +55,27 @@ lastdbBackup <- function(path = getOption('wader.dbbackup') ) {
 #' @export
 db_backup = function(year=data.table::year(Sys.Date() ) , db=yy2dbnam(year)  , host = ip() , 
     user = getOption('wader.user'), pwd = wadeR::pwd(), outdir = getOption('wader.dbbackup'), 
-    startMonth = 6, startDay = 1 ) {
+    startMonth = 5, startDay = 25 ) {
 
-  # find the last backup file before saving
-  last_bk_path = data.table(fn = list.files(outdir, full.names = TRUE))
-  last_bk_path[, dtime := file.info(fn)$mtime ]
-  last_bk_path = last_bk_path[max(dtime) == dtime, fn]
+    if(Sys.time() > ISOdate(year, startMonth, startDay) ) {
 
-  # save current backup
-  filepath = glue('{outdir}', Sys.time() %>% make.names  %>% str_remove("X"), '.sql' )
-  syscall = glue('mysqldump --host={host} --user={user} --password={pwd} --databases  {db} --routines  --result-file={filepath} --verbose ')
-  system(syscall)
+    # find the last backup file before saving
+    last_bk_path = data.table(fn = list.files(outdir, full.names = TRUE))
+    last_bk_path[, dtime := file.info(fn)$mtime ]
+    last_bk_path = last_bk_path[max(dtime) == dtime, fn]
 
-  # remove last_bk_path ?
-  doit = tools::md5sum(lb) == tools::md5sum(last_bk_path)
-  if(length(doit) == 0) doit = FALSE
+    # save current backup
+    filepath = glue('{outdir}', Sys.time() %>% make.names  %>% str_remove("X"), '.sql' )
+    syscall = glue('mysqldump --host={host} --user={user} --password={pwd} --databases  {db} --routines  --result-file={filepath} --verbose ')
+    system(syscall)
 
-  if(doit)
-    file.remove(last_bk_path)
- 
+    # remove last_bk_path ?
+    doit = tools::md5sum(last_bk_path) == tools::md5sum(last_bk_path)
+    if(length(doit) == 0) doit = FALSE
+
+    if(doit)
+      file.remove(last_bk_path)
+    }
 
   }
 
