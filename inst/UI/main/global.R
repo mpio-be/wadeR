@@ -5,7 +5,8 @@
 # settings
     sapply(c('wadeR', 'knitr', 'ggplot2', 'ggthemes',
             'shiny','shinyjs','shinydashboard','shinytoastr'),
-      function(x) suppressPackageStartupMessages( require(x, character.only = TRUE, quietly = TRUE) ))
+      function(x) suppressPackageStartupMessages( require(x, 
+      	character.only = TRUE, quietly = TRUE) ))
     options(stringsAsFactors = FALSE)
 
 Y = year(Sys.Date())

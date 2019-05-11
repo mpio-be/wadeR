@@ -21,13 +21,18 @@ dashboardPage(skin = 'black',
         menuItem("Nests",          tabName  = "nestsdata_tab",      icon = icon("caret-right") )
         ),
 
-      menuItem("Maps",  icon = icon("map") ,
+      menuItem("Static maps",  icon = icon("map") ,
         menuSubItem("Nests",           tabName  = "nestsmap_tab",         icon = icon("caret-right") ),
         menuSubItem("Resightings",     tabName  = "resightsmap_tab",      icon = icon("caret-right") ),
         menuSubItem("Resights by id",  tabName  = "resightsbyidmap_tab",  icon = icon("caret-right") ),
-        menuSubItem("Tracks",          tabName  = "tracksmap_tab",  icon = icon("caret-right") ),
-        menuSubItem('INTERACTIVE',     href     = '/wadeR/imap',        newtab = TRUE)
-
+        menuSubItem("Tracks",          tabName  = "tracksmap_tab",  icon = icon("caret-right") )
+     
+        ),
+      
+      menuItem("Dynamic maps",  icon = icon("map") ,
+        menuSubItem('Nests',     href     = '/wadeR/imap',        newtab = TRUE),
+        menuSubItem('gps points',     href     = '/wadeR/imap',        newtab = TRUE)
+     
         ),
 
       menuItem("Data entry",  icon = icon("database"),

@@ -4,8 +4,8 @@
 \alias{install_ui}
 \title{Install UI-s on localhost}
 \usage{
-install_ui(pwd, install_package = TRUE, root = "/srv/shiny-server",
-  IP = ip())
+install_ui(pwd = askpass::askpass(), install_package = TRUE,
+  root = "/srv/shiny-server", IP = ip())
 }
 \arguments{
 \item{pwd}{root pwd}

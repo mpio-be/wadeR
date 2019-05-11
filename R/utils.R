@@ -80,12 +80,6 @@ db_backup = function(year=data.table::year(Sys.Date() ) , db=yy2dbnam(year)  , h
   }
 
 
-
-
-
-
-
-
 #' @title   Find the ip address. 
 #' @return  The host external ip. It falls back to localhost on error. 
 #' @note    The function is used by idbq and in global.R files
@@ -316,7 +310,7 @@ index.html <- function(IP = ip() ) {
 #' @examples
 #' install_ui() 
 #'
-install_ui <- function(pwd, install_package = TRUE, root = "/srv/shiny-server", IP = ip() ) {
+install_ui <- function(pwd = askpass::askpass() , install_package = TRUE, root = "/srv/shiny-server", IP = ip() ) {
 
   if(install_package) {
     cat('Install package...')

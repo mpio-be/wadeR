@@ -21,7 +21,7 @@ NULL
 
     }
 
-#' @import  utils  methods magrittr stringr  anytime glue
-#' @import  rgdal ggplot2 ggthemes ggrepel mapproj lubridate foreach RColorBrewer V8 
+#' @import  utils  methods magrittr stringr  anytime glue 
+#' @import  sp rgdal ggplot2 ggthemes ggrepel mapproj lubridate foreach RColorBrewer V8 
 
 NULL

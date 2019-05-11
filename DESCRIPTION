@@ -8,7 +8,6 @@ Authors@R: c(
 Depends:
     R (>= 3.3.2),
     data.table,
-    DataEntry.validation,
     DataEntry
 Imports:
     utils, 
@@ -27,21 +26,21 @@ Imports:
     lubridate,
     foreach,
     RColorBrewer,
-    V8
+    V8,
+    sp
 Suggests:
     shiny,
-    markdown,
-    jsonlite,
-    rhandsontable,
     shinydashboard,
     shinyjs,
     shinytoastr,
+    markdown,
+    jsonlite,
+    rhandsontable,
     leaflet,
     devtools
 Remotes: 
     mpio-be/sdb,
     mpio-be/DataEntry,
-    mpio-be/DataEntry.validation
 VignetteBuilder: knitr
 LazyData: true
 License: GPL > 2
