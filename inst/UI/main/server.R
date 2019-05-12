@@ -13,7 +13,7 @@ shinyServer(function(input, output, session) {
   output$sys_show <- renderUI({
     invalidateLater(2000)
 
-    sysinfo(ip = IP)
+    sysinfo(ip = ip()  )
 
   })
 

@@ -13,5 +13,3 @@ Y = year(Sys.Date())
 
 tags = shiny::tags
  
-IP = ip() 
-
