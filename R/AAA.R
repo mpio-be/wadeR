@@ -17,11 +17,11 @@ NULL
     options(wader.freshdata = 60) # for GPS import
     options(wader.dbbackup  = path.expand('~/ownCloud/BACKUPS/db/') )
 
-
+    options(xtable.comment = FALSE)
 
     }
 
-#' @import  utils  methods magrittr stringr  anytime glue 
+#' @import  utils  methods magrittr stringr  anytime glue xtable
 #' @import  sp rgdal ggplot2 ggthemes ggrepel mapproj lubridate foreach RColorBrewer V8 
 
 NULL

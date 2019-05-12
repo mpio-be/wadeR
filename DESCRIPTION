@@ -27,7 +27,8 @@ Imports:
     foreach,
     RColorBrewer,
     V8,
-    sp
+    sp,
+    xtable
 Suggests:
     shiny,
     shinydashboard,
