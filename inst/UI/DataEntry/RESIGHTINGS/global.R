@@ -6,7 +6,8 @@
 
  
   tableName       = 'RESIGHTINGS'
-  excludeColumns = c('pk', 'nov')
+  package         = 'wadeR'
+  excludeColumns  = c('pk', 'nov')
   n_empty_lines   =  30
   
 # table summary function
@@ -21,10 +22,9 @@
 
   comments = column_comment(user, host, db, pwd, tableName,excludeColumns)
 
-
   authors = idbq('select initials from AUTHORS')$initials
 
-  inspector= getS3method('inspector', tableName)
+
 
 # Define UI table  
   uitable = emptyFrame(user, host, db, pwd, tableName, n = n_empty_lines, excludeColumns) %>% 

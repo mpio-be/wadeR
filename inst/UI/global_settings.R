@@ -1,6 +1,7 @@
 
 
-sapply(c('DataEntry', 'wadeR' , 'data.table', 'shinyjs', 'tableHTML', 'glue'),
+sapply(c('DataEntry', 'DataEntry.validation', 'wadeR' , 
+       'data.table', 'shinyjs', 'tableHTML', 'glue', 'stringr', 'magrittr'),
 require, character.only = TRUE, quietly = TRUE)
 
 tags   = shiny::tags

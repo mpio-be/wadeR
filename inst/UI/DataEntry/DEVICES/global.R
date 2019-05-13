@@ -4,8 +4,8 @@
 # settings
   source(system.file('UI', 'global_settings.R', package = 'wadeR'))
 
-
   tableName       = 'DEVICES'
+  package         = 'wadeR'
   excludeColumns  = c('pk', 'nov')
   n_empty_lines   =  30
   
@@ -21,7 +21,6 @@
 
   comments = column_comment(user, host, db, pwd, tableName,excludeColumns)
 
-  inspector= getS3method('inspector', tableName)
 
 # Define UI table  
   uitable = emptyFrame(user, host, db, pwd, tableName, n = n_empty_lines, excludeColumns) %>% 

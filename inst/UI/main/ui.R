@@ -40,7 +40,7 @@ dashboardPage(skin = 'black',
         menuSubItem('NESTS',      href = '/wadeR/DataEntry/NESTS',        newtab = TRUE),
         menuSubItem('RESIGHTINGS',href = '/wadeR/DataEntry/RESIGHTINGS',  newtab = TRUE),
         menuSubItem('DEVICES',    href = '/wadeR/DataEntry/DEVICES',      newtab = TRUE),
-        menuSubItem('phpmyadmin', href = paste0('http://',IP,'/phpmyadmin/'),newtab = TRUE)
+        menuSubItem('phpmyadmin', href = paste0('http://', ip() ,'/phpmyadmin/'),newtab = TRUE)
         ),
 
       # CONDITIONAL PANNELS

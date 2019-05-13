@@ -5,6 +5,7 @@
 
 
   tableName       = 'CAPTURES'
+  package         = 'wadeR'
   excludeColumns = c('pk', 'PC', 'nov')
   n_empty_lines   =  30
   
@@ -23,8 +24,6 @@
 
   authors = idbq('select initials from AUTHORS')$initials
 
-
-  # inspector= getS3method('inspector', tableName)
 
 
 # Define UI table  

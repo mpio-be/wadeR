@@ -6,7 +6,8 @@
 
 
   tableName       = 'NESTS'
-  excludeColumns = c('pk', 'nov')
+  package         = 'wadeR'
+  excludeColumns  = c('pk', 'nov')
   n_empty_lines   =  30
   
 # table summary function
