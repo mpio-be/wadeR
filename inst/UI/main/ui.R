@@ -13,7 +13,7 @@ dashboardPage(skin = 'black',
 
       menuItem("GPS management",   tabName  = "gps_tab",   icon = icon("hdd-o") ),
 
-      menuItem("Nests dashboard",  tabName  = "nestsDashSummary_tab",      icon = icon("sun-o") ),
+      menuItem("Nests dashboard",  tabName  = "nestsDashSummary_tab",      icon = icon("dot-circle") ),
 
       menuItem("Data viewer",  icon = icon("binoculars") ,
         menuSubItem("Captures",    tabName  = "capturesdata_tab",   icon = icon("caret-right") ),
@@ -57,7 +57,7 @@ dashboardPage(skin = 'black',
       # NESTS
         div(class = "col-sm-12 text-center",
         conditionalPanel(
-          condition = "input.menubar == 'nestsmap_tab'",
+          condition = "input.menubar == 'nestsmap_tab' ",
           selectInput("species", "Species:",multiple = TRUE, selected = 'REPH',
               c("AMGP", "BASA", "DUNL", "RNPH", "PESA", "REPH", "SESA", "LBDO") ),
 
@@ -72,6 +72,17 @@ dashboardPage(skin = 'black',
 
           downloadButton('nestsmap_pdf', 'PDF map', style="font-size:25px;" )
           ) ),
+
+
+      # EGGS_CHICKS_FIELD
+        div(class = "col-sm-12 text-center",
+        conditionalPanel(
+          condition = "input.menubar == 'nestsDashSummary_tab'",
+          selectInput("species2", "Species:",multiple = FALSE, selected = 'REPH',
+              c( "REPH", "LBDO") )
+
+          ) ),
+
 
       # RESIGHTINGS
         div(class = "col-sm-12 text-center",
