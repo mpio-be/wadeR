@@ -59,7 +59,7 @@ dashboardPage(skin = 'black',
         conditionalPanel(
           condition = "input.menubar == 'nestsmap_tab' ",
           selectInput("species", "Species:",multiple = TRUE, selected = 'REPH',
-              c("AMGP", "BASA", "DUNL", "RNPH", "PESA", "REPH", "SESA", "LBDO") ),
+              getOption('wader.species')),
 
           selectInput("nest_state", "Nest state:",multiple = TRUE,
               c("Found"             = "F",
@@ -79,7 +79,7 @@ dashboardPage(skin = 'black',
         conditionalPanel(
           condition = "input.menubar == 'nestsDashSummary_tab'",
           selectInput("species2", "Species:",multiple = FALSE, selected = 'REPH',
-              c( "REPH", "LBDO") )
+             getOption('wader.species')  )
 
           ) ),
 

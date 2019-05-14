@@ -7,7 +7,7 @@
 reporter_NESTS(Species)
 }
 \arguments{
-\item{species}{species}
+\item{Species}{species}
 }
 \value{
 a path to the pdf file

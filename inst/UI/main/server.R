@@ -1,7 +1,7 @@
 
 
 shinyServer(function(input, output, session) {
-# observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalEnv)) )
+ observe( on.exit( assign('input', reactiveValuesToList(input) , envir = .GlobalEnv)) )
 
 # main board
   output$overview_show <- renderTable({
@@ -101,7 +101,7 @@ shinyServer(function(input, output, session) {
   output$download_nestsSummary <- downloadHandler(
   filename = 'nests_summary.pdf',
   content = function(file) {
-    f = NESTS_SUMMARY()
+    f = reporter_NESTS(input$species2)
     file.copy(f, file)
   })
 
@@ -121,11 +121,20 @@ shinyServer(function(input, output, session) {
 
   # hatching date show
     output$hatching_show <- renderPlot({
-      x = idbq('select min(est_hatch_date) est_hatch_date  from EGGS_CHICKS group by nest')
+      x = idbq('
+ 
+        (select min(est_hatch_date) est_hatch_date, nest  from EGGS_CHICKS group by nest)  
+         UNION
+        (select min(est_hatch_date) est_hatch_date, nest  from EGGS_CHICKS_field group by nest) 
+        ')
+      x[, species := nest2species(nest)]
+   
       x[, est_hatch_date := as.Date(est_hatch_date)]
 
-      ggplot(x[est_hatch_date > as.Date('2017-06-28')], aes(est_hatch_date)) + geom_bar() +
-      theme_gdocs()
+      ggplot(x, aes(est_hatch_date)) + geom_bar() +
+        facet_wrap(~species, ncol = 1) + 
+        xlab("Estimated hatsihng date") + 
+        theme_gdocs()
 
 
 
