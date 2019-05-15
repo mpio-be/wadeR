@@ -34,6 +34,7 @@ Suggests:
     shinydashboard,
     shinyjs,
     shinytoastr,
+    shinyWidgets,
     markdown,
     jsonlite,
     rhandsontable,
