@@ -310,7 +310,9 @@ index.html <- function(IP = ip() ) {
 #' @examples
 #' install_ui() 
 #'
-install_ui <- function(pwd = askpass::askpass() , install_package = TRUE, root = "/srv/shiny-server", IP = ip() ) {
+install_ui <- function(pwd , install_package = TRUE, root = "/srv/shiny-server", IP = ip() ) {
+
+  if(missing(pwd)) pwd = askpass::askpass() 
 
   if(install_package) {
     cat('Install package...')
