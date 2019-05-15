@@ -27,7 +27,7 @@ nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/", db) {
   O = foreach(i = 1: nrow(newff)  , .combine = rbind, .errorhandling = 'remove')  %do% {
     di = fread( paste( dir, newff[i, f] , sep = "/"  ))
     setnames(di, make.names(names(di)))
-    di = di[, .(Device.ID,Timestamp, Latitude.decimal, Longitude.decimal,Altitude,Battery.voltage)]
+    di = di[, .(Device.ID,Timestamp, Latitude.decimal, Longitude.decimal,Altitude,Speed,Battery.voltage)]
     di[, Timestamp := anytime(Timestamp, asUTC = TRUE ,tz = "UTC") ]
     di[, filenam := newff[i, f] ]
     di
@@ -42,9 +42,9 @@ nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/", db) {
 
     dbnam = idbq(q = "select * from NANO_TAGS where false") %>% names
     setnames(O, dbnam)
-    
+
     out= dbWriteTable(con,'NANO_TAGS', O, append = TRUE, row.names = FALSE)
- 
+
     return(out)
   } else FALSE
 
