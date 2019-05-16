@@ -43,12 +43,12 @@ hatch_est <- function(x, y) {
   d[, species := nest2species(nest) ]
 
 
-  parm = data.table(species   = c('REPH',  'RNPH',  'PESA'),
-                 a1   = c(-15.29,  -16.61,  -17.47),
-                 b1   = c(0.73,    1.08,    0.82),
-                 a2   = c(-3.03,   -12.99,  -7.29),
-                 b2   = c(1.41,    2.51,     1.23),
-                 c2   = c(-0.10,   0.02,    -0.06) )
+  parm = data.table(species   = c('REPH',  'RNPH',  'PESA', 'LBDO'),
+                         a1   = c(-15.29,  -16.61,  -17.47, -17.2),
+                         b1   = c(0.73,    1.08,     0.82,   1.4),
+                         a2   = c(-3.03,   -12.99,  -7.29,  -4.7),
+                         b2   = c(1.41,    2.51,     1.23,   1.06),
+                         c2   = c(-0.10,   0.02,    -0.06,  -0.1) )
 
    d = merge(d, parm, by = 'species', sort = FALSE, all.x = TRUE)
 
