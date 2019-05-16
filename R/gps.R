@@ -78,8 +78,12 @@ upload_gps <- function(p, gps_id) {
 
     Msg( "Please wait for the pop-ups to appear and then safely remove your GPS." )
 
-    con = dbcon(user = getOption('wader.user'), host = getOption('wader.host'), db = yy2dbnam(year(Sys.Date() )) )
-    on.exit(  closeCon (con)  )
+
+    con =  dbConnect(RMySQL::MySQL(), host = ip(), user = getOption('wader.user'), 
+        db = yy2dbnam(data.table::year(Sys.Date() )), password = wadeR::pwd()  )
+    on.exit(  dbDisconnect (con)  )
+
+
 
 
     wp = foreach(i = p, .errorhandling= 'pass') %do% {

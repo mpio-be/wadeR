@@ -179,14 +179,8 @@ dbTableUpdate <- function(user= getOption('wader.user'), host, db, password = pw
   if(missing(db)) db = yy2dbnam(data.table::year(Sys.Date()))
 
 
-  con = dbcon(user = user,  host = host)
-  on.exit(dbDisconnect(con))
-
   con =  dbConnect(RMySQL::MySQL(), host = host, user = user, db = db)
   on.exit(  dbDisconnect (con)  )
-
-
-
 
 
   dbExecute(con, paste('USE', db) )
