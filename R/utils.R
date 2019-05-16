@@ -15,7 +15,7 @@ idbq <- function(query, year , db  , host = ip() , user = getOption('wader.user'
   if(missing(year)) year = data.table::year(Sys.Date() )
   if(missing(db))   db   = yy2dbnam(year)
   if(missing(host)) host = ip()
-  if(missing(pwd))  pwd  = wadeR::pwd() 
+  if(missing(pwd))  pwd  = wadeR::pwd()
 
   con =  dbConnect(RMySQL::MySQL(), host = host, user = user, db = db, password = pwd)
   on.exit(  dbDisconnect (con)  )
@@ -49,12 +49,12 @@ lastdbBackup <- function(path = getOption('wader.dbbackup') ) {
   }
 
 
-#' @title   database backup 
+#' @title   database backup
 #' @return  NULL
 #' @note    similar to sdb::mysqldump but tailored for a field database.
 #' @export
-db_backup = function(year=data.table::year(Sys.Date() ) , db=yy2dbnam(year)  , host = ip() , 
-    user = getOption('wader.user'), pwd = wadeR::pwd(), outdir = getOption('wader.dbbackup'), 
+db_backup = function(year=data.table::year(Sys.Date() ) , db=yy2dbnam(year)  , host = ip() ,
+    user = getOption('wader.user'), pwd = wadeR::pwd(), outdir = getOption('wader.dbbackup'),
     startMonth = 5, startDay = 25 ) {
 
     if(Sys.time() > ISOdate(year, startMonth, startDay) ) {
@@ -80,8 +80,8 @@ db_backup = function(year=data.table::year(Sys.Date() ) , db=yy2dbnam(year)  , h
   }
 
 
-#' @title   Find the ip address. 
-#' @return  The host external ip. It falls back to localhost on error. 
+#' @title   Find the ip address.
+#' @return  The host external ip. It falls back to localhost on error.
 #' @note    The function is used by idbq and in global.R files
 #' @export
 ip = function() {
@@ -218,13 +218,15 @@ combo <- function(LL, LR) {
 #' @importFrom gtools permutations
 #' @examples
 #' colorCombos()
-colorCombos <- function(v = c('R', 'Y', 'W', 'DB', 'G', 'O') ) {
+colorCombos <- function(v = c('R', 'Y', 'W', 'DB', 'G', 'O', 'P') ) {
   setA       = gtools::permutations(length(v), 3, v, repeats=TRUE)
   L_combos17 = paste0('M', '-', setA[,1], ',', setA[,2], '|', 'Y', '-', setA[,3])
   R_combos17 = paste0('M', '-', setA[,3], '|',  'Y', '-', setA[,1], ',', setA[,2])
   L_combos18 = paste0('M', '-', setA[,1], ',', setA[,2], '|', 'W', '-', setA[,3])
   R_combos18 = paste0('M', '-', setA[,3], '|',  'W', '-', setA[,1], ',', setA[,2])
-  c(L_combos17, R_combos17, L_combos18, R_combos18)
+  L_combos19 = paste0('M', '-', setA[,1], ',', setA[,2], '|', 'G', '-', setA[,3])
+  R_combos19 = paste0('M', '-', setA[,3], '|',  'G', '-', setA[,1], ',', setA[,2])
+    c(L_combos17, R_combos17, L_combos18, R_combos18, L_combos19, R_combos19)
 }
 
 
@@ -302,11 +304,11 @@ index.html <- function(IP = ip() ) {
 #' @export
 #' @return NULL
 #' @examples
-#' install_ui() 
+#' install_ui()
 #'
 install_ui <- function(pwd , install_package = TRUE, root = "/srv/shiny-server", IP = ip() ) {
 
-  if(missing(pwd)) pwd = askpass::askpass() 
+  if(missing(pwd)) pwd = askpass::askpass()
 
   if(install_package) {
     cat('Install package...')
@@ -322,13 +324,13 @@ install_ui <- function(pwd , install_package = TRUE, root = "/srv/shiny-server",
   cat('Install user interfaces...')
   system( paste('echo', shQuote(pwd), '| sudo -S rm -R', uipath ),
       wait = TRUE,ignore.stderr = TRUE )
- 
+
 
   system( paste('echo', shQuote(pwd), '| sudo -S mkdir -p', uipath),
       wait = TRUE,ignore.stderr = TRUE )
 
 
-  system( paste('echo', shQuote(pwd), '| sudo -S cp -a', uisrc, uipath) ,  
+  system( paste('echo', shQuote(pwd), '| sudo -S cp -a', uisrc, uipath) ,
     wait = TRUE,ignore.stderr = TRUE )
 
 
@@ -343,12 +345,12 @@ install_ui <- function(pwd , install_package = TRUE, root = "/srv/shiny-server",
   cat('done\n')
 
   cat('Restarting web server...')
-  system( paste('echo', shQuote(pwd), '| sudo -S systemctl restart shiny-server') ,  
+  system( paste('echo', shQuote(pwd), '| sudo -S systemctl restart shiny-server') ,
     wait = TRUE,ignore.stderr = TRUE )
   cat('done\n')
 
   cat('Go to', ip() )
-  
+
 
 
   }
@@ -359,20 +361,20 @@ install_ui <- function(pwd , install_package = TRUE, root = "/srv/shiny-server",
 #' @rdname install_ui
 #' @return NULL
 #' @examples
-#' reboot_webserver() 
+#' reboot_webserver()
 #'
 reboot_webserver <- function(pwd) {
 
-  if(missing(pwd)) pwd = askpass::askpass() 
+  if(missing(pwd)) pwd = askpass::askpass()
 
 
   cat('Restarting web server...')
-  system( paste('echo', shQuote(pwd), '| sudo -S systemctl restart shiny-server') ,  
+  system( paste('echo', shQuote(pwd), '| sudo -S systemctl restart shiny-server') ,
     wait = TRUE,ignore.stderr = TRUE )
   cat('done\n')
 
   cat('Go to', ip() )
-  
+
 
 
   }
