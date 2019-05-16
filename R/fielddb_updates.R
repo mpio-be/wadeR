@@ -68,7 +68,7 @@ NESTS2EGGS_CHICKS <- function(Species = 'REPH', table = 'EGGS_CHICKS', db = 'FIE
 
     e = dbGetQuery(con, "select nest, max(clutch_size) clutch from NESTS
                  where nest not in (SELECT distinct nest from EGGS_CHICKS)
-                group by nest")
+                group by nest") %>% data.table
     e[, species := nest2species(nest)]
     e = e[ species %in% Species]
     e = e[, .(pk = rep(NA, each = clutch)) , by = nest]

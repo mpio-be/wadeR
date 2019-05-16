@@ -16,6 +16,5 @@ species abbreviation (REPH, RNPH or PESA)
 this function extracts the species from the nest ID (R = REPH, N = RNPH. P = PESA)
 }
 \examples{
- #----------------------------------------------------#
 nest2species( nest = c('R101', 'P201', 'X102', 'N101')  )
 }

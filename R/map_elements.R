@@ -30,6 +30,7 @@ theme_wader  <- function() {
 #' @export
 #' @rdname maps
 #' @examples
+#' data("map_layers")
 #' x = map_layers
 #' coord_wader(x)
 coord_wader  <- function(x = map_layers) {

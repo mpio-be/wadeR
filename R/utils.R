@@ -114,7 +114,6 @@ pwd = function(p = paste(path.expand("~"), '.wader.pwd', sep = .Platform$file.se
 #' @return               species abbreviation (REPH, RNPH or PESA)
 #' @export
 #' @examples
-#'  #----------------------------------------------------#
 #' nest2species( nest = c('R101', 'P201', 'X102', 'N101')  )
 
 nest2species <- function(nest){

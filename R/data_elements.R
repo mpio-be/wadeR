@@ -2,7 +2,10 @@
 
 #' projp
 #' @export
-data.tableTransform <- function(DT, proj = '+proj=omerc +lat_0=71.3332703512554 +lonc=-156.654269449915 +alpha=-41.5 +gamma=0.0 +k=1.000000 +x_0=0.000 +y_0=0.000 +ellps=WGS84 +units=m') {
+data.tableTransform <- function(DT, proj) {
+
+  if(missing(proj))
+    proj = '+proj=omerc +lat_0=71.3332703512554 +lonc=-156.654269449915 +alpha=-41.5 +gamma=0.0 +k=1.000000 +x_0=0.000 +y_0=0.000 +ellps=WGS84 +units=m'
 
   if(nrow(DT) > 0) {
     pp = SpatialPoints(DT[, .(lon, lat)], proj4string = CRS('+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs') )

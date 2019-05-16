@@ -32,6 +32,7 @@ map_resights_by_day(x, n, size = 2.5)
 maps
 }
 \examples{
+data("map_layers")
 x = map_layers
 coord_wader(x)
 map_empty()

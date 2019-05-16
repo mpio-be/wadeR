@@ -6,7 +6,7 @@ Authors@R: c(
            person("Mihai", "Valcu",       email = "valcu@orn.mpg.de",     role = c("aut", "cre")),
            person("Johannes", "Krietsch", email = "jkrietsch@orn.mpg.de", role = "ctb") )
 Depends:
-    R (>= 3.3.2),
+    R (>= 3.5.0),
     data.table,
     DataEntry
 Imports:
@@ -14,6 +14,7 @@ Imports:
     methods,
     magrittr,
     stringr,
+    RMySQL,
     sdb,
     anytime,
     glue,
@@ -23,13 +24,14 @@ Imports:
     ggthemes,
     ggrepel,
     mapproj,
-    lubridate,
     foreach,
     RColorBrewer,
     V8,
     sp,
-    xtable
+    xtable,
+    broom
 Suggests:
+    knitr,
     shiny,
     shinydashboard,
     shinyjs,
@@ -39,12 +41,15 @@ Suggests:
     jsonlite,
     rhandsontable,
     leaflet,
-    devtools
+    devtools,
+    askpass,
+    rmarkdown
 Remotes: 
     mpio-be/sdb,
     mpio-be/DataEntry,
+    mpio-be/DataEntry.validation
 VignetteBuilder: knitr
 LazyData: true
-License: GPL > 2
+License: GPL-3
 Encoding: UTF-8
 RoxygenNote: 6.1.1

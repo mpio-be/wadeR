@@ -37,7 +37,6 @@ dashboardPage(skin = 'black',
       menuSubItem('NESTS',      href = '/wadeR/DataEntry/NESTS',        newtab = TRUE),
       menuSubItem('EGGS_CHICKS_field',href = '/wadeR/DataEntry/EGGS_CHICKS_field', newtab = TRUE),
       menuSubItem('RESIGHTINGS',href = '/wadeR/DataEntry/RESIGHTINGS',  newtab = TRUE),
-      menuSubItem('DEVICES',    href = '/wadeR/DataEntry/DEVICES',      newtab = TRUE),
       menuSubItem('phpmyadmin', href = paste0('http://', ip() ,'/phpmyadmin/'),newtab = TRUE)
       ),
 

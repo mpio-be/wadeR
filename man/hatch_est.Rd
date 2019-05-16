@@ -36,7 +36,7 @@ x = data.table(
   float_angle = c(21, 80, 85, 20,NA,NA),
   float_height = c(0, NA, 2, NA,NA,NA), pk = 1:6 )
 
-y = data.table(nest = c('R103', 'R104'), datetime_ = as.POSIXct(c('2017-06-01 10:00', '2017-06-01 13:00')),
+y = data.table(nest = c('R103', 'R104'), datetime_found = as.POSIXct(c('2017-06-01 10:00', '2017-06-01 13:00')),
     iniClutch = c(1,2), clutch = c(4,4) )
 
 hatch_est(x,y)
