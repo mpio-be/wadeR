@@ -48,7 +48,7 @@ NESTS <- function(project = TRUE) {
       n[, datetime_found := anytime(datetime_found, asUTC = TRUE, tz = 'AKDT')]
 
       nopos = nrow( n[is.na(lat)] )
-      if(nopos > 0) Err(paste(nopos, 'nest without coordinates; Are all GPS units uploaded?'))
+      if(nopos > 0) Err(paste(nopos, 'nests without coordinates; Are all GPS units uploaded?'))
 
       n = n[!is.na(lat)]
 

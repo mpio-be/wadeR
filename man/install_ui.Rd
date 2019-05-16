@@ -2,10 +2,13 @@
 % Please edit documentation in R/utils.R
 \name{install_ui}
 \alias{install_ui}
+\alias{reboot_webserver}
 \title{Install UI-s on localhost}
 \usage{
-install_ui(pwd = askpass::askpass(), install_package = TRUE,
-  root = "/srv/shiny-server", IP = ip())
+install_ui(pwd, install_package = TRUE, root = "/srv/shiny-server",
+  IP = ip())
+
+reboot_webserver(pwd)
 }
 \arguments{
 \item{pwd}{root pwd}
@@ -17,5 +20,7 @@ Install UI-s on localhost
 }
 \examples{
 install_ui() 
+
+reboot_webserver() 
 
 }

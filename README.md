@@ -17,6 +17,14 @@ Site installation
   install_ui(install_package = FALSE)
 ```
 
+
+Web server reload
+``` r
+  wadeR::reboot_webserver()
+```
+
+
+
 Notes
 ------------
  - data entry pages are customized from `./inst/UI/DataEntry/_TABLENAME_/global.R` files

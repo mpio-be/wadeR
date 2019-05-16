@@ -355,6 +355,30 @@ install_ui <- function(pwd , install_package = TRUE, root = "/srv/shiny-server",
 
 
 
+#' @export
+#' @rdname install_ui
+#' @return NULL
+#' @examples
+#' reboot_webserver() 
+#'
+reboot_webserver <- function(pwd) {
+
+  if(missing(pwd)) pwd = askpass::askpass() 
+
+
+  cat('Restarting web server...')
+  system( paste('echo', shQuote(pwd), '| sudo -S systemctl restart shiny-server') ,  
+    wait = TRUE,ignore.stderr = TRUE )
+  cat('done\n')
+
+  cat('Go to', ip() )
+  
+
+
+  }
+
+
+
 
 
 
