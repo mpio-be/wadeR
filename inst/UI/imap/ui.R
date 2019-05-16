@@ -22,7 +22,15 @@ bootstrapPage(
 
 	absolutePanel(draggable = TRUE, top = 0, right = 0, width='130px',
 
-		selectInput(  "task", "Show",   c('GPS points', 'Nests') ,  multiple = FALSE),
+		pickerInput(  "task", "Show on map:",   
+			multiple = FALSE, 
+			choices = c('GPS points', 'Nests') ,  
+			selected = 'GPS points',
+   			choicesOpt = list(
+      		content = sprintf("<span class='label label-%s'>%s</span>", 
+      			c("success", "danger"), c('GPS points', 'Nests')
+        ) )),
+
 
 		 conditionalPanel( condition = "input.task == 'GPS points'",
 		 	selectInput("gpsid", "GPS ID", 1:15 ,  multiple = FALSE),
@@ -31,8 +39,8 @@ bootstrapPage(
 
 		 conditionalPanel(condition = "input.task == 'Nests'",
 		 	   selectInput("species", "Species:",multiple = TRUE, selectize = FALSE, 
-		 	   	selected = c('REPH', 'LBDO'),
-              	c("RNPH", "LBDO", "PESA", "REPH", "SESA", "AMGP", "BASA", "DUNL") )
+		 	   	selected = getOption('wader.species')[1:2],
+              	getOption('wader.species')  )
 		 	)
 
 

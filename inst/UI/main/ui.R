@@ -28,8 +28,7 @@ dashboardPage(skin = 'black',
       ),
     
     menuItem("Dynamic maps",  icon = icon("map") ,
-      menuSubItem('Nests',     href     = '/wadeR/imap',        newtab = TRUE),
-      menuSubItem('gps points',     href     = '/wadeR/imap',        newtab = TRUE)
+      menuSubItem('Show maps',     href     = '/wadeR/imap',        newtab = TRUE)
    
       ),
 
@@ -82,7 +81,6 @@ dashboardPage(skin = 'black',
 
         ) ),
 
-
     # RESIGHTINGS
       div(class = "col-sm-12 text-center",
       conditionalPanel(
@@ -108,8 +106,7 @@ dashboardPage(skin = 'black',
         )
       ),
 
-
-    # RESIGHTINGS BY ID
+    # GPS tracks
       div(class = "col-sm-12 text-center",
 
       conditionalPanel(

@@ -5,7 +5,7 @@
 
 
 # settings
-    sapply(c('wadeR', 'leaflet', 'shiny', 'shinytoastr'),
+    sapply(c('wadeR', 'leaflet', 'shiny', 'shinytoastr', 'shinyWidgets', 'glue'),
       function(x) suppressPackageStartupMessages( require(x, character.only = TRUE, quietly = TRUE) ))
     options(stringsAsFactors = FALSE)
 

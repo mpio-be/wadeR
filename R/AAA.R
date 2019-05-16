@@ -14,7 +14,7 @@ NULL
 
     options(wader.db        = "REPHatBARROW")
     options(wader.user      = 'wader')
-    options(wader.freshdata = 60) # for GPS import
+    options(wader.freshdata = 120) # for GPS import
     options(wader.dbbackup  = path.expand('~/ownCloud/BACKUPS/db/') )
     options(wader.species   = c("REPH",  "LBDO", "PESA" , "SESA", "AMGP", "BASA", "DUNL", "RNPH") )
 

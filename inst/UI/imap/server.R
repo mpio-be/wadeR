@@ -40,6 +40,7 @@ shinyServer(function(input, output, session) {
       
       d = rNESTS()[species %in% input$species]
 
+      if(nrow(d) > 0) {
       leafletProxy("map") %>%
       fitBounds(min(d$lon), min(d$lat), max(d$lon), max(d$lat)) %>%
       addTiles() %>%
@@ -49,6 +50,11 @@ shinyServer(function(input, output, session) {
       addLabelOnlyMarkers(lng = d$lon, lat = d$lat , label =  d$nest, 
                       labelOptions = labelOptions(noHide = TRUE, direction = 'top', 
                         textOnly = TRUE) )
+      }
+  
+      if(nrow(d) == 0)      
+        Wrn( glue('There are no data for {input$species} !'))
+      
 
       }
 
