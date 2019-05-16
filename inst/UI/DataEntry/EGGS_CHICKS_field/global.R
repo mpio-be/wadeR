@@ -4,7 +4,7 @@
 # settings
   source(system.file('UI', 'global_settings.R', package = 'wadeR'))
 
-  tableName       = 'EGGS_CHICKS_field1'
+  tableName       = 'EGGS_CHICKS_field'
   package         = 'wadeR'
   excludeColumns  = c('pk', 'nov', 'est_hatch_date')
   n_empty_lines   =  16
