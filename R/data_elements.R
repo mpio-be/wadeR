@@ -109,17 +109,6 @@ NESTS <- function(project = TRUE) {
 
   }
 
-#' NESTS_SUMMARY
-#' @export
-NESTS_SUMMARY <- function(f= tempfile(fileext = '.pdf')) {
-
-  rmarkdown::render(system.file('VIEWS', 'summary_NESTS.Rmd', package = 'wadeR'), output_file = f)
-  Sys.chmod(f)
-
-  f
-
-  }
-
 
 #' RESIGHTINGS
 #' @export
