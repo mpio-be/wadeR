@@ -107,8 +107,10 @@ shinyServer(function(input, output, session) {
 
   # hatch update estimation
     Hatch_Update <- eventReactive(input$update_hatching, {
+      
       EGGS_CHICKS_updateHatchDate()
-      paste("Updated on", Sys.time() )
+      EGGS_CHICKS_updateHatchDate('EGGS_CHICKS_field')
+      glue("EGGS_CHICKS & EGGS_CHICKS_field updated on {Sys.time() }") %>% h4 %>% as.character
 
     })
 

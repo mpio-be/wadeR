@@ -6,6 +6,9 @@
 \usage{
 EGGS_CHICKS_updateHatchDate(table = "EGGS_CHICKS", db)
 }
+\value{
+0 on success
+}
 \description{
 EGGS_CHICKS_updateHatchDate
 }

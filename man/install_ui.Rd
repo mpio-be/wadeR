@@ -19,8 +19,8 @@ reboot_webserver(pwd)
 Install UI-s on localhost
 }
 \examples{
-install_ui() 
+install_ui()
 
-reboot_webserver() 
+reboot_webserver()
 
 }

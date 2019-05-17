@@ -14,7 +14,7 @@ reporter_NESTS <- function(Species) {
 	n = NESTS()
 	n = n[species == Species, .(nest, state = nest_state, lastCheck, iniClutch, clutch, MSR, IN, m_sure, f_sure)]
 
-	# TODO: prepare n to show optimal output
+	# TODO: prepare n to show output by species
 
 
 	# REPORT

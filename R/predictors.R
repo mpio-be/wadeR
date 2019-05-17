@@ -78,6 +78,7 @@ hatch_est <- function(x, y) {
 
 
 #' EGGS_CHICKS_updateHatchDate
+#' @return 0 on success
 #' @export
 #' @examples
 #' EGGS_CHICKS_updateHatchDate()
@@ -103,7 +104,7 @@ EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db) {
 
   if(writeTMP) {
 
-  dbExecute(con, paste('UPDATE', table ,' e, TEMP t
+  out = dbExecute(con, paste('UPDATE', table ,' e, TEMP t
    SET e.est_hatch_date = t.hatch_date
   WHERE e.pk = t.pk') )
 
@@ -111,6 +112,10 @@ EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db) {
   dbExecute(con, 'DROP TABLE TEMP')
 
   }
+
+  out
+ 
+
  }
 
 

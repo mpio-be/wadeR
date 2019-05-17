@@ -4,7 +4,7 @@
 \alias{colorCombos}
 \title{create all color combinations}
 \usage{
-colorCombos(v = c("R", "Y", "W", "DB", "G", "O"))
+colorCombos(v = c("R", "Y", "W", "DB", "G", "O", "P"))
 }
 \arguments{
 \item{v}{character vector containing the colors}
