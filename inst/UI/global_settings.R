@@ -1,7 +1,8 @@
 
 
 sapply(c('DataEntry', 'DataEntry.validation', 'wadeR' , 
-       'data.table', 'shinyjs', 'tableHTML', 'glue', 'stringr', 'magrittr'),
+       'data.table', 'shinyjs', 'tableHTML', 'glue', 'stringr', 'magrittr', 
+       'shinyWidgets'),
 require, character.only = TRUE, quietly = TRUE)
 
 tags   = shiny::tags
