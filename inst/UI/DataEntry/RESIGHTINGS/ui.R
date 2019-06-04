@@ -1,1 +1,1 @@
-vnavbarPage(tableName = tableName)
+dropDownNavPage(tableName = tableName)
