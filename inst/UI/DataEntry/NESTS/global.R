@@ -12,11 +12,11 @@
   
 # table summary function
   describeTable <- function() {
-    x = idbq('select ID, species from NESTS where ID is not NULL')
+    x = idbq('select nest, species from NESTS where nest is not NULL')
 
     data.table(
         N_entries = nrow(x), 
-        N_unique_IDs = length(unique(x$ID))
+        N_unique_nests = length(unique(x$nest))
            )
   }
 
