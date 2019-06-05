@@ -6,15 +6,17 @@ sysinfo <- function(ip) {
 
     o1 = paste(badge('Current site location'), ip)
 
-    o4 = paste(badge('Shared folder [copy/paste in windows explorer]'), paste0('\\\\', ip ) )
+    o2 = paste(badge('Shared folder [copy/paste in windows explorer]'), paste0('\\\\', ip ) )
 
     lastbk = try(lastdbBackup(), silent = TRUE)
 
     if( !inherits(lastbk, 'difftime') || lastbk > 180) Wrn("Please check BACKUP system !!")
 
-    o2 = paste(badge('Last DB backup (minutes ago)'), lastbk )
+    o3 = paste(badge('Last DB backup (minutes ago)'), lastbk )
 
-    o3 = paste(badge('Package version'), paste('wader', packageVersion('wadeR') ) )
+    pv1 = paste(badge('Package version'), paste('wader', packageVersion('wadeR') ) )
+    pv2 = paste(badge('Package version'), paste('DataEntry', packageVersion('DataEntry') ) )
+    pv3 = paste(badge('Package version'), paste('DataEntry.validation', packageVersion('DataEntry.validation') ) )
 
 
 
@@ -22,9 +24,11 @@ sysinfo <- function(ip) {
     paste(
     '<ul class="list-group">',
         paste(o1%>%li,
-              o4%>% li,
-              o2%>%li,
-              o3%>%li
+              o2%>% li,
+              o3%>%li,
+              pv1%>%li,
+              pv2%>%li,
+              pv3%>%li
               ),
      '</ul>' )
 
