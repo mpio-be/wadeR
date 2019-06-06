@@ -6,7 +6,7 @@
 
   tableName       = 'CAPTURES'
   package         = 'wadeR'
-  excludeColumns = c('pk', 'PC', 'nov')
+  excludeColumns = c('pk', 'PC', 'nov', 'start_capture','bled_time','plasma','haema')
   n_empty_lines   =  30
   
 # table summary function
