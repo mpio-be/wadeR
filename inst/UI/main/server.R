@@ -15,7 +15,23 @@ shinyServer(function(input, output, session) {
 
     sysinfo(ip = ip()  )
 
-  })
+  })  
+
+
+  output$team_show <- renderTable({
+    invalidateLater(90000)
+
+  teamStatus()
+
+  }, striped = TRUE, 
+     bordered = TRUE,  
+     spacing  = "xs", digits = 0 )
+
+
+
+
+
+
 
 
 # GPS data

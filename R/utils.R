@@ -170,6 +170,32 @@ dbTablesStatus <- function() {
   }
 
 
+#' teamsStatus
+#' @export
+teamStatus <- function() {
+
+
+  au = idbq('SELECT `name`, initials author, gps_id FROM AUTHORS')
+  rs = idbq('SELECT  COUNT(*) N_resightings, author 
+              FROM RESIGHTINGS GROUP BY author')
+  ns = idbq('SELECT COUNT(*) N_nests, author FROM NESTS 
+                WHERE nest_state = "F" GROUP BY author')
+
+  o = merge(au, ns, by = 'author', all.x = TRUE)
+  o = merge(o, rs, by = 'author', all.x = TRUE)
+
+  setorder(o, name)
+  o[, author := NULL]
+  o
+
+
+  }
+
+
+
+
+
+
 #' dbTableUpdate
 #' @export
 dbTableUpdate <- function(user= getOption('wader.user'), host, db, password = pwd(), table, newdat) {

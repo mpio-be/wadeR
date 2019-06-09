@@ -133,7 +133,10 @@ tabItems(
           ),
 
         box(title = 'DB state',
-          tableOutput('overview_show'))
+          tableOutput('overview_show')) ,
+
+        box(title = 'Team',
+          tableOutput('team_show')) 
 
 
         ),
