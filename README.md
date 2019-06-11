@@ -9,6 +9,7 @@ Package installation
 
 ``` r
 devtools::install_github("mpio-be/wadeR")
+
 ```
 
 Site installation
