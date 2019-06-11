@@ -184,8 +184,20 @@ tabItems(
         box(title = 'NESTS', width = NULL,
           footer = 'Before downloading the Nest summary make sure you have the hatching estimation up-to-date.',
           
+
+
+          actionBttn("update_eggs_chicks",label= "UPDATE EGGS_CHICKS", size = 'lg', icon  = icon('database') , block = TRUE),
+          uiOutput("update_eggs_chicksOut"), 
+          
+          hr(), 
+
           actionBttn("update_hatching",label= "UPDATE hatching estimation", size = 'lg', icon  = icon('database') , block = TRUE),
           uiOutput("update_hatchingOut"), 
+          
+
+
+
+
           hr(), 
           downloadBttn("download_nestsSummary", size = 'lg', label="Download Nest Summary  PDF", block = TRUE, color = "danger")
       

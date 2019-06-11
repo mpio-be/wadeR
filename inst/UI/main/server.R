@@ -137,6 +137,29 @@ shinyServer(function(input, output, session) {
 
     })
 
+
+
+  # EGGS_CHICKS update table
+    EGGS_CHICKS_Update <- eventReactive(input$update_eggs_chicks, {
+      
+      NESTS2EGGS_CHICKS()
+      glue("EGGS_CHICKS update last run on {Sys.time() }") %>% h4 %>% as.character
+
+    })
+
+    output$update_eggs_chicksOut <- renderUI({
+     o = EGGS_CHICKS_Update()
+
+     HTML(o)
+
+    })
+
+
+
+
+
+
+
   # hatching date show
     output$hatching_show <- renderPlot({
       x = idbq('

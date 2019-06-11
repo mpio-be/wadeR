@@ -52,6 +52,9 @@ hatch_est <- function(x, y) {
 
    d = merge(d, parm, by = 'species', sort = FALSE, all.x = TRUE)
 
+   if ( nrow( d[ (float_height <= 0 | is.na(float_height)) & is.na(float_angle) ] > 0 ) )
+    Wrn("Are all the floating data entered?")
+
   # sinking eggs
     d[ float_height <= 0 | is.na(float_height),
       hatch_date := arrival_datetime + 24*60*60 * abs(a1 + b1 * logit((float_angle - 20) / 70) ) ]
@@ -77,46 +80,6 @@ hatch_est <- function(x, y) {
   }
 
 
-#' EGGS_CHICKS_updateHatchDate
-#' @return 0 on success
-#' @export
-#' @examples
-#' EGGS_CHICKS_updateHatchDate()
-
-EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db) {
-
-  if(missing(db)) db = yy2dbnam(data.table::year(Sys.Date()))
-
-  EC = idbq( paste("SELECT nest,arrival_datetime,float_angle,float_height,pk FROM",  table) )
-  n = NESTS()
-
-  h = hatch_est(x = EC, y = n)
-
-  # update table
-  con =  dbConnect(RMySQL::MySQL(), host = ip(), user = getOption('wader.user'), db = db, password = pwd())
-  on.exit(  dbDisconnect (con)  )
-
-
-  dbExecute(con, 'DROP TABLE IF EXISTS TEMP')
-
-
-  writeTMP = dbWriteTable(con, 'TEMP', h, row.names = FALSE)
-
-  if(writeTMP) {
-
-  out = dbExecute(con, paste('UPDATE', table ,' e, TEMP t
-   SET e.est_hatch_date = t.hatch_date
-  WHERE e.pk = t.pk') )
-
-
-  dbExecute(con, 'DROP TABLE TEMP')
-
-  }
-
-  out
- 
-
- }
 
 
 

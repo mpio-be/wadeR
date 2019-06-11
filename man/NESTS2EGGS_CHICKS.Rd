@@ -5,8 +5,7 @@
 \title{NESTS2EGGS_CHICKS
 populate  table}
 \usage{
-NESTS2EGGS_CHICKS(Species = "REPH", table = "EGGS_CHICKS",
-  db = "FIELD_REPHatBARROW")
+NESTS2EGGS_CHICKS(table = "EGGS_CHICKS", db)
 }
 \description{
 NESTS2EGGS_CHICKS

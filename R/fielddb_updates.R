@@ -60,20 +60,86 @@ nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/", db) {
 #' NESTS2EGGS_CHICKS()
 #' NESTS2EGGS_CHICKS(c('PESA', 'RNPH'), table = 'EGGS_CHICKS_field')
 
-NESTS2EGGS_CHICKS <- function(Species = 'REPH', table = 'EGGS_CHICKS', db = 'FIELD_REPHatBARROW') {
+NESTS2EGGS_CHICKS <- function( table = 'EGGS_CHICKS', db ) {
+    
+    if(missing(db)) db = yy2dbnam(data.table::year(Sys.Date()))
 
     con =  dbConnect(RMySQL::MySQL(), host = ip(), user = getOption('wader.user'), db = db, password = pwd())
     on.exit(  dbDisconnect (con)  )
 
 
-    e = dbGetQuery(con, "select nest, max(clutch_size) clutch from NESTS
-                 where nest not in (SELECT distinct nest from EGGS_CHICKS)
-                group by nest") %>% data.table
-    e[, species := nest2species(nest)]
-    e = e[ species %in% Species]
-    e = e[, .(pk = rep(NA, each = clutch)) , by = nest]
-    Msg(paste(nrow(e), "rows added to the", table))
+    e = dbGetQuery(con, 'select nest, max(clutch_size) clutch from NESTS
+                 WHERE nest_state = "C" AND nest not in (SELECT distinct nest from EGGS_CHICKS)
+                group by nest') %>% data.table
 
-    dbWriteTable(con, table, e, row.names = FALSE, append = TRUE)
+    if(nrow(e) == 0)
+      Wrn(paste( "No new collected eggs found in ", table, "!" ) )
+
+    if(nrow(e) > 0) {
+   
+        e[, species := nest2species(nest)]
+        e = e[, .(pk = rep(NA, each = clutch) ) , by = nest]
+        e[, egg_id := 1:.N, by = nest]
+
+
+
+        if(nrow(e) == 0)
+          Wrn(paste( "No new collected eggs found in ", table, "!" ) )
+
+        if(nrow(e) > 0) {
+          
+          Msg(paste(nrow(e), "new rows added to the", table, "table"))
+          dbWriteTable(con, table, e, row.names = FALSE, append = TRUE)
+
+        }
+
+
+     }
+
+
 
 }
+
+
+
+#' EGGS_CHICKS_updateHatchDate
+#' @return 0 on success
+#' @export
+#' @examples
+#' EGGS_CHICKS_updateHatchDate()
+
+EGGS_CHICKS_updateHatchDate <- function(table = 'EGGS_CHICKS', db) {
+
+  if(missing(db)) db = yy2dbnam(data.table::year(Sys.Date()))
+
+  EC = idbq( paste("SELECT nest,arrival_datetime,float_angle,float_height,pk FROM",  table) )
+  n = NESTS()
+
+
+  h = hatch_est(x = EC, y = n)
+
+  # update table
+  con =  dbConnect(RMySQL::MySQL(), host = ip(), user = getOption('wader.user'), db = db, password = pwd())
+  on.exit(  dbDisconnect (con)  )
+
+
+  dbExecute(con, 'DROP TABLE IF EXISTS TEMP')
+
+
+  writeTMP = dbWriteTable(con, 'TEMP', h, row.names = FALSE)
+
+  if(writeTMP) {
+
+  out = dbExecute(con, paste('UPDATE', table ,' e, TEMP t
+   SET e.est_hatch_date = t.hatch_date
+  WHERE e.pk = t.pk') )
+
+
+  dbExecute(con, 'DROP TABLE TEMP')
+
+  }
+
+  out
+ 
+
+ }
