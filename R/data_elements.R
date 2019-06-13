@@ -220,16 +220,22 @@ fetch_GPS_points <- function(gpsid = 0, gpspoints = 0) {
 #' @export
 #' @examples
 #' x = fetch_GPS_tracks(48)
-fetch_GPS_tracks <- function(lastNhours = 48)  {
+fetch_GPS_tracks <- function(lastNhours = 48, gps_id = 1:11)  {
 
  if(is.null(lastNhours)) lastNhours = 48
+ if(is.null(gps_id) || gps_id < 0 & gps_id > 11 ) gps_id = 1:11
+
+ gps_id = paste(gps_id, collapse = ",")  
 
  o = idbq(
-    paste('
+
+    glue('
     SELECT gps_id, seg_id, lat, lon
         FROM GPS_TRACKS
-            WHERE datetime_ > DATE_SUB(CURDATE(), INTERVAL', lastNhours, 'HOUR)
-              ORDER BY gps_id, datetime_')
+            WHERE datetime_ > DATE_SUB(CURDATE(), INTERVAL {lastNhours} HOUR)
+              AND gps_id in ({gps_id})
+              ORDER BY gps_id, datetime_'   
+              )
     )
 
  o[, gps_id := factor(gps_id) ]

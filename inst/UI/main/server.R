@@ -214,7 +214,7 @@ shinyServer(function(input, output, session) {
 # TRACKS map
   output$tracksmap_show <- renderPlot({
 
-  x = fetch_GPS_tracks(input$trackshour)
+  x = fetch_GPS_tracks(input$trackshour, input$gps_id)
   map_tracks(x)
 
   })

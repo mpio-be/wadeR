@@ -111,10 +111,20 @@ dashboardPage(skin = 'black',
       conditionalPanel(
         condition = "input.menubar == 'tracksmap_tab'",
 
-        numericInput('trackshour', HTML('Last N hours<br>(since last entry)'), value = 48)
+        numericInput('trackshour', HTML('Last N hours<br>(since last entry)'), value = 48),
+        selectInput('gps_id', 'GPS ID-s', choices = 1:11, selected = 1:11, multiple = TRUE)
 
         )
       )
+
+
+
+
+
+
+
+
+
 
   )),
 
