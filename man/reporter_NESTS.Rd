@@ -16,5 +16,5 @@ a path to the pdf file
 reporter_TABLENAME exports the TABLENAME summary as pdf
 }
 \examples{
-reporter_NESTS('PESA')
+reporter_NESTS('REPH')
 }

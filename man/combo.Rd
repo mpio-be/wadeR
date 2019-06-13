@@ -4,11 +4,23 @@
 \alias{combo}
 \title{combo}
 \usage{
-combo(LL, LR)
+combo(LL, LR, UR, UL)
 }
 \description{
 combo
 }
 \examples{
-LL = c('W,R', 'Y,DB', NA, NA, 'NOBA'); LR = c('Y', 'DB', 'c', NA)
+
+x = data.table(
+ LL = c('W,R', 'Y,DB', NA, 'NOBA', NA), 
+ LR = c('Y', 'DB', 'c', NA, NA),
+ UR = c('Y', 'W', 'G',  'R', NA)
+
+)
+
+x[,combo(LL, LR), by = .I ]
+x[,combo(LL, LR, UR), by = .I ]
+
+
+
 }

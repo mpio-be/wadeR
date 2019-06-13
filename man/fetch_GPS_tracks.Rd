@@ -4,7 +4,7 @@
 \alias{fetch_GPS_tracks}
 \title{fetchTracks}
 \usage{
-fetch_GPS_tracks(lastNhours = 48)
+fetch_GPS_tracks(lastNhours = 48, gps_id = 1:11)
 }
 \description{
 fetchTracks

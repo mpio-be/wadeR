@@ -56,7 +56,6 @@ NESTS <- function(project = TRUE) {
       n = n[!is.na(lat)]
 
 
-
     # clutch size
       cs = idbq("SELECT  nest, min(clutch_size) iniClutch, max(clutch_size) clutch FROM NESTS GROUP BY nest")
 
@@ -74,31 +73,55 @@ NESTS <- function(project = TRUE) {
       setnames(m, 'msr_state', 'MSR')
 
     # male confirmed identity
-      idm = idbq("SELECT distinct n.nest,c.LL, c.LR
+      idm = idbq("SELECT distinct n.nest,c.LL, c.LR,c.UR
                 from NESTS n
                  left join CAPTURES c on c.ID = n.male_id
                    where male_ID is not NULL")
-      idm[, m_sure := combo(LL, LR)]
-      idm = idm[, .(nest, m_sure)] %>% unique
-      idm[m_sure == '|', m_sure := NA ]
-      idm = idm[!is.na(m_sure)]
+      idm[, m_id := combo(LL, LR, UR)]
+      idm = idm[, .(nest, m_id)] %>% unique
+      idm[m_id == '|', m_id := NA ]
+      idm = idm[!is.na(m_id)]
+      idm[, mSure := "*"]
 
     # female confirmed identity
-      idf = idbq("SELECT distinct n.nest,c.LL, c.LR
+      idf = idbq("SELECT distinct n.nest,c.LL, c.LR,c.UR
                 from NESTS n
                  left join CAPTURES c on c.ID = n.female_id
                    where female_ID is not NULL")
-      idf[, f_sure := combo(LL, LR)]
-      idf = idf[, .(nest, f_sure)] %>% unique
-      idf[f_sure == '|', f_sure := NA ]
-      idf = idf[!is.na(f_sure)]
+      idf[, f_id := combo(LL, LR,UR)]
+      idf = idf[, .(nest, f_id)] %>% unique
+      idf[f_id == '|', f_id := NA ]
+      idf = idf[!is.na(f_id)]
+      idf[, fSure := "*"]
+
+    # possible identities 
+       ii = idbq('SELECT nest, m_LL,m_LR,m_UR,f_LL,f_LR,f_UR
+                      FROM NESTS where m_LR is not NULL OR f_LR is not NULL')  
+        # m_LR is not NULL because NOBA ad COBA are written here                 
+       ii[, male := combo(m_LL,m_LR,m_UR), by= .I]
+       ii[, female := combo(f_LL,f_LR,f_UR), by= .I]
+
+       ii = ii[, .( 
+          m_maybe = paste(male%>% unique, collapse = ";"), 
+          f_maybe = paste(female%>% unique, collapse = ";") 
+          )
+        , by = nest]
+
+     # confirmed and possible identities
+      ai = merge( idm, idf,  by = 'nest', all.x = TRUE, , all.y = TRUE)
+      
+      ai = merge( ai, ii,  by = 'nest', all.x = TRUE, , all.y = TRUE)
+
+      ai[ is.na(mSure) , m_id := m_maybe]
+      ai[ is.na(fSure) , f_id := f_maybe]
+      ai[, ":=" (m_maybe = NULL, f_maybe = NULL)]
+
 
     # final set
       o = merge(n, cs, by = 'nest', all.x = TRUE)
       o = merge(o, e,  by = 'nest', all.x = TRUE)
       o = merge(o, m,  by = 'nest', all.x = TRUE)
-      o = merge(o, idm,  by = 'nest', all.x = TRUE)
-      o = merge(o, idf,  by = 'nest', all.x = TRUE)
+      o = merge(o, ai,  by = 'nest', all.x = TRUE)
 
 
     # coords transformations

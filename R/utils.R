@@ -227,11 +227,36 @@ dbTableUpdate <- function(user= getOption('wader.user'), host, db, password = pw
 #' combo
 #' @export
 #' @examples
-#' LL = c('W,R', 'Y,DB', NA, NA, 'NOBA'); LR = c('Y', 'DB', 'c', NA)
-combo <- function(LL, LR) {
-  o = paste(LL, LR, sep = '|')
-  o = str_replace_all(o, 'NA', '')
+#' 
+#' x = data.table(
+#'  LL = c('W,R', 'Y,DB', NA, 'NOBA', NA), 
+#'  LR = c('Y', 'DB', 'c', NA, NA),
+#'  UR = c('Y', 'W', 'G',  'R', NA)
+#' 
+#' )
+#' 
+#' x[,combo(LL, LR), by = .I ]
+#' x[,combo(LL, LR, UR), by = .I ]
+#' 
+#' 
+#' 
+combo <- function(LL, LR, UR,  UL) {
+  
+  if(missing(UL) & missing(UR) ) {
+    o = paste(LL, LR, sep = '|')
+    } else 
+
+    o = glue('{LL}|{LR}({UR})')
+ 
+    o = str_replace_all(o, 'NA', '')
+    o = str_replace_all(o, '\\|\\(\\)', '')
+    o = str_replace_all(o, '^\\|&', '')
+    o = str_replace_all(o, 'NOBA\\(\\)', 'NOBA')
+    o = str_replace_all(o, 'COBA\\(\\)', 'COBA')
+  
   o
+  
+
   }
 
 

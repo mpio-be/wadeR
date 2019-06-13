@@ -4,7 +4,7 @@
 #' @return       a path to the pdf file
 #' @export
 #' @examples
-#' reporter_NESTS('PESA')
+#' reporter_NESTS('REPH')
 
 
 
@@ -12,7 +12,9 @@ reporter_NESTS <- function(Species) {
 
 	# DATA
 	n = NESTS()
-	n = n[species == Species, .(nest, state = nest_state, lastCheck, iniClutch, clutch, MSR, IN, m_sure, f_sure)]
+	n = n[species == Species, .(nest, state = nest_state, lastCheck, 
+						iniClutch, clutch, MSR, IN, m_id, mSure,f_id, fSure)]
+
 
 	# TODO: prepare n to show output by species
 
