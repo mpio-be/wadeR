@@ -76,18 +76,21 @@ NESTS <- function(project = TRUE) {
       idm = idbq("SELECT distinct n.nest,c.LL, c.LR,c.UR
                 from NESTS n
                  left join CAPTURES c on c.ID = n.male_id
-                   where male_ID is not NULL")
+                   where male_ID is not NULL 
+                        and c.LL is not NULL and c.LR is not NULL")
       idm[, m_id := combo(LL, LR, UR)]
       idm = idm[, .(nest, m_id)] %>% unique
       idm[m_id == '|', m_id := NA ]
       idm = idm[!is.na(m_id)]
       idm[, mSure := "*"]
+      idm
 
     # female confirmed identity
       idf = idbq("SELECT distinct n.nest,c.LL, c.LR,c.UR
                 from NESTS n
                  left join CAPTURES c on c.ID = n.female_id
-                   where female_ID is not NULL")
+                   where female_ID is not NULL
+                        and c.LL is not NULL and c.LR is not NULL")
       idf[, f_id := combo(LL, LR,UR)]
       idf = idf[, .(nest, f_id)] %>% unique
       idf[f_id == '|', f_id := NA ]
