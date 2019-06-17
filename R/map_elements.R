@@ -115,7 +115,7 @@ map_resights <- function(x, size = 2.5, daysAgo = 5) {
     geom_point(      data = x, aes(lon, lat) , size = 1, color = 'grey') +
     geom_label_repel( data = x, aes(lon, lat, label = lab, color = sex),  size = size) +
     coord_wader() +
-    scale_colour_manual(values = c("red", "blue") )
+    scale_colour_manual(values = c("red", "blue", "grey") )
 
 
   }

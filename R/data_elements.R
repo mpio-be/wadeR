@@ -150,7 +150,7 @@ RESIGHTINGS <- function(sp) {
                     ', enhance = FALSE)
    x[, datetime_ := anytime(datetime_, asUTC = TRUE, tz = 'AKDT')]
 
-   if(!missing(species))
+   if(!missing(sp))
     x = x[species == sp]
 
    x[, combo := combo(LL, LR, UR)]

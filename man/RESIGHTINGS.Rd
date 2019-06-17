@@ -4,7 +4,7 @@
 \alias{RESIGHTINGS}
 \title{RESIGHTINGS}
 \usage{
-RESIGHTINGS()
+RESIGHTINGS(sp)
 }
 \description{
 RESIGHTINGS
