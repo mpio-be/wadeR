@@ -153,7 +153,9 @@ RESIGHTINGS <- function(sp) {
    if(!missing(sp))
     x = x[species == sp]
 
+   x[LR=='NOBA', LL := as.character(.I)]
    x[, combo := combo(LL, LR, UR)]
+
 
    x[,lastSeen := max(datetime_), by = .(combo, sex) ]
    x = x[lastSeen == datetime_]
