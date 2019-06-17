@@ -185,7 +185,7 @@ shinyServer(function(input, output, session) {
 # RESIGHTINGS map
   output$resightsmap_show <- renderPlot({
 
-    x = RESIGHTINGS()
+    x = RESIGHTINGS(input$species3)
     map_resights(x, size = input$font_size, daysAgo = input$daysAgo)
 
     })
@@ -194,9 +194,9 @@ shinyServer(function(input, output, session) {
   filename = 'resightsmap.pdf',
   content = function(file) {
 
-    x = RESIGHTINGS()
+    x = RESIGHTINGS(input$species3)
 
-    m = map_resights(x, size = input$font_size)
+    m = map_resights(x, size = input$font_size, daysAgo = input$daysAgo)
 
     cairo_pdf(file = file, width = 11, height = 8.5)
     print(m)

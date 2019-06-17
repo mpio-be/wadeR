@@ -84,15 +84,18 @@ dashboardPage(skin = 'black',
       div(class = "col-sm-12 text-center",
       conditionalPanel(
         condition = "input.menubar == 'resightsmap_tab'",
-        downloadButton('resightsmap_pdf', 'PDF map', style="font-size:25px;" )
-        ),
-      conditionalPanel(
-        condition = "input.menubar == 'resightsmap_tab'",
-        numericInput('daysAgo', HTML('Seen in the last<br>N days:'), value = 3)
+        downloadButton('resightsmap_pdf', 'PDF map', style="font-size:25px;" ),
+        
+        numericInput('daysAgo', HTML('Seen in the last<br>N days:'), value = 3), 
 
-      )
+        selectInput("species3", "Species:",multiple = FALSE, selected = 'REPH',
+           getOption('wader.species')  )
 
-      ) ,
+        )
+
+
+ 
+       ) ,
 
     # RESIGHTINGS BY ID
       div(class = "col-sm-6 text-center",

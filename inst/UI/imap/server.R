@@ -4,7 +4,9 @@ shinyServer(function(input, output, session) {
 
   # reactive data
   rGPS <- reactive({
-    fetch_GPS_points(input$gpsid, input$gpspts)
+    x = fetch_GPS_points(input$gpsid, input$gpspts)
+    x[,datetime_ := as.character(datetime_) ]
+    x
     
   })
 

@@ -139,24 +139,27 @@ NESTS <- function(project = TRUE) {
 #' RESIGHTINGS
 #' @export
 #'
-RESIGHTINGS <- function() {
-   x = idbq('SELECT r.UR, r.UL, r.LR, r.LL, lat, lon, datetime_ - interval 8  hour  datetime_ , c.sex from
+RESIGHTINGS <- function(sp) {
+   x = idbq('SELECT r.species, r.UR, r.UL, r.LR, r.LL, lat, lon, datetime_ - interval 8  hour  datetime_ , c.sex from
                 GPS_POINTS g
                 JOIN
                     RESIGHTINGS r ON
                         g.gps_id = r.gps_id AND g.gps_point = r.gps_point
-                JOIN CAPTURES c ON
+                LEFT JOIN CAPTURES c ON
                 c.UL = r.UL AND c.LL = r.LL AND c.UR = r.UR AND c.LR = r.LR
                     ', enhance = FALSE)
    x[, datetime_ := anytime(datetime_, asUTC = TRUE, tz = 'AKDT')]
 
-   x[, combo := paste(LL, LR, sep = '|')]
+   if(!missing(species))
+    x = x[species == sp]
+
+   x[, combo := combo(LL, LR, UR)]
 
    x[,lastSeen := max(datetime_), by = .(combo, sex) ]
    x = x[lastSeen == datetime_]
 
    x[, seenDaysAgo := difftime(Sys.time(), lastSeen, units = 'days') %>% as.numeric %>% round(., 1)  ]
-
+   x[is.na(sex), sex := 'U']
 
    data.tableTransform(x)
 
@@ -224,7 +227,7 @@ RESIGHTINGS_BY_DAY <- function(day = Sys.Date() ) {
 #' x = fetch_GPS_points()
 fetch_GPS_points <- function(gpsid = 0, gpspoints = 0) {
 
- dummy = data.table(gps_point = 0, lat = 71.3249297, lon = -156.6739807, datetime_ = '')
+ dummy = data.table(gps_point = 0, lat = 71.3249297, lon = -156.6739807, datetime_ = Sys.time() )
 
  if(nchar(gpsid) == 0)     gpsid = 0
  if(nchar(gpspoints) == 0) gpspoints = 0
