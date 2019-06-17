@@ -50,8 +50,9 @@ NESTS <- function(project = TRUE) {
       n = merge(n, g[, .(nest, lat, lon, datetime_found)], by = c("nest"), all.x = TRUE)
       n[, datetime_found := anytime(datetime_found, asUTC = TRUE, tz = 'AKDT')]
 
-      nopos = nrow( n[is.na(lat)] )
-      if(nopos > 0) Err(paste(nopos, 'nests without coordinates; Are all GPS units uploaded?'))
+      nopos = n[is.na(lat)]
+      if(nrow( nopos ) > 0) 
+        Err(paste(paste(nopos$nest, collapse = ';'), 'nests without coordinates; Are all GPS units uploaded?'))
 
       n = n[!is.na(lat)]
 
