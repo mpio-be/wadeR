@@ -41,6 +41,12 @@ NESTS <- function(project = TRUE) {
       n = n[datetime_ == lastd ][,lastd := NULL]
       n[, lastCheck := difftime(Sys.time(), datetime_, units = 'days') %>% as.numeric %>% round(., 1)  ]
 
+      # days since found
+      n[, firstd := max(datetime_), by = .(nest)]
+      n = n[datetime_ == firstd ][,firstd := NULL]
+      n[, firstCheck := difftime(Sys.time(), datetime_, units = 'days') %>% as.numeric %>% round(., 1)  ]
+
+
     # lat, lon for F state, species
       g = idbq('SELECT n.gps_id, n.gps_point, CONCAT_WS(" ",n.date_,n.time_appr) datetime_found, n.nest, lat, lon
                   FROM NESTS n JOIN GPS_POINTS g on n.gps_id = g.gps_id AND n.gps_point = g.gps_point
@@ -51,7 +57,7 @@ NESTS <- function(project = TRUE) {
       n[, datetime_found := anytime(datetime_found, asUTC = TRUE, tz = 'AKDT')]
 
       nopos = n[is.na(lat)]
-      if(nrow( nopos ) > 0) 
+      if(nrow( nopos ) > 0)
         Err(paste(paste(nopos$nest, collapse = ';'), 'nests without coordinates; Are all GPS units uploaded?'))
 
       n = n[!is.na(lat)]
@@ -77,7 +83,7 @@ NESTS <- function(project = TRUE) {
       idm = idbq("SELECT distinct n.nest,c.LL, c.LR,c.UR
                 from NESTS n
                  left join CAPTURES c on c.ID = n.male_id
-                   where male_ID is not NULL 
+                   where male_ID is not NULL
                         and c.LL is not NULL and c.LR is not NULL")
       idm[, m_id := combo(LL, LR, UR)]
       idm = idm[, .(nest, m_id)] %>% unique
@@ -98,22 +104,22 @@ NESTS <- function(project = TRUE) {
       idf = idf[!is.na(f_id)]
       idf[, fSure := "*"]
 
-    # possible identities 
+    # possible identities
        ii = idbq('SELECT nest, m_LL,m_LR,m_UR,f_LL,f_LR,f_UR
-                      FROM NESTS where m_LR is not NULL OR f_LR is not NULL')  
-        # m_LR is not NULL because NOBA ad COBA are written here                 
+                      FROM NESTS where m_LR is not NULL OR f_LR is not NULL')
+        # m_LR is not NULL because NOBA ad COBA are written here
        ii[, male := combo(m_LL,m_LR,m_UR), by= .I]
        ii[, female := combo(f_LL,f_LR,f_UR), by= .I]
 
-       ii = ii[, .( 
-          m_maybe = paste(male%>% unique, collapse = ";"), 
-          f_maybe = paste(female%>% unique, collapse = ";") 
+       ii = ii[, .(
+          m_maybe = paste(male%>% unique, collapse = ";"),
+          f_maybe = paste(female%>% unique, collapse = ";")
           )
         , by = nest]
 
      # confirmed and possible identities
       ai = merge( idm, idf,  by = 'nest', all.x = TRUE, , all.y = TRUE)
-      
+
       ai = merge( ai, ii,  by = 'nest', all.x = TRUE, , all.y = TRUE)
 
       ai[ is.na(mSure) , m_id := m_maybe]
@@ -257,7 +263,7 @@ fetch_GPS_tracks <- function(lastNhours = 48, gps_id = 1:11)  {
  if(is.null(lastNhours)) lastNhours = 48
  if(is.null(gps_id) || gps_id < 0 & gps_id > 11 ) gps_id = 1:11
 
- gps_id = paste(gps_id, collapse = ",")  
+ gps_id = paste(gps_id, collapse = ",")
 
  o = idbq(
 
@@ -266,7 +272,7 @@ fetch_GPS_tracks <- function(lastNhours = 48, gps_id = 1:11)  {
         FROM GPS_TRACKS
             WHERE datetime_ > DATE_SUB(CURDATE(), INTERVAL {lastNhours} HOUR)
               AND gps_id in ({gps_id})
-              ORDER BY gps_id, datetime_'   
+              ORDER BY gps_id, datetime_'
               )
     )
 

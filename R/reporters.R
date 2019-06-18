@@ -12,7 +12,7 @@ reporter_NESTS <- function(Species) {
 
 	# DATA
 	n = NESTS()
-	n = n[species == Species, .(nest, state = nest_state, lastCheck, 
+	n = n[species == Species, .(nest, state = nest_state, first = firstCheck, last = lastCheck,
 						iniClutch, clutch, MSR, IN, m_id, mSure,f_id, fSure)]
 
 
@@ -20,15 +20,15 @@ reporter_NESTS <- function(Species) {
 
 
 	# REPORT
-	xtab = xtable(n, auto = TRUE, 
-		caption = glue(' {Species} , { format(Sys.time(), "%a, %d %b %Y %H h" )}')%>%as.character ) %>% print( 
+	xtab = xtable(n, auto = TRUE,
+		caption = glue(' {Species} , { format(Sys.time(), "%a, %d %b %Y %H h" )}')%>%as.character ) %>% print(
 		print.results = FALSE,
-		latex.environments = "flushleft", 
+		latex.environments = "flushleft",
 		tabular.environment="longtable",
-		caption.placement = 'top', 
-		floating = FALSE, 
+		caption.placement = 'top',
+		floating = FALSE,
 		hline.after = 0:nrow(.)
-		) 
+		)
 
 	latex = glue("
 		\\documentclass[letterpaper]{{article}}
@@ -49,7 +49,7 @@ reporter_NESTS <- function(Species) {
 	ofile = tempfile(fileext = '.pdf')
 	infile = str_replace(ofile, 'pdf$', 'tex')
 
-	cat(latex, file =  infile) 
+	cat(latex, file =  infile)
 
 	wd = tempdir() %>% setwd
 
@@ -59,6 +59,6 @@ reporter_NESTS <- function(Species) {
 
 	Sys.chmod(ofile)
 	ofile
-	
+
 
 }

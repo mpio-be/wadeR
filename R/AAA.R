@@ -24,7 +24,7 @@ NULL
 
 #' @import  utils  methods magrittr stringr  anytime glue xtable
 #' @import  data.table DataEntry
-#' @import  sp rgdal ggplot2 ggthemes ggrepel mapproj foreach RColorBrewer V8 
+#' @import  sp rgdal ggplot2 ggthemes ggrepel mapproj foreach RColorBrewer V8
 #' @importFrom  stats binomial time
 
 NULL
@@ -87,6 +87,7 @@ c(
 'i',
 'iniClutch',
 'lab',
+'firstCheck',
 'lastCheck',
 'lastSeen',
 'last_update',
