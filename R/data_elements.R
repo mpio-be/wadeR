@@ -42,7 +42,7 @@ NESTS <- function(project = TRUE) {
       n[, lastCheck := difftime(Sys.time(), datetime_, units = 'days') %>% as.numeric %>% round(., 1)  ]
 
       # days since found
-      n[, firstd := max(datetime_), by = .(nest)]
+      n[, firstd := min(datetime_), by = .(nest)]
       n = n[datetime_ == firstd ][,firstd := NULL]
       n[, firstCheck := difftime(Sys.time(), datetime_, units = 'days') %>% as.numeric %>% round(., 1)  ]
 
