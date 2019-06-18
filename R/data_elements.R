@@ -32,8 +32,6 @@ NESTS <- function(project = TRUE) {
                           GROUP BY nest, nest_state')
       n[, datetime_      := anytime(datetime_, asUTC = TRUE, tz = 'AKDT')]
 
-
-
       n[, species := nest2species(nest)]
 
       setorder(n, nest)
@@ -41,7 +39,14 @@ NESTS <- function(project = TRUE) {
       n = n[datetime_ == lastd ][,lastd := NULL]
       n[, lastCheck := difftime(Sys.time(), datetime_, units = 'days') %>% as.numeric %>% round(., 1)  ]
 
-      # days since found
+      # first state
+      n = idbq('SELECT nest, max(CONCAT_WS(" ",date_,time_appr)) datetime_, nest_state
+                      FROM NESTS
+               GROUP BY nest, nest_state')
+      n[, datetime_      := anytime(datetime_, asUTC = TRUE, tz = 'AKDT')]
+
+      n[, species := nest2species(nest)]
+
       n[, firstd := min(datetime_), by = .(nest)]
       n = n[datetime_ == firstd ][,firstd := NULL]
       n[, firstCheck := difftime(Sys.time(), datetime_, units = 'days') %>% as.numeric %>% round(., 1)  ]
