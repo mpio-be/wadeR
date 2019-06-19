@@ -14,6 +14,7 @@ reporter_NESTS <- function(Species) {
 	n = NESTS()
 	n = n[species == Species, .(nest, state = nest_state, first = firstCheck, last = lastCheck,
 						iniClutch, clutch, MSR, IN, m_id, mSure,f_id, fSure)]
+	n = n[state != 'notA']
 
 
 	# TODO: prepare n to show output by species
