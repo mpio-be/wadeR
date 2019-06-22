@@ -177,15 +177,23 @@ teamStatus <- function() {
 
   au = idbq('SELECT `name`, initials author, gps_id FROM AUTHORS')
   rs = idbq('SELECT  COUNT(*) N_resightings, author 
-              FROM RESIGHTINGS GROUP BY author')
+            FROM RESIGHTINGS GROUP BY author')
   ns = idbq('SELECT COUNT(*) N_nests, author FROM NESTS 
-                WHERE nest_state = "F" GROUP BY author')
+              WHERE nest_state = "F" GROUP BY author')
 
   o = merge(au, ns, by = 'author', all.x = TRUE)
   o = merge(o, rs, by = 'author', all.x = TRUE)
 
-  setorder(o, name)
   o[, author := NULL]
+
+  # track dist
+  x = fetch_GPS_tracks(all = TRUE, withinStudyArea = TRUE) %>%
+     consecutive_pts_dist()
+  x = x[, .(min_distance_walked = sum(dst,na.rm = TRUE)/1000), by = gps_id]    
+  x[, gps_id := as.integer(gps_id)]
+
+  o = merge(o, x, by = 'gps_id')
+  setorder(o, name)
   o
 
 

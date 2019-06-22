@@ -4,11 +4,13 @@
 \alias{fetch_GPS_tracks}
 \title{fetchTracks}
 \usage{
-fetch_GPS_tracks(lastNhours = 48, gps_id = 1:11)
+fetch_GPS_tracks(lastNhours = 48, gps_id = 1:11, all = FALSE,
+  reproject = TRUE, withinStudyArea = FALSE)
 }
 \description{
 fetchTracks
 }
 \examples{
 x = fetch_GPS_tracks(48)
+x = fetch_GPS_tracks(all = TRUE, withinStudyArea = TRUE)
 }

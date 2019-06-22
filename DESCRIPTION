@@ -28,6 +28,8 @@ Imports:
     RColorBrewer,
     V8,
     sp,
+    sf,
+    lwgeom,
     xtable,
     broom
 Suggests:

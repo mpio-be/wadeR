@@ -18,14 +18,17 @@ NULL
     options(wader.dbbackup  = path.expand('~/ownCloud/BACKUPS/db/') )
     options(wader.species   = c("REPH",  "LBDO", "PESA" , "SESA", "AMGP", "BASA", "DUNL", "RNPH") )
 
+    options(wader.proj = '+proj=omerc +lat_0=71.3332703512554 +lonc=-156.654269449915 +alpha=-41.5 +gamma=0.0 +k=1.000000 +x_0=0.000 +y_0=0.000 +ellps=WGS84 +units=m')
+    
     options(xtable.comment = FALSE)
 
     }
 
 #' @import  utils  methods magrittr stringr  anytime glue xtable
 #' @import  data.table DataEntry
-#' @import  sp rgdal ggplot2 ggthemes ggrepel mapproj foreach RColorBrewer V8
+#' @import  sp sf rgdal ggplot2 ggthemes ggrepel mapproj foreach RColorBrewer V8
 #' @importFrom  stats binomial time
+
 
 NULL
 # no visible global function definitions
