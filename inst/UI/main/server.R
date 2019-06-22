@@ -172,12 +172,16 @@ shinyServer(function(input, output, session) {
    
       x[, est_hatch_date := as.Date(est_hatch_date)]
 
+      if(nrow(x)  == 0) Wrn('There are no data yet!') 
+
       if(nrow(x) > 0)
-      ggplot(x, aes(est_hatch_date)) + geom_bar() +
+      g = ggplot(x, aes(est_hatch_date)) + geom_bar() +
         facet_wrap(~species, ncol = 1) + 
         xlab("Estimated hatching date") 
 
-       if(nrow(x)  == 0) Wrn('There are no data yet!') 
+       plot(g) 
+
+
 
     } )
 
