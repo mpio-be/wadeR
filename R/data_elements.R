@@ -193,13 +193,13 @@ RESIGHTINGS <- function(sp) {
 #'
 #' RESIGHTINGS_BY_ID('DB,Y', 'Y')
 #'
-RESIGHTINGS_BY_ID <- function(LL, LR) {
+RESIGHTINGS_BY_ID <- function(UL, UR, LL, LR) {
 	 x = idbq(paste('SELECT UL, LL, UR, LR, lat, lon, datetime_ - interval 8  hour  datetime_ from
 								GPS_POINTS g
 								JOIN
 										RESIGHTINGS r ON
 												g.gps_id = r.gps_id AND g.gps_point = r.gps_point
-									WHERE LL =',shQuote(LL) , "AND LR = ", shQuote(LR))
+									WHERE LL =',shQuote(LL) , "AND LR = ", shQuote(LR), "AND UL = ", shQuote(UL), "AND UR = ", shQuote(UR) )
 										)
 
 	 x[, seenDaysAgo := difftime(datetime_, Sys.time(), units = 'days') %>% as.numeric %>% round(., 1) %>% abs  ]

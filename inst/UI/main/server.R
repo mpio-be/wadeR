@@ -209,7 +209,7 @@ shinyServer(function(input, output, session) {
 # RESIGHTS BY ID map
   output$resightsbyidmap_show <- renderPlot({
 
-  x = RESIGHTINGS_BY_ID(input$LL, input$LR)
+  x = RESIGHTINGS_BY_ID(input$UL, input$UR, input$LL, input$LR)
   map_resights_by_id(x)
 
   })
