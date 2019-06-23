@@ -63,7 +63,9 @@ dashboardPage(skin = 'black',
               "Collected"         = "C",
               "Incubated"         = "I",
               "possibly Predated" = "pP",
-              "possibly Deserted" = "pD",
+              "possibly Deserted" = "pD",              
+              "Predated"          = "P",
+              "Deserted"          = "D",
               "Hatched"           = "H", 
               "Not Active"        = 'notA'
               )),
@@ -210,8 +212,6 @@ tabItems(
           actionBttn("update_hatching",label= "UPDATE hatching estimation", size = 'lg', icon  = icon('database') , block = TRUE),
           uiOutput("update_hatchingOut"), 
           
-
-
 
 
           hr(), 

@@ -27,13 +27,6 @@ shinyServer(function(input, output, session) {
      bordered = TRUE,  
      spacing  = "xs", digits = 0 )
 
-
-
-
-
-
-
-
 # GPS data
  # observeEvent(input$menubar, {
  #     Wrn('Plug in your GPS (it will behave like an USB pen)
