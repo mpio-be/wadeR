@@ -103,10 +103,8 @@ dashboardPage(skin = 'black',
       conditionalPanel(
         condition = "input.menubar == 'resightsbyidmap_tab'",
         
-        div(style="display:inline-block", textInput('UL', 'UL', width = '100') ),
-        div(style="display:inline-block", textInput('UR', 'UR', width = '100') ),
-        div(style="display:inline-block", textInput('LR', 'LR', width = '100') ),
-        div(style="display:inline-block", textInput('LR', 'LR', width = '100') )
+        div(style="display:inline-block", textInput('UL', 'UL', width = '100') , textInput('LL', 'LL', width = '100')    ),
+        div(style="display:inline-block", textInput('UR', 'UR', width = '100') , textInput('LR', 'LR', width = '100')    )
 
 
 

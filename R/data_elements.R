@@ -191,7 +191,7 @@ RESIGHTINGS <- function(sp) {
 #' @export
 #' @examples
 #'
-#' RESIGHTINGS_BY_ID('DB,Y', 'Y')
+#' RESIGHTINGS_BY_ID('M', 'G', 'Y,Y', 'Y')
 #'
 RESIGHTINGS_BY_ID <- function(UL, UR, LL, LR) {
 	 x = idbq(paste('SELECT UL, LL, UR, LR, lat, lon, datetime_ - interval 8  hour  datetime_ from

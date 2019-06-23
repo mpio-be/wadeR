@@ -4,13 +4,13 @@
 \alias{RESIGHTINGS_BY_ID}
 \title{RESIGHTINGS_BY_ID}
 \usage{
-RESIGHTINGS_BY_ID(LL, LR)
+RESIGHTINGS_BY_ID(UL, UR, LL, LR)
 }
 \description{
 RESIGHTINGS_BY_ID
 }
 \examples{
 
-RESIGHTINGS_BY_ID('DB,Y', 'Y')
+RESIGHTINGS_BY_ID('M', 'G', 'Y,Y', 'Y')
 
 }
