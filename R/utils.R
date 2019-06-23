@@ -189,7 +189,7 @@ teamStatus <- function() {
   # track dist
   x = fetch_GPS_tracks(all = TRUE, withinStudyArea = TRUE) %>%
      consecutive_pts_dist()
-  x = x[, .(min_distance_walked = sum(dst,na.rm = TRUE)/1000), by = gps_id]    
+  x = x[, .(min_dist_walked_km = sum(dst,na.rm = TRUE)/1000), by = gps_id]    
   x[, gps_id := as.integer(gps_id)]
 
   o = merge(o, x, by = 'gps_id')
