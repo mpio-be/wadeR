@@ -136,13 +136,11 @@ NESTS <- function(project = TRUE) {
 			ai[ is.na(fSure) , f_id := f_maybe]
 			ai[, ":=" (m_maybe = NULL, f_maybe = NULL)]
 
-
 		# final set
 			o = merge(n, cs, by = 'nest', all.x = TRUE)
 			o = merge(o, e,  by = 'nest', all.x = TRUE)
 			o = merge(o, m,  by = 'nest', all.x = TRUE)
 			o = merge(o, ai,  by = 'nest', all.x = TRUE)
-
 
 		# coords transformations
 			if(project)

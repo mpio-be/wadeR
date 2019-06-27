@@ -14,7 +14,7 @@ devtools::install_github("mpio-be/wadeR")
 
 Site installation
 ``` r
-  require(wadeR)
+  require(wadeR);
   install_ui(install_package = TRUE)
 ```
 
