@@ -61,7 +61,7 @@ hatch_est <- function(x, y) {
 
   # floating eggs
     d[ float_height > 0,
-       hatch_date := arrival_datetime + 19*24*60*60 - 24*60*60 * abs(a2 + b2 * float_height + c2 * float_angle) ]
+       hatch_date := arrival_datetime + 24*60*60 * abs(a2 + b2 * float_height + c2 * float_angle) ]
 
   # direct estimation
     if(nrow(y) > 0) {
