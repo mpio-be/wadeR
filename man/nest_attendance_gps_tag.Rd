@@ -14,6 +14,9 @@ nest_attendance_gps_tag(last_datetime = Sys.time() - 3600 * 24 * 5,
 
 \item{project}{when TRUE, the default, data.tableTransform is called}
 }
+\value{
+DT with nest, ....
+}
 \description{
 nest attendance based on gps tags data
 }
