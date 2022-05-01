@@ -4,10 +4,16 @@
 \alias{db_backup}
 \title{database backup}
 \usage{
-db_backup(year = data.table::year(Sys.Date()), db = yy2dbnam(year),
-  host = ip(), user = getOption("wader.user"), pwd = wadeR::pwd(),
-  outdir = getOption("wader.dbbackup"), startMonth = 5,
-  startDay = 25)
+db_backup(
+  year = data.table::year(Sys.Date()),
+  db = yy2dbnam(year),
+  host = ip(),
+  user = getOption("wader.user"),
+  pwd = wadeR::pwd(),
+  outdir = getOption("wader.dbbackup"),
+  startMonth = 5,
+  startDay = 25
+)
 }
 \description{
 database backup

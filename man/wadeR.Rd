@@ -3,7 +3,6 @@
 \docType{package}
 \name{wadeR}
 \alias{wadeR}
-\alias{wadeR-package}
 \title{wadeR}
 \description{
 Mapping and field work organizer

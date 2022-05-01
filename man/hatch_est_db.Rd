@@ -4,8 +4,15 @@
 \alias{hatch_est_db}
 \title{Estimated hatching date based on Liebezeit (2007) database version}
 \usage{
-hatch_est_db(species = "REPH", float_time, float_angle, float_height,
-  found_datetime = NA, found_clutch = 4, final_clutch = 4)
+hatch_est_db(
+  species = "REPH",
+  float_time,
+  float_angle,
+  float_height,
+  found_datetime = NA,
+  found_clutch = 4,
+  final_clutch = 4
+)
 }
 \arguments{
 \item{species}{Species (Red Phalarope = 'REPH', Red-necked Phalarope = 'RNPH', Pectoral Sandpiper = 'PESA')}

@@ -4,8 +4,14 @@
 \alias{dbTableUpdate}
 \title{dbTableUpdate}
 \usage{
-dbTableUpdate(user = getOption("wader.user"), host, db,
-  password = pwd(), table, newdat)
+dbTableUpdate(
+  user = getOption("wader.user"),
+  host,
+  db,
+  password = pwd(),
+  table,
+  newdat
+)
 }
 \description{
 dbTableUpdate

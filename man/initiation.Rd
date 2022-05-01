@@ -4,8 +4,15 @@
 \alias{initiation}
 \title{Initiation date}
 \usage{
-initiation(found_datetime, found_clutch, final_clutch, hatching_datetime,
-  est_hatching_datetime, incubation_period, incubator = FALSE)
+initiation(
+  found_datetime,
+  found_clutch,
+  final_clutch,
+  hatching_datetime,
+  est_hatching_datetime,
+  incubation_period,
+  incubator = FALSE
+)
 }
 \arguments{
 \item{found_datetime}{Datetime when the nest was found}

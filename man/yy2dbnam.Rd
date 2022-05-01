@@ -4,8 +4,7 @@
 \alias{yy2dbnam}
 \title{make field database name from year}
 \usage{
-yy2dbnam(year = format(Sys.Date(), format = "\%Y"),
-  db = getOption("wader.db"))
+yy2dbnam(year = format(Sys.Date(), format = "\%Y"), db = getOption("wader.db"))
 }
 \description{
 make field database name from year

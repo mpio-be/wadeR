@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/mpio-be/wadeR.svg?branch=master)](https://travis-ci.org/mpio-be/wadeR)
 
 wadeR
 ------------
@@ -23,18 +22,3 @@ Site installation
   require(wadeR);
   install_ui(install_package = TRUE)
 ```
-
-
-Web server reload
-``` r
-  wadeR::reboot_webserver()
-```
-
-
-
-Notes
-------------
- - data entry pages are customized from `./inst/UI/DataEntry/_TABLENAME_/global.R` files
- 
-
- 

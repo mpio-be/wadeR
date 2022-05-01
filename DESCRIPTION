@@ -1,7 +1,7 @@
 Package: wadeR
 Title: Wader field work manager
 Description: Wader (or any open breeder) field work organizer: mapping and data entry. 
-Version: 2020.0.1
+Version: 2022.0.1
 Authors@R: c( 
            person("Mihai", "Valcu",       email = "valcu@orn.mpg.de",     role = c("aut", "cre")),
            person("Johannes", "Krietsch", email = "jkrietsch@orn.mpg.de", role = "ctb") )
@@ -54,4 +54,4 @@ VignetteBuilder: knitr
 LazyData: true
 License: GPL-3
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.2
