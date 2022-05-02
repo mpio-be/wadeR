@@ -1,5 +1,5 @@
 
-#' @title          nanotag txt to database
+#' @title          accelerometer data to database
 #' @return        TRUE if new data are updated, error on no new files
 #' @author        MV
 #' @export
@@ -7,10 +7,10 @@
 #' \dontrun{
 #'  require(wader)
 #'
-#'  nanotag2db()
+#'  acc2db()
 #' }
 #'
-nanotag2db <- function(dir =  "~/ownCloud/RAW_DATA/NANO_TAG_DATA/", db) {
+acc2db <- function() { # TODO
   if(missing(db)) db = yy2dbnam(data.table::year(Sys.Date()))
 
   allff  = data.table( f = list.files(dir, pattern = ".csv") )
