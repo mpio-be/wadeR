@@ -2,7 +2,7 @@
 
 export(coord_wader)
 export(map_empty)
-export(reproject)
+export(reprojectBarrow)
 export(theme_wader)
 import(data.table)
 import(ggplot2)

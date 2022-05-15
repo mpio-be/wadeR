@@ -9,7 +9,6 @@
 .Rproj
 .Rproj.user
 .Rproj.user/
-.sublime-workspace
 /*.Rcheck/
 /*.tar.gz
 /*_cache/
@@ -17,5 +16,3 @@
 vignettes/*.html
 vignettes/*.pdf
 vignettes/*.png
-*.sublime-workspace
-*.sublime-project
