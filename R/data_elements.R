@@ -2,11 +2,11 @@
 
 
 #' @examples
+#' require(wadeR)
 #' data("map_layers")
-#' x <- map_layers
-#' reproject(x)
+#' x = reprojectBarrow(map_layers)
 #' @export
-reproject <- function(x, LAT = "lat", LON = "lon") {
+reprojectBarrow <- function(x, LAT = "lat", LON = "lon") {
   omerc <- getOption("wadeR.proj")
   ll <- 4326
 
