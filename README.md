@@ -1,7 +1,7 @@
 
 wadeR
 ------------
-Wader (or any open breeder) field work organizer: mapping and data entry. 
+Utqiaġvik (Barrow) field work organizer: mapping related files. 
 
 Package installation
 ------------
@@ -15,10 +15,4 @@ devtools::install_github("mpio-be/wadeR")
 # tuned to work with Red Phalarope as main study species. 
 devtools::install_github("mpio-be/wadeR@2019")
 
-```
-
-Site installation
-``` r
-  require(wadeR);
-  install_ui(install_package = TRUE)
 ```

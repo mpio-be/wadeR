@@ -1,57 +1,28 @@
 Package: wadeR
-Title: Wader field work manager
-Description: Wader (or any open breeder) field work organizer: mapping and data entry. 
+Title: Wader field work files
+Description: Utqiaġvik (Barrow) maps & other files
 Version: 2022.0.1
 Authors@R: c( 
            person("Mihai", "Valcu",       email = "valcu@orn.mpg.de",     role = c("aut", "cre")),
            person("Johannes", "Krietsch", email = "jkrietsch@orn.mpg.de", role = "ctb") )
 Depends:
     R (>= 3.5.0),
-    data.table,
-    DataEntry
+    data.table
 Imports:
     utils, 
     methods,
-    magrittr,
     stringr,
-    RMySQL,
-    sdb,
-    anytime,
     glue,
-    gtools,
-    rgdal,
+    data.table,
     ggplot2,
     ggthemes,
     ggrepel,
-    mapproj,
-    foreach,
-    RColorBrewer,
-    V8,
-    sp,
     sf,
-    lwgeom,
-    xtable,
-    broom
+    lwgeom
 Suggests:
-    knitr,
-    shiny,
-    shinydashboard,
-    shinyjs,
-    shinytoastr,
-    shinyWidgets,
-    markdown,
-    jsonlite,
-    rhandsontable,
-    leaflet,
-    devtools,
-    askpass,
     rmarkdown
-Remotes: 
-    mpio-be/sdb,
-    mpio-be/DataEntry,
-    mpio-be/DataEntry.validation
 VignetteBuilder: knitr
 LazyData: true
 License: GPL-3
 Encoding: UTF-8
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0

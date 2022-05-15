@@ -5,5 +5,5 @@
 \alias{wadeR}
 \title{wadeR}
 \description{
-Mapping and field work organizer
+Wader field work files
 }
