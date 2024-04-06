@@ -69,16 +69,11 @@
         boundary       =  boundary       %>% fortify %>% data.table %>% .[, .(long, lat, group)]%>% .[, name := 'boundary'       ]
 
 
-        map_layers = rbindlist(list(narl     ,lakes    ,buildings,bog      ,powerline, boundary))
-        setcolorder(map_layers, c('long', 'lat', 'group', 'name'))
-        setnames(map_layers, "long", "lon")
+        Barrow = rbindlist(list(narl     ,lakes    ,buildings,bog      ,powerline, boundary))
+        setcolorder(Barrow, c('long', 'lat', 'group', 'name'))
+        setnames(Barrow, "long", "lon")
 
 
     # save
-        file.remove('./data/map_layers.RData')
-        save(map_layers, file = './data/map_layers.RData')
-
-
-
-
-
+        file.remove('./data/Barrow.RData')
+        save(Barrow, file = './data/Barrow.RData')

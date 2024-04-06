@@ -1,7 +1,7 @@
 
 wadeR
 ------------
-Utqiaġvik (Barrow) field work organizer: mapping related files. 
+Field sites data. This is a data package, mainly mapping related files. 
 
 Package installation
 ------------

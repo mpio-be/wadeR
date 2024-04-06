@@ -1,13 +1,12 @@
 Package: wadeR
-Title: Wader field work files
-Description: Utqiaġvik (Barrow) maps & other files
-Version: 2022.0.1
+Title: Field work files
+Description: Field work files for Utqiaġvik (Barrow), Dümmersee (Germany), etc.
+Version: 1.0.1
 Authors@R: c( 
            person("Mihai", "Valcu",       email = "valcu@orn.mpg.de",     role = c("aut", "cre")),
            person("Johannes", "Krietsch", email = "jkrietsch@orn.mpg.de", role = "ctb") )
 Depends:
-    R (>= 3.5.0),
-    data.table
+    R (>= 4.0.0)
 Imports:
     utils, 
     methods,
@@ -17,12 +16,11 @@ Imports:
     ggplot2,
     ggthemes,
     ggrepel,
-    sf,
-    lwgeom
+    sf
 Suggests:
     rmarkdown
 VignetteBuilder: knitr
 LazyData: true
 License: GPL-3
 Encoding: UTF-8
-RoxygenNote: 7.2.0
+RoxygenNote: 7.3.1

@@ -1,13 +1,13 @@
 
 
-
+#' reprojectBarrow
 #' @examples
 #' require(wadeR)
-#' data("map_layers")
-#' x = reprojectBarrow(map_layers)
+#' data("Barrow")
+#' x = reprojectBarrow(Barrow)
 #' @export
 reprojectBarrow <- function(x, LAT = "lat", LON = "lon") {
-  omerc <- getOption("wadeR.proj")
+  omerc <- getOption("barrow.proj ")
   ll <- 4326
 
   if (median(x[, ..LAT][[1]]) < 0) {

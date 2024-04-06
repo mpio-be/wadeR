@@ -1,7 +1,6 @@
 
-# TODO  map_layers function
-
-
+#' theme_wader
+#' @return a ggplot2 theme
 #' @export
 theme_wader <- function() {
   theme(
@@ -21,12 +20,14 @@ theme_wader <- function() {
   )
 }
 
-#' @examples
-#' data("map_layers")
-#' x = map_layers
-#' coord_wader(x)
+#' coord_wader
+#' @return a coord_equal object
 #' @export
-coord_wader <- function(x = map_layers) {
+#' @examples
+#' data("Barrow")
+#' x = Barrow
+#' coord_wader(x)
+coord_wader <- function(x = Barrow) {
   coord_equal(
     xlim = x[name == "boundary", .(min(lon), max(lon))] |> t() |> as.vector(),
     ylim = x[name == "boundary", .(min(lat), max(lat))] |> t() |> as.vector()
@@ -36,9 +37,9 @@ coord_wader <- function(x = map_layers) {
 
 #' An empty map of the study area
 #' @examples
-#' map_empty()
+#' map_empty_barrow()
 #' @export
-map_empty <- function(m = map_layers) {
+map_empty_barrow <- function(m = Barrow) {
   ggplot() +
     ggtitle(format(Sys.time(), "%a, %d %b %y %H:%M")) +
     theme_wader() +
