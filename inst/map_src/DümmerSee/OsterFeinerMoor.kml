@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>OsterFeinerMoor.geojson</name>
+	<open>1</open>
+	<atom:link rel="app" href="https://www.google.com/earth/about/versions/#earth-pro" title="Google Earth Pro 7.3.6.10201"></atom:link>
+	<Schema name="OsterFeinerMoor" id="J_OsterFeinerMoor_S">
+		<SimpleField type="string" name="id_2"><displayName>id</displayName>
+</SimpleField>
+	</Schema>
+	<Style id="OsterFeinerMoor_style24">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style16">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style17">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style18">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="OsterFeinerMoor_style19">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style17</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style0</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="OsterFeinerMoor_style20">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style3</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style6</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="OsterFeinerMoor_style21">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style22">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style23">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="OsterFeinerMoor_style15">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style31</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style16</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="OsterFeinerMoor_style25">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style26">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="OsterFeinerMoor_style27">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style21</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style28</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="OsterFeinerMoor_style28">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style29">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style30">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style31">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="OsterFeinerMoor_style">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style24</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style8</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="OsterFeinerMoor_style14">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style9</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style25</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="OsterFeinerMoor_style13">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style12">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style11">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="OsterFeinerMoor_style10">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style22</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style11</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="OsterFeinerMoor_style9">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style8">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="OsterFeinerMoor_style7">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style18</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style26</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="OsterFeinerMoor_style6">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="OsterFeinerMoor_style5">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style30</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style13</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="OsterFeinerMoor_style4">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Style id="OsterFeinerMoor_style3">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<StyleMap id="OsterFeinerMoor_style2">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style12</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style29</styleUrl>
+		</Pair>
+	</StyleMap>
+	<StyleMap id="OsterFeinerMoor_style1">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#OsterFeinerMoor_style23</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#OsterFeinerMoor_style4</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="OsterFeinerMoor_style0">
+		<BalloonStyle>
+			<text><![CDATA[<table border="0">
+  <tr><td><b>$[OsterFeinerMoor/id_2/displayName]</b></td><td>$[OsterFeinerMoor/id_2]</td></tr>
+</table>
+$[description]]]></text>
+		</BalloonStyle>
+		<PolyStyle>
+			<fill>0</fill>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>A1</name>
+		<styleUrl>#OsterFeinerMoor_style27</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">A1</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.332846773494031,52.55391429072902,0 8.333013838843806,52.55296659879043,0 8.333207008377514,52.55161654001989,0 8.335732,52.55173299999999,0 8.335393,52.554033,0 8.332846773494031,52.55391429072902,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>A2</name>
+		<styleUrl>#OsterFeinerMoor_style5</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">A2</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.337564838773154,52.55188094325204,0 8.339378999999999,52.551966,0 8.339159097424309,52.55438696487965,0 8.337255000000001,52.554106,0 8.335416,52.55401299999999,0 8.335725999999999,52.551737,0 8.337564838773154,52.55188094325204,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>A3</name>
+		<styleUrl>#OsterFeinerMoor_style1</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">A3</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.339167,52.554397,0 8.339405392000124,52.55196008237696,0 8.343420999999999,52.552183,0 8.342762596067228,52.55498267754403,0 8.339167,52.554397,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>B1</name>
+		<styleUrl>#OsterFeinerMoor_style15</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">B1</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.334772582818861,52.54848573366188,0 8.334388598203477,52.55160174132686,0 8.332843,52.551514,0 8.333315000000001,52.54834100000001,0 8.334772582818861,52.54848573366188,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>B2</name>
+		<styleUrl>#OsterFeinerMoor_style19</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">B2</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.33700403098193,52.54862188002853,0 8.336606,52.55167600000001,0 8.334378332372372,52.55160358582404,0 8.334783569599766,52.54849272216175,0 8.33700403098193,52.54862188002853,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>B3</name>
+		<styleUrl>#OsterFeinerMoor_style10</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">B3</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.336601,52.551675,0 8.336995,52.54861499999999,0 8.344377,52.54881,0 8.344662480202363,52.55212154759976,0 8.336601,52.551675,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>B4</name>
+		<styleUrl>#OsterFeinerMoor_style</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">B4</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.34468215640543,52.55213083362333,0 8.34436,52.54882099999999,0 8.348727999999999,52.548896,0 8.349288,52.550054,0 8.349688,52.552386,0 8.34468215640543,52.55213083362333,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>C1</name>
+		<styleUrl>#OsterFeinerMoor_style2</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">C1</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.332976,52.548238,0 8.332548618365665,52.54595301148844,0 8.333922981192829,52.54598493724414,0 8.335234541639059,52.54604385214875,0 8.335493308736169,52.54720697834066,0 8.335707792887607,52.54854252171964,0 8.332976,52.548238,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>C2</name>
+		<styleUrl>#OsterFeinerMoor_style20</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">C2</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.335725883536426,52.54853878941132,0 8.335500964686823,52.54718618108303,0 8.335265874313952,52.54604488715582,0 8.338438369878705,52.54634186498825,0 8.340871621157211,52.5465157702513,0 8.344445581264793,52.54642629457425,0 8.345564,52.548765,0 8.335725883536426,52.54853878941132,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>C3</name>
+		<styleUrl>#OsterFeinerMoor_style14</styleUrl>
+		<ExtendedData>
+			<SchemaData schemaUrl="#J_OsterFeinerMoor_S">
+				<SimpleData name="id_2">C3</SimpleData>
+			</SchemaData>
+		</ExtendedData>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.345581919639608,52.54876732795735,0 8.344464272145835,52.54643004695837,0 8.347378051018538,52.54639581135127,0 8.348105290655267,52.54749044424523,0 8.348749339053141,52.54886934588961,0 8.345581919639608,52.54876732795735,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+	<Placemark>
+		<name>A4</name>
+		<styleUrl>#OsterFeinerMoor_style7</styleUrl>
+		<Polygon>
+			<tessellate>1</tessellate>
+			<outerBoundaryIs>
+				<LinearRing>
+					<coordinates>
+						8.343449569663017,52.55219312328938,0 8.349729442320166,52.55248169714505,0 8.349764778492833,52.55300017135181,0 8.349385451470221,52.55377420757936,0 8.348503681634693,52.55545149343653,0 8.348090513258281,52.55578717015592,0 8.347825996989574,52.55572918897944,0 8.345608727579437,52.55542121396333,0 8.342783608624663,52.55498441952494,0 8.343449569663017,52.55219312328938,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
